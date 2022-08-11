@@ -27,6 +27,7 @@ namespace PX.Objects.PM
     #region UsrPreparer
     [PXDBInt]
     [PXEPEmployeeSelector]
+    [Owner(typeof(PX.Objects.EP.EPEmployee.AcctCD))]
     [PXUIField(DisplayName = "Preparer", Visibility = PXUIVisibility.SelectorVisible)]
     public virtual int? UsrPreparer { get; set; }
     public abstract class usrPreparer : PX.Data.BQL.BqlInt.Field<usrPreparer> { }
