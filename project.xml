@@ -1,0 +1,672 @@
+<Customization level="" description="Adding Preparer, Statutory Due Date to PMTask" product-version="21.211">
+    <Page path="~/pages/pm/pm208000.aspx" pageSource="7T1tc9s20p/Tmf4Hnm7aT03sOE1fHLtzsuQkmlq2TlKS3tzcZGAStnimSJYvttUPz29/sHghCRIkAYpy7MzlSyxwiV0sFruL3QV49N0/rBm6xtYZ8q9T8sfxYPT3gTVFcYIjePDW9Ujb/+3lLfHe2yBaj3GCXO/FmjYPrGGaBKe32E8+uRFOw+NBEqV4YH1EnuugBM/xnymOk+PBFfJi0j4KHN7zbHqw/8v+/v4LFIf3L+x4YE38FY7cJCbPCLbPAmDw7TcW+bd0E3jtg5/AHw4lfmB999u333z7zREZDKNzuQmx9dGNkhR5M5SsNEYAXRwRIg5HgZ+QgViT8fHAJn+/BHJp08xDNn4feA6O4GG4Gi8GVpT6iAxsgaNb0s1vjMqj8P5w9scYJWgRpJGNaWdOnEHHDJqQGLuXMJ4lZdcn1wFaX+7vfzewYAznaA08+uPFxeV/sZ3EL2bTF0u8Dj3C0yly/WRgzSJ3jaLNRxffEcgoALiBdRJEhMpFsoHOz4NkgZOMtr0ScTDwvcLI6xhxUM+It418AG4DfbSnK/KjwoecGMEoTvpfz13fwfeHFuFJiT/wzhSvL3FUGPcIhYkb+IShnEvWIl0DfwYWyFs88R3XRkkQcZYzMuEfYRIuP7XOXP9mRleFGBEdlei80JaP9gxtgjSZpx4ujxK4FwXewv2LdPjHlHSPLrEX81EtpjBqFCWjwEvXviBhT4lkga/XZCKITN9QrmKHdo7sZDRWcvetiz2HLO4CVJXpalzjKAjHwZ3PEREak7QqygUkAuLUR0S4nWzVq7uv55cafonvk1PHTTg5YxzbkUtnvYkmCcyUEO1pGa2wfXMS3LM1s7o5D/xMNOtpK0IV+z3aKwkaX7piPeku3Ff1C/dd48JdokvaSYIuK/RLa/E9dq9X5OHrly/De5VkKRYr+S/EUeLiWFpbkwSvY/XEo0t4aIEAEHr5ui6BNq3PLaa7slIra7ksEEbI3kUBGE2Gi/7IFBnnllVgVwuu0no9SZ1rnJzhW+w1CaEENgrWazcZrYhTgOM6kW/EOgriRBNzBbQD9gX2CJOCiGO/uPNBwpuwZiDQ8TP4p+xplEab5o4EBBOFRR/MG9p2kBIPx7+eEkepgnzoecHdeep5x4O3TLMWyCm/24xYUlhktJToC/AdPgXRzRXB0zh0FbgBQqIh58QtjFw7WQanZM0GG4zP3LhRW9a90RUv+YuqKn288htGDGZyPsXQU6MNlQC5IWW4uqkZWamcuJ5HJMQa+g6VJuL0kHaLeIkgOLFKK22rASUn8JLhf1vnCwpTwelUWZQ59nMPd+ESUcAqW5AR0WITavkI+IoNP1cI7tVcyHRkekGpU5hIwT6hSZLY80w7NSGuOBxVgLIDUkt6SY8ucbSOmxVpBmKk6nPxbe5dhqMqFLxIwUvaMHScc9hGsaYSzxMNPV7WMrAt5ogb50iGMxo/XyLNgy8A7WjkJarG+AqlXnISId9eNdNWATVCNCccW4J2bFTdAmhrBphM/ijCBC/x22DLixrtaAmygwdRsjNnLukgtxv1qEuA28o8dmYRDtEGNqca2BXA28te3ikRrZHKgVJSkAGbL/E10Sv2nFCBYjycty30MnStRta09GUL9VJtoSRrLtmsRLHtoJEp13OTTcEraDVr2pugMs0HFZqnOLrGHWSfTAmPqk38d2dNcyGBbbvkimiHMy20ANYr2kbJk8D6RLu40EILYH2inemhnXVD2yCqryt4O3f1Y5vUKzrtxKzJuRazAKzPORoNtdACWK9o9RbCqGkhFCICGZ5SnxWJnF+Ma4SQPulXDH/pTwx/3YnyXepN/rLnyT/VQ3vaDW39BhvoiCCl5KNrzM1wW2xvfrocTs6H706140MKpMQHFmhZxEeKWUhPtuGzEvPEt73UwaMLCWuhVYmxdS9qzOuDTGTf5qmGnvp+ZbQczlOIXBTyE9kUzJqTADKcim+/8d13jmKLmVskOAwL1JUSOOWHu10qr+5V86fF5JYFge4pO5VLgj9rRvUuch0VkmvSnnUF/IKg2ca3Z0Hs8gwk5VE568jHR/ec5FmCS20LjCJ7lbVxX/tHyH6KJMvLg/1CopPPlVWcLPaslFym3c/QNXHlc5TOf9M4gQwnW5PngU9aS6lQBtsUNqJx+3LSpp6fFFyK85U42dIT7W0e3GmG9GQCsvRh7bJYriIcrwLPKYuO/KAtgmeKVlYAtZpBB+3Rnhl3jthOsG0G5RHBTLL36nkkkoS/7JvyS927zArT3o/29MbJ9Wwmqo0R01bZP4I9PyyvPB/eouToW2CxVaEp2jTGHk7klb0IoqRdfeYj28pADidDTReHQJomvybD1pRhDtPBMJUKCM5QnIjQGzMsjfEyBbSZp8q9o38mG7IXnzR6qxVQo+CYIjFeF9/ncsEz7BrZ9yWKb5R6Wi/3XmdVoVt4pij1kbM/mS2kzxc3rg9PWEkXMbdLKFhQmOOdGjHGE9r0O95A6Vacpe8n4x/g8Wi8U9v2QCUNauTVkiQ+djbwaoSvaDUYb7ojZETHwp7ynMICEedrkV5OmrFXoLcZupqS0/sQ+zHWpqUIb06NOkPSgllKknTEWBp8MefWiFuRnFNYvWLSph8Cs7xYI3Xl7FmvpGXWj5G2LpF2Qe2oDnkXNcVtbZwpr9riauDFJAbrJ3tjYPVFCV8LRrSU3zGmpr7KsAV9Q5lh2/jlvHYYRsEtlCg1r5wMjBVhz/EVOOBbLhOes0f3I6IUrgMocGrR3wVIFSFmdDQkdKpkUGDwqtmI6xI8PVEwnHWiAHI9fVEw70ZBU6bRjILFRScKIAPUEwWK5I8GAbOLmpxK5V8vRBoEwHtii0HsuyeMisSSxkTAW489jsE8UqrKRsjzTpB9UzwVADsx5NNB4TsANlRxNVhprVYfPW1hiGpCL93dQ3WHss/XR48FP60XAgumtUfyhJ9G9195KaZoZnWN4HoEEd9rd7DkdUItmek+upzE3ONSLxUYwdBzr8muc0ScO9APIONQOsw0Sn+sXeAQRWR03qY3tI8mYNguAixeOPHdhGxNiNaUdicfQi9ATosrJscGq0+7hI6UsaM5YYCfYouVOJOFQGi78MeY6dPabINBZAmsFMfCkLCYUg+HzrK40+t9OOjyOAJP0lC1Akxb2knVSpdq6rK4z1ZqpgXNxIcDp9vqshYkcDgFygJ3iYPvUmngvC+9XLT/ffT3z2STmSzy9wtJx85hUaij07vi2YeLaUYP/btX5KXjPR+IWp3T0myOkf3YMQdKRAzXICQZCeLnwxFBS4WpHHxBSz9F95SE6rB7G6Lg7BccJcw3GWn9HPeBJC99ptlUPUHqbXg59vpR7kyU5TzyA468gweu64RS2K6ZI9V5cmb4uHPRdoBT2EgpQN6Fb0VKamrOMrM/P9nOITCJLzyQjz91/YKP+RR9fpXLDxKyY38/P0X8dTv7+Tg7pJKfPWtHW04fsvUvra2mKsYqtJQNMFLhrcoJ/n+Ummn0gJqJwv9vR/e/Hd32dNOdVP+7pofbo9TsDR5iX/ZwWCcxWY9OarOA8RfcpnBtL9SCgpIesVRsSnnQTzCi+3V6e+JeDuJknRDnyvWv6fVD8Ijd/sUTgaf3IVFrZKJ55Vn87+//TIPkjXRxEmv6z4uPyEux9bdjK6lxsfT8xUXokSVJ8JH9H45UdjwOoawVwOC6uMyzOwD3ULiA74PI/Qs68Qp3H+2Dl2gmBe1uSDaql9o+Y3Y+QcyDuPRLxylWHGEQA3xFByi5yO0LTuk06yxULUe5Oviqw1zhgq7zaRm6zyVqql6roKTZhS5A8YOIjbgMHcXsPTOHUR6aWk8Xh9dVP2vjmglsnz8TZyuBatssNCoeWax1V3jHkHBMYI5hxBx33miZOH4Ur0Ggh8Fr26j8Fe1ldVScQmuJIrLjZGpFLCTw7WLm5dCdPN/jaRriGmum9W6XBCkbfpMBzKF0dG6mmA/MFXOJg61aWWjgH3vTwPn5sQuCk5CE9U5dgUBcEoHgk64tqlw2LBZcEPZ+Mo7rLJWmM2dOTn+GpTSLct3/HNtB5Ey06v0zZDvQySjyif/F6oqMzsp0wjYr4AMF2aEGSQcP0bVkfYDHWdC80BhZ0NgvsnzfQbr+/PkExXgWubYh60yVO32HneewxHVbQg0YbN52byK66GH6ckcDYKrD69Qz70feD+x2W/Rn6obgGTzCbVHdgSyOjaq43g5mlU8dgxiVzifvPo6ezYZSfWdPJ+MfsiNcX/PZLSnmXxh9406lCPYYo9pSzGxoJ+7tw8XGjJnT2uEs67KjadXufZ76sCqEge0liMe63AGxC5ykYd/kZp3uguA0DrHv9E5y3u0OCgs6uyJfuDb2oWKevAp6izPRX+o+8vJtUD9pXB8on/HnY7eoL9J6PbnmicMOBw473RveRAw/fmt0crhPIqqnGDscfNwBQbp8kcH7JISML0qRZ8KZ6is7IEiXMzL49hfei7MqukdFe73PqVU/REH4fLFyQ2tGtgorsoE2/YYB/IxJB7J0s51HI7cb3zOeark3Mnnw0AB/9kanwc+xjYnLR7YjNo5jei16O2bFSx1u2G2eDhbr0iSo+k4Hegxksa0jYkfZ15nS9XrjqW6SFveuUdhOu2gud/ntJsJ9OjigAd2KJQVI64qs7ndnFn+5eBeY+hsrYrO9WAVRwr5NIO2p+Vd4yjeSXe3+ei8+hN1e7PXILj/RMk0FoG3xiSKM5ktWnsBOvauBNsFhxoqHLhlpD3G2SbziSnDFIqja7WZl2XQX4hRFN+luL0H8qXgJ4oF0CeI4sFOac83IeHp3IArSd6EjS3eaKKtXGX4psLTdefKS69CAlKWnOp6DZ2jargRliOgOVb6TgLWYoMpc76YRcQXTUeeYoCrXmm5dhqqPulhKu1WFrT5KqQrwKVVYP41bHoyWQ382tq2vXdRT91IHvp0EPpJaVLPrSMcRuiZLJ5Zsao93lDIiaXHzCYqsgi8RhF8+zjtMksi9TBN1vYzhmSX259CP73CkUwekPp3UkGmdIkLtPczdQ6RUxUAeeL8gZgTWXSG5d4avxA6Y7Ijv3rtOfr04gFVf/+z0rU7dGL587UbwYaMHyjtyDb7NNTKPRjFplEdXr0kubiTIOKbBreTtF1WT0W3J1ad96ZQzF/vWJ+SSVV/82JLimCSZ1hA++93b8UmdcvhXA2uGfOy9nLo+2yL9ui+aoHoQPvuZbSkVdfOFTdu+dJCyUEXfZ8pPGr1e2bz+TvpAuZNmv7h6/kPjtkFTtD+2R9nJLDqU58izChJV+WxXKdZl/i1KJani6U/lG/OD9HpFWjCzZAUidfHWfcdCWdzBiBGvvNS4GN50Jl59GQF43S4AH3z7UYjAz80iIJHZsop3VomtGMAoIL24yLex0MEsVt90JKbJ92oplKuWu9VEovLfcARJq1ajrwpnkCEmQnNsuyH5pRfDz/ruv6D5I/FrgmjkoTieOLs/Z0JMnrtO1ywQXbysZFvEj+2wh9hv6ZIzIpIarMGJMapoZt5PEBC+RSdpkgS+9TveHA/stUP8N7ImCvOrdyRBHkbxzEp2MEXVc3aixWnIRStx7FXHoD2HZlw72tOdlqdbFD0lGhOuv/z+e2sWufS79QMr9yrJrs3BftkZrtvK9ufzHqhc2VdP7wjo+aJazdVurUoXn2QeBp+sWOPUkW6Nd9UyaqmrbQ4e1B5sO593Ps3Wm8k9DxL3ymX34jK2VGrTBbd+oEWqhkeMup0WzanuMctukGSXaShVo0BNKmq8BkZAdENXzbWf63zX/Lz9i+bNeCtfmuZ7HO37tsULXYctVZgJYWsYcQbSC8I5DoOopX4ih6FhL0GHHWFsdKt0IyHFJdky5SXIIlHbnEUuH88APaxVX1KGHLsxWfobHhAmBtjU93k0h813cJpDB20m4rveeBS0h/IKen55OAXq+RBnvzLThi5fwjtnaWl17hqfsDp1ofhd48/37Cd4hW7dIOrhCPDXdo71sVwJAL6nuaOef0k6j8+oXW8Nj/0x+ObqQ8G/He3BA50OZigihpbYATNnHIJ8MB/0deGmFjdRenkzI+ydL1NYoFssMkHijLCIFpaa6Q0LJiGOo7c4sVeE9XUInsDFDEVFX1wY8jaqZA5M9Nm2Upp19NX4RTScYiessulLGbyLyCXaC3mcGOqBi/pPqby0XA6wA06YSVTW8Tmx09fEglBFYioXMnl84TKNBjJfpK2i4oj5mZFtNY6SDYOFIbEDffz6gQp3+RUE5uyjNO5tNdSC2WZT0KcDvCbm9utyBYeOswwewNH7CqNLkmZrumm4ANbLLr+wWFvR1nz9sRh/4Ns4GoYwX66dP3JKh9c1bPAV7RsePuNytFfOM+WueYbpePDJ9Z3gbqB7M2mOjjQc7aE4PKS32PgJ/C78pFI8dpEXXMdsacKHJjxk4/eB58Ap1ONBuMoAuIgv+JG7b795xhfFmqx7WmvEqgzgr1EQbhSH1MvXuf/yxgp57ubQQpcxUR4JfmN5+Co5tA5+Du/fWEkQHlq//kr+LOyloHtLcHsANzCqD5PIOSmWxwHXYnhF3K0zeh0ra6QZTuiVjVZW989LmSDpmchOwP1A0AG/iqYEVclZMJrZU3BJnyu3/RLELIgT0CvA4msgw7ZxmLD0JivvYH9f/A4v+jb2qs9YO508Pnti5dK5qwyihyv6s0nL6+bKk8V9PLGbXkbIj0MUwT1M9HZN+Uq3bJLoKJ4VM4rPnolhPcBRw9pjfpyelqN+BajakA8MZ08aH1/cYtZYm+PeWjGbiBA5cGT30HpNFw9xYJ4j2GMcWhGoijeCabQXnt4vC0+JaOYFwQPG9zmOU4+0/Avn9c4/vYIsZF5ECDlWTmqWf29Cy+Wywi8J4XkgiBHg9diFYBLdRFzi50yjvA7vBV+P9gjTqA7bKykxhdL8fw==">
+        <PXGridLevel DataMember="Tasks" ParentId="phG_tab_Items#1_TaskGrid_Levels#0" TypeFullName="PX.Web.UI.PXGridLevel">
+            <Children Key="Columns">
+                <AddItem>
+                    <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                        <Prop Key="DataField" Value="UsrPreparer" />
+                        <Prop Key="Width" Value="140" />
+                    </PXGridColumn>
+                </AddItem>
+                <AddItem>
+                    <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                        <Prop Key="DataField" Value="UsrStatutoryDueDate" />
+                        <Prop Key="Width" Value="90" />
+                    </PXGridColumn>
+                </AddItem>
+            </Children>
+        </PXGridLevel>
+    </Page>
+    <Page path="~/pages/pm/pm208010.aspx" ControlId="2" pageSource="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">
+        <PXTabItem Text="Summary" ParentId="phG_tab_Items#0" TypeFullName="PX.Web.UI.PXTabItem">
+            <Children Key="Template">
+                <AddItem>
+                    <PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXDateTimeEdit2" />
+                        <Prop Key="DataField" Value="UsrStatutoryDueDate" />
+                    </PXDateTimeEdit>
+                </AddItem>
+                <AddItem>
+                    <PXSegmentMask TypeFullName="PX.Web.UI.PXSegmentMask">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXSegmentMask1" />
+                        <Prop Key="DataField" Value="UsrPreparer" />
+                    </PXSegmentMask>
+                </AddItem>
+                <PXLayoutRule OriginalIndex="5" />
+            </Children>
+        </PXTabItem>
+    </Page>
+    <Page path="~/pages/pm/pm301000.aspx" ControlId="5" pageSource="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">
+        <PXGridLevel DataMember="Tasks" ParentId="phG_tab_Items#1_TaskGrid_Levels#0" TypeFullName="PX.Web.UI.PXGridLevel">
+            <Children Key="Columns">
+                <AddItem>
+                    <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                        <Prop Key="DataField" Value="UsrPKTaskStatus" />
+                        <Prop Key="Width" Value="70" />
+                    </PXGridColumn>
+                </AddItem>
+                <PXGridColumn DataField="Status" OriginalIndex="6" />
+                <AddItem>
+                    <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                        <Prop Key="DataField" Value="UsrStatutoryDueDate" />
+                        <Prop Key="Width" Value="90" />
+                    </PXGridColumn>
+                </AddItem>
+                <PXGridColumn DataField="ApproverID" OriginalIndex="10" />
+                <AddItem>
+                    <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                        <Prop Key="DataField" Value="UsrPreparer" />
+                        <Prop Key="Width" Value="140" />
+                    </PXGridColumn>
+                </AddItem>
+            </Children>
+        </PXGridLevel>
+        <PXTabItem Text="Summary" ParentId="phG_tab_Items#0" TypeFullName="PX.Web.UI.PXTabItem">
+            <Children Key="Template">
+                <AddItem>
+                    <PXSelector TypeFullName="PX.Web.UI.PXSelector">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXSelector4" />
+                        <Prop Key="DataField" Value="UsrPGDepartment" />
+                    </PXSelector>
+                </AddItem>
+                <AddItem>
+                    <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXDropDown2" />
+                        <Prop Key="DataField" Value="Usr401kStatus" />
+                    </PXDropDown>
+                </AddItem>
+                <PXSelector DataField="OwnerID" OriginalIndex="6" />
+            </Children>
+        </PXTabItem>
+        <PXGridLevel DataMember="EmployeeContract" ParentId="phG_tab_Items#11_sp1_gridEmployeeContract_Levels#0" TypeFullName="PX.Web.UI.PXGridLevel">
+            <Children Key="Columns">
+                <AddItem>
+                    <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                        <Prop Key="DataField" Value="Usr401kRole" />
+                        <Prop Key="Width" Value="70" />
+                    </PXGridColumn>
+                </AddItem>
+                <AddItem>
+                    <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                        <Prop Key="DataField" Value="UsrTaxRole" />
+                        <Prop Key="Width" Value="70" />
+                    </PXGridColumn>
+                </AddItem>
+            </Children>
+        </PXGridLevel>
+        <PXFormView ID="form" ParentId="phF_form" TypeFullName="PX.Web.UI.PXFormView">
+            <Children Key="Template">
+                <AddItem>
+                    <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXDropDown5" />
+                        <Prop Key="DataField" Value="UsrPKPriority" />
+                    </PXDropDown>
+                </AddItem>
+                <PXCheckBox DataField="Hold" OriginalIndex="9" />
+            </Children>
+        </PXFormView>
+    </Page>
+    <Page path="~/pages/pm/pm302000.aspx" ControlId="70" pageSource="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">
+        <PXTabItem Text="Summary" ParentId="phG_tab_Items#0" TypeFullName="PX.Web.UI.PXTabItem">
+            <Children Key="Template">
+                <AddItem>
+                    <PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXDateTimeEdit2" />
+                        <Prop Key="DataField" Value="UsrStatutoryDueDate" />
+                    </PXDateTimeEdit>
+                </AddItem>
+                <PXDropDown DataField="CompletedPctMethod" OriginalIndex="6" />
+                <AddItem>
+                    <PXSegmentMask TypeFullName="PX.Web.UI.PXSegmentMask">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXSegmentMask1" />
+                        <Prop Key="DataField" Value="UsrPreparer" />
+                    </PXSegmentMask>
+                </AddItem>
+                <PXLayoutRule OriginalIndex="9" />
+                <AddItem>
+                    <PXCheckBox TypeFullName="PX.Web.UI.PXCheckBox">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXCheckBox3" />
+                        <Prop Key="DataField" Value="UsrPKIsDocumentGathering" />
+                    </PXCheckBox>
+                </AddItem>
+                <AddItem>
+                    <PXCheckBox TypeFullName="PX.Web.UI.PXCheckBox">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXCheckBox4" />
+                        <Prop Key="DataField" Value="UsrPKIsSampleTesting" />
+                    </PXCheckBox>
+                </AddItem>
+                <PXLayoutRule OriginalIndex="54" />
+            </Children>
+        </PXTabItem>
+        <PXTab ID="tab" ParentId="phG_tab" TypeFullName="PX.Web.UI.PXTab">
+            <Children Key="Items">
+                <AddItem>
+                    <PXTabItem TypeFullName="PX.Web.UI.PXTabItem">
+                        <Prop Key="Text" Value="Document Gathering" />
+                        <Children Key="Template">
+                            <AddItem>
+                                <PXLayoutRule TypeFullName="PX.Web.UI.PXLayoutRule">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXLayoutRule17" />
+                                    <Prop Key="StartGroup" Value="True" />
+                                </PXLayoutRule>
+                            </AddItem>
+                            <AddItem>
+                                <PXCheckBox TypeFullName="PX.Web.UI.PXCheckBox">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXCheckBox19" />
+                                    <Prop Key="DataField" Value="UsrPK401kDocSPD" />
+                                </PXCheckBox>
+                            </AddItem>
+                            <AddItem>
+                                <PXCheckBox TypeFullName="PX.Web.UI.PXCheckBox">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXCheckBox8" />
+                                    <Prop Key="DataField" Value="UsrPK401kDocAA" />
+                                </PXCheckBox>
+                            </AddItem>
+                            <AddItem>
+                                <PXCheckBox TypeFullName="PX.Web.UI.PXCheckBox">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXCheckBox22" />
+                                    <Prop Key="DataField" Value="UsrPK401kDocBPD" />
+                                </PXCheckBox>
+                            </AddItem>
+                            <AddItem>
+                                <PXCheckBox TypeFullName="PX.Web.UI.PXCheckBox">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXCheckBox25" />
+                                    <Prop Key="DataField" Value="UsrPK401kDocIRSOpinion" />
+                                </PXCheckBox>
+                            </AddItem>
+                            <AddItem>
+                                <PXLayoutRule TypeFullName="PX.Web.UI.PXLayoutRule">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXLayoutRule39" />
+                                    <Prop Key="StartColumn" Value="True" />
+                                </PXLayoutRule>
+                            </AddItem>
+                            <AddItem>
+                                <PXLayoutRule TypeFullName="PX.Web.UI.PXLayoutRule">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXLayoutRule40" />
+                                    <Prop Key="StartGroup" Value="True" />
+                                </PXLayoutRule>
+                            </AddItem>
+                            <AddItem>
+                                <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXTextEdit20" />
+                                    <Prop Key="DataField" Value="UsrPK401kDocSPDNotes" />
+                                </PXTextEdit>
+                            </AddItem>
+                            <AddItem>
+                                <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXTextEdit9" />
+                                    <Prop Key="DataField" Value="UsrPK401kDocAANotes" />
+                                </PXTextEdit>
+                            </AddItem>
+                            <AddItem>
+                                <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXTextEdit23" />
+                                    <Prop Key="DataField" Value="UsrPK401kDocBPDNotes" />
+                                </PXTextEdit>
+                            </AddItem>
+                            <AddItem>
+                                <PXTextEdit TypeFullName="PX.Web.UI.PXTextEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXTextEdit26" />
+                                    <Prop Key="DataField" Value="UsrPK401kDocIRSOpinionNotes" />
+                                </PXTextEdit>
+                            </AddItem>
+                        </Children>
+                        <Prop Key="VisibleExp" Value="DataControls[&quot;CstPXCheckBox3&quot;].Value == true" />
+                    </PXTabItem>
+                </AddItem>
+                <AddItem>
+                    <PXTabItem TypeFullName="PX.Web.UI.PXTabItem">
+                        <Prop Key="Text" Value="Sample Testing" />
+                        <Children Key="Template">
+                            <AddItem>
+                                <PXLayoutRule TypeFullName="PX.Web.UI.PXLayoutRule">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXLayoutRule27" />
+                                    <Prop Key="StartColumn" Value="True" />
+                                </PXLayoutRule>
+                            </AddItem>
+                            <AddItem>
+                                <PXLayoutRule TypeFullName="PX.Web.UI.PXLayoutRule">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXLayoutRule36" />
+                                    <Prop Key="StartGroup" Value="True" />
+                                </PXLayoutRule>
+                            </AddItem>
+                            <AddItem>
+                                <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDropDown65" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleTCO01" />
+                                </PXDropDown>
+                            </AddItem>
+                            <AddItem>
+                                <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDropDown66" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleTCO02" />
+                                </PXDropDown>
+                            </AddItem>
+                            <AddItem>
+                                <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDropDown67" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleTCO03" />
+                                </PXDropDown>
+                            </AddItem>
+                            <AddItem>
+                                <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDropDown64" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleTBP01" />
+                                </PXDropDown>
+                            </AddItem>
+                            <AddItem>
+                                <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDropDown68" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleTLO01" />
+                                </PXDropDown>
+                            </AddItem>
+                            <AddItem>
+                                <PXLayoutRule TypeFullName="PX.Web.UI.PXLayoutRule">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXLayoutRule37" />
+                                    <Prop Key="StartColumn" Value="True" />
+                                </PXLayoutRule>
+                            </AddItem>
+                            <AddItem>
+                                <PXLayoutRule TypeFullName="PX.Web.UI.PXLayoutRule">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXLayoutRule38" />
+                                    <Prop Key="StartGroup" Value="True" />
+                                </PXLayoutRule>
+                            </AddItem>
+                            <AddItem>
+                                <PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDateTimeEdit59" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleCO01Date" />
+                                </PXDateTimeEdit>
+                            </AddItem>
+                            <AddItem>
+                                <PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDateTimeEdit60" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleCO02Date" />
+                                </PXDateTimeEdit>
+                            </AddItem>
+                            <AddItem>
+                                <PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDateTimeEdit61" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleCO03Date" />
+                                </PXDateTimeEdit>
+                            </AddItem>
+                            <AddItem>
+                                <PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDateTimeEdit58" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleBP01Date" />
+                                </PXDateTimeEdit>
+                            </AddItem>
+                            <AddItem>
+                                <PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+                                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                                    <Prop Key="ID" Value="CstPXDateTimeEdit62" />
+                                    <Prop Key="DataField" Value="UsrPK401kSampleLO01Date" />
+                                </PXDateTimeEdit>
+                            </AddItem>
+                        </Children>
+                        <Prop Key="VisibleExp" Value="DataControls[&quot;CstPXCheckBox4&quot;].Value == true" />
+                    </PXTabItem>
+                </AddItem>
+            </Children>
+        </PXTab>
+        <PXFormView ID="form" ParentId="phF_form" TypeFullName="PX.Web.UI.PXFormView">
+            <Children Key="Template">
+                <AddItem>
+                    <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXDropDown69" />
+                        <Prop Key="DataField" Value="UsrPKTaskStatus" />
+                    </PXDropDown>
+                </AddItem>
+                <AddItem>
+                    <PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+                        <Prop Key="Virtual:ApplyStylesheetSkin" />
+                        <Prop Key="ID" Value="CstPXDropDown70" />
+                        <Prop Key="DataField" Value="PMProject__UsrPKPriority" />
+                    </PXDropDown>
+                </AddItem>
+                <PXCheckBox DataField="IsDefault" OriginalIndex="8" Remove="True" />
+            </Children>
+        </PXFormView>
+    </Page>
+    <Automation screen="PM301000">
+        <Conditions screen="PM301000">
+            <AutomationScreenCondition ConditionID="ca025998-c703-4d95-bfa0-8178ef436500" ScreenID="PM301000" ConditionName="PK - Is401k" Order="1" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
+                <FilterRow LineNbr="1" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPGDepartment" Condition="1" Operator="0" Value2="" Value="401K" IsActive="True" IsFromScheme="True" />
+            </AutomationScreenCondition>
+            <AutomationScreenCondition ConditionID="4132a987-16fc-40f6-b6fb-57f2effc3d81" ScreenID="PM301000" ConditionName="PK - IsNOT401k" Order="2" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
+                <FilterRow LineNbr="1" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPGDepartment" Condition="2" Operator="0" Value2="" Value="401K" IsActive="True" IsFromScheme="True" />
+            </AutomationScreenCondition>
+            <AutomationScreenCondition ConditionID="2b4e18f7-4289-49f5-8302-e2c08b912145" ScreenID="PM301000" ConditionName="PK - IsNOTTax" Order="3" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
+                <FilterRow LineNbr="2" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPGDepartment" Condition="2" Operator="0" Value2="" Value="TAX" IsActive="True" IsFromScheme="True" />
+            </AutomationScreenCondition>
+            <AutomationScreenCondition ConditionID="bc48b672-64d7-498b-afbb-ad8d14d57778" ScreenID="PM301000" ConditionName="PK - IsTax" Order="4" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
+                <FilterRow LineNbr="2" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPGDepartment" Condition="1" Operator="0" Value2="" Value="TAX" IsActive="True" IsFromScheme="True" />
+            </AutomationScreenCondition>
+        </Conditions>
+        <Fields ScreenID="PM301000">
+            <Field IsActive="True" DisplayName="401k Status" FieldName="Usr401kStatus" DisableCondition="4132a987-16fc-40f6-b6fb-57f2effc3d81" HideCondition="4132a987-16fc-40f6-b6fb-57f2effc3d81" ObjectName="PX.Objects.PM.PMProject" />
+            <Field IsActive="True" DisplayName="401k Role" FieldName="Usr401kRole" DisableCondition="4132a987-16fc-40f6-b6fb-57f2effc3d81" HideCondition="4132a987-16fc-40f6-b6fb-57f2effc3d81" ObjectName="PX.Objects.EP.EPEmployeeContract" />
+            <Field IsActive="True" DisplayName="Tax Role" FieldName="UsrTaxRole" DisableCondition="2b4e18f7-4289-49f5-8302-e2c08b912145" HideCondition="2b4e18f7-4289-49f5-8302-e2c08b912145" ObjectName="PX.Objects.EP.EPEmployeeContract" />
+        </Fields>
+    </Automation>
+    <Automation screen="PM302000">
+        <Conditions screen="PM302000">
+            <AutomationScreenCondition ConditionID="b4639a5e-6563-4604-bccf-69ed3da7476f" ScreenID="PM302000" ConditionName="PK-401kDocGathering" Order="1" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
+                <FilterRow LineNbr="1" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPKIsDocumentGathering" Condition="1" Operator="0" Value2="False" Value="True" IsActive="True" IsFromScheme="True" />
+            </AutomationScreenCondition>
+            <AutomationScreenCondition ConditionID="475f3012-9bae-4d3b-a75d-1edc1d4544d9" ScreenID="PM302000" ConditionName="PK-401kSampleTesting" Order="2" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
+                <FilterRow LineNbr="1" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPKIsSampleTesting" Condition="1" Operator="0" Value2="False" Value="True" IsActive="True" IsFromScheme="True" />
+            </AutomationScreenCondition>
+        </Conditions>
+    </Automation>
+    <Graph ClassName="PMTaskExtensions" Source="#CDATA" IsNew="True" FileType="NewFile">
+        <CDATA name="Source"><![CDATA[using PX.Data.BQL;
+using PX.Data.EP;
+using PX.Data.ReferentialIntegrity.Attributes;
+using PX.Data;
+using PX.Objects.AR;
+using PX.Objects.CM;
+using PX.Objects.CN.ProjectAccounting.Descriptor;
+using PX.Objects.CN.ProjectAccounting.PM.Descriptor;
+using PX.Objects.CR;
+using PX.Objects.CS;
+using PX.Objects.EP;
+using PX.Objects.GL;
+using PX.Objects.IN;
+using PX.Objects.PM;
+using PX.Objects.TX;
+using PX.Objects;
+using PX.TM;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System;
+
+namespace PX.Objects.PM
+{
+  public class PMTaskExt : PXCacheExtension<PX.Objects.PM.PMTask>
+  {
+    #region UsrPreparer
+    [PXDBInt]
+    [PXEPEmployeeSelector]
+    [PXUIField(DisplayName = "Preparer", Visibility = PXUIVisibility.SelectorVisible)]
+    public virtual int? UsrPreparer { get; set; }
+    public abstract class usrPreparer : PX.Data.BQL.BqlInt.Field<usrPreparer> { }
+    #endregion
+
+    #region UsrPKTaskStatus
+    [PXDBInt]
+    [PXIntList(new int[] {01, 02, 03, 04}, new string[] {"Not Started", "In Process", "Waiting on Information", "Ready for Review"})]
+    [PXUIField(DisplayName="Task Status")]
+    public virtual int? UsrPKTaskStatus { get; set; }
+    public abstract class usrPKTaskStatus : PX.Data.BQL.BqlInt.Field<usrPKTaskStatus> { }
+    #endregion
+
+    #region UsrStatutoryDueDate
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Statutory Due Date")]
+    public virtual DateTime? UsrStatutoryDueDate { get; set; }
+    public abstract class usrStatutoryDueDate : PX.Data.BQL.BqlDateTime.Field<usrStatutoryDueDate> { }
+    #endregion
+
+    #region UsrPKIsDocumentGathering
+    [PXDBBool]
+    [PXUIField(DisplayName="401k Document Gathering")]
+
+    public virtual bool? UsrPKIsDocumentGathering { get; set; }
+    public abstract class usrPKIsDocumentGathering : PX.Data.BQL.BqlBool.Field<usrPKIsDocumentGathering> { }
+    #endregion
+
+    #region UsrPKIsSampleTesting
+    [PXDBBool]
+    [PXUIField(DisplayName="401k Sample Testing")]
+
+    public virtual bool? UsrPKIsSampleTesting { get; set; }
+    public abstract class usrPKIsSampleTesting : PX.Data.BQL.BqlBool.Field<usrPKIsSampleTesting> { }
+    #endregion
+
+    #region UsrPK401kDocSPD
+    [PXDBBool]
+    [PXUIField(DisplayName="SPD")]
+
+    public virtual bool? UsrPK401kDocSPD { get; set; }
+    public abstract class usrPK401kDocSPD : PX.Data.BQL.BqlBool.Field<usrPK401kDocSPD> { }
+    #endregion
+
+    #region UsrPK401kDocSPDNotes
+    [PXDBString(128)]
+    [PXUIField(DisplayName="SPD Notes")]
+
+    public virtual string UsrPK401kDocSPDNotes { get; set; }
+    public abstract class usrPK401kDocSPDNotes : PX.Data.BQL.BqlString.Field<usrPK401kDocSPDNotes> { }
+    #endregion
+
+    #region UsrPK401kDocAA
+    [PXDBBool]
+    [PXUIField(DisplayName="AA")]
+
+    public virtual bool? UsrPK401kDocAA { get; set; }
+    public abstract class usrPK401kDocAA : PX.Data.BQL.BqlBool.Field<usrPK401kDocAA> { }
+    #endregion
+
+    #region UsrPK401kDocBPD
+    [PXDBBool]
+    [PXUIField(DisplayName="BPD")]
+
+    public virtual bool? UsrPK401kDocBPD { get; set; }
+    public abstract class usrPK401kDocBPD : PX.Data.BQL.BqlBool.Field<usrPK401kDocBPD> { }
+    #endregion
+
+    #region UsrPK401kDocIRSOpinion
+    [PXDBBool]
+    [PXUIField(DisplayName="IRS Opinion Letter")]
+
+    public virtual bool? UsrPK401kDocIRSOpinion { get; set; }
+    public abstract class usrPK401kDocIRSOpinion : PX.Data.BQL.BqlBool.Field<usrPK401kDocIRSOpinion> { }
+    #endregion
+
+    #region UsrPK401kDocAANotes
+    [PXDBString(128)]
+    [PXUIField(DisplayName="AA Notes")]
+
+    public virtual string UsrPK401kDocAANotes { get; set; }
+    public abstract class usrPK401kDocAANotes : PX.Data.BQL.BqlString.Field<usrPK401kDocAANotes> { }
+    #endregion
+
+    #region UsrPK401kDocBPDNotes
+    [PXDBString(128)]
+    [PXUIField(DisplayName="BPD Notes")]
+
+    public virtual string UsrPK401kDocBPDNotes { get; set; }
+    public abstract class usrPK401kDocBPDNotes : PX.Data.BQL.BqlString.Field<usrPK401kDocBPDNotes> { }
+    #endregion
+
+    #region UsrPK401kDocIRSOpinionNotes
+    [PXDBString(128)]
+    [PXUIField(DisplayName="IRS Opinion Letter Notes")]
+
+    public virtual string UsrPK401kDocIRSOpinionNotes { get; set; }
+    public abstract class usrPK401kDocIRSOpinionNotes : PX.Data.BQL.BqlString.Field<usrPK401kDocIRSOpinionNotes> { }
+    #endregion
+
+    #region UsrPK401kSampleTCO01
+    [PXDBInt]
+    [PXIntList(new int[] {01, 02, 03, 04, 05}, new string[] {"Client Data Requested", "Client uploaded", "Prepared", "Reviewed", "Needs Correction"})]
+    [PXUIField(DisplayName="CO-01")]
+    public virtual int? UsrPK401kSampleTCO01 { get; set; }
+    public abstract class usrPK401kSampleTCO01 : PX.Data.BQL.BqlInt.Field<usrPK401kSampleTCO01> { }
+    #endregion
+
+    #region UsrPK401kSampleCO01Date
+    [PXDBDate()]
+    //[PXDefault(typeof(AccessInfo.businessDate))]
+    [PXUIField(DisplayName="Date Requested")]
+    public virtual DateTime? UsrPK401kSampleCO01Date { get; set; }
+    public abstract class usrPK401kSampleCO01Date : PX.Data.BQL.BqlDateTime.Field<usrPK401kSampleCO01Date> { }
+    #endregion
+
+    #region UsrPK401kSampleCO02Date
+    [PXDBDate()]
+    //[PXDefault(typeof(AccessInfo.businessDate))]
+    [PXUIField(DisplayName="Date Requested")]
+    public virtual DateTime? UsrPK401kSampleCO02Date { get; set; }
+    public abstract class usrPK401kSampleCO02Date : PX.Data.BQL.BqlDateTime.Field<usrPK401kSampleCO02Date> { }
+    #endregion
+
+    #region UsrPK401kSampleCO03Date
+    [PXDBDate()]
+    //[PXDefault(typeof(AccessInfo.businessDate))]
+    [PXUIField(DisplayName="Date Requested")]
+    public virtual DateTime? UsrPK401kSampleCO03Date { get; set; }
+    public abstract class usrPK401kSampleCO03Date : PX.Data.BQL.BqlDateTime.Field<usrPK401kSampleCO03Date> { }
+    #endregion
+
+    #region UsrPK401kSampleBP01Date
+    [PXDBDate()]
+    //[PXDefault(typeof(AccessInfo.businessDate))]
+    [PXUIField(DisplayName="Date Requested")]
+    public virtual DateTime? UsrPK401kSampleBP01Date { get; set; }
+    public abstract class usrPK401kSampleBP01Date : PX.Data.BQL.BqlDateTime.Field<usrPK401kSampleBP01Date> { }
+    #endregion
+
+    #region UsrPK401kSampleLO01Date
+    [PXDBDate()]
+    //[PXDefault(typeof(AccessInfo.businessDate))]
+    [PXUIField(DisplayName="Date Requested")]
+    public virtual DateTime? UsrPK401kSampleLO01Date { get; set; }
+    public abstract class usrPK401kSampleLO01Date : PX.Data.BQL.BqlDateTime.Field<usrPK401kSampleLO01Date> { }
+    #endregion
+
+    #region UsrPK401kSampleTBP01
+    [PXDBInt]
+    [PXIntList(new int[] {01, 02, 03, 04, 05}, new string[] {"Client Data Requested", "Client uploaded", "Prepared", "Reviewed", "Needs Correction"})]
+    [PXUIField(DisplayName="BP-01")]
+    public virtual int? UsrPK401kSampleTBP01 { get; set; }
+    public abstract class usrPK401kSampleTBP01 : PX.Data.BQL.BqlInt.Field<usrPK401kSampleTBP01> { }
+    #endregion
+
+    #region UsrPK401kSampleTCO02
+    [PXDBInt]
+    [PXIntList(new int[] {01, 02, 03, 04, 05}, new string[] {"Client Data Requested", "Client uploaded", "Prepared", "Reviewed", "Needs Correction"})]
+    [PXUIField(DisplayName="CO-02")]
+    public virtual int? UsrPK401kSampleTCO02 { get; set; }
+    public abstract class usrPK401kSampleTCO02 : PX.Data.BQL.BqlInt.Field<usrPK401kSampleTCO02> { }
+    #endregion
+
+    #region UsrPK401kSampleTCO03
+    [PXDBInt]
+    [PXIntList(new int[] {01, 02, 03, 04, 05}, new string[] {"Client Data Requested", "Client uploaded", "Prepared", "Reviewed", "Needs Correction"})]
+    [PXUIField(DisplayName="CO-03")]
+    public virtual int? UsrPK401kSampleTCO03 { get; set; }
+    public abstract class usrPK401kSampleTCO03 : PX.Data.BQL.BqlInt.Field<usrPK401kSampleTCO03> { }
+    #endregion
+
+    #region UsrPK401kSampleTLO01
+    [PXDBInt]
+    [PXIntList(new int[] {01, 02, 03, 04, 05}, new string[] {"Client Data Requested", "Client uploaded", "Prepared", "Reviewed", "Needs Correction"})]
+    [PXUIField(DisplayName="LO-01")]
+    public virtual int? UsrPK401kSampleTLO01 { get; set; }
+    public abstract class usrPK401kSampleTLO01 : PX.Data.BQL.BqlInt.Field<usrPK401kSampleTLO01> { }
+    #endregion
+  }
+}]]></CDATA>
+    </Graph>
+    <Table TableName="Contract">
+        <Column TableName="Contract" ColumnName="Usr401kStatus" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="Contract" ColumnName="UsrPGDepartment" ColumnType="string" AllowNull="True" MaxLength="10" DecimalPrecision="2" DecimalLength="10" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="Contract" ColumnName="UsrPKPriority" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+    </Table>
+    <Table TableName="EPEmployeeContract">
+        <Column TableName="EPEmployeeContract" ColumnName="UsrRole" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="EPEmployeeContract" ColumnName="UsrTaxRole" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="EPEmployeeContract" ColumnName="Usr401kRole" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+    </Table>
+    <Table TableName="PMTask">
+        <Column TableName="PMTask" ColumnName="UsrPreparer" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrStatutoryDueDate" ColumnType="date" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPKIsDocumentGathering" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPKIsSampleTesting" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kDocSPD" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kDocSPDNotes" ColumnType="string" AllowNull="True" MaxLength="128" DecimalPrecision="2" DecimalLength="128" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kDocAA" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kDocBPD" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kDocIRSOpinion" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kDocAANotes" ColumnType="string" AllowNull="True" MaxLength="128" DecimalPrecision="2" DecimalLength="128" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kDocBPDNotes" ColumnType="string" AllowNull="True" MaxLength="128" DecimalPrecision="2" DecimalLength="128" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kDocIRSOpinionNotes" ColumnType="string" AllowNull="True" MaxLength="128" DecimalPrecision="2" DecimalLength="128" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleCO01Date" ColumnType="date" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleCO02Date" ColumnType="date" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleCO03Date" ColumnType="date" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleBP01Date" ColumnType="date" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleLO01Date" ColumnType="date" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleTCO01" ColumnType="int" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleTBP01" ColumnType="int" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleTCO02" ColumnType="int" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleTCO03" ColumnType="int" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPK401kSampleTLO01" ColumnType="int" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+        <Column TableName="PMTask" ColumnName="UsrPKTaskStatus" ColumnType="int" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+    </Table>
+    <DAC type="PX.Objects.CT.Contract">
+        <Field FieldName="Usr401kStatus" TypeName="int" MapDbTable="Contract" TextAttributes="#CDATA" StorageName="AddColumn">
+            <CDATA name="TextAttributes"><![CDATA[[PXDBInt]
+[PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17}, new string[] {"Setup/Engagement Letter/Invoice", "Plan Doc Gather and Plan Design", "Payroll Doc Gather", "Data Preprocessing and Validation", "Initial RECs and DIs", "EIC Inquiries", "Fraud Inquiries", "Risk Assessment and Sample Selection", "Sample Testing", "Remaining Audit Steps", "Deficiency Resolution", "Initial Review", "Preparation of Final Deliverables", "Technical Review", "Waiting on Management Rep Letter", "Final Bill", "Completed"})]
+[PXUIField(DisplayName="401k Status")]]]></CDATA>
+        </Field>
+        <Field FieldName="UsrPGDepartment" TypeName="string" MapDbTable="Contract" TextAttributes="#CDATA" StorageName="AddColumn">
+            <CDATA name="TextAttributes"><![CDATA[[PXDBString(10)]
+[PXSelector(typeof(PX.Objects.EP.EPDepartment.departmentID))]
+[PXUIField(DisplayName="Department")]]]></CDATA>
+        </Field>
+        <Field FieldName="UsrPKPriority" TypeName="int" MapDbTable="Contract" TextAttributes="#CDATA" StorageName="AddColumn">
+            <CDATA name="TextAttributes"><![CDATA[[PXDBInt]
+[PXIntList(new int[] {01, 02, 03}, new string[] {"Low", "Medium", "High"})]
+[PXUIField(DisplayName="Priority")]]]></CDATA>
+        </Field>
+    </DAC>
+    <DAC type="PX.Objects.EP.EPEmployeeContract">
+        <Field FieldName="UsrTaxRole" TypeName="int" MapDbTable="EPEmployeeContract" TextAttributes="#CDATA" StorageName="AddColumn">
+            <CDATA name="TextAttributes"><![CDATA[[PXDBInt]
+[PXIntList(new int[] {01, 02, 03}, new string[] {"Example 1", "Example 2", "Example 3"})]
+[PXUIField(DisplayName="Tax Role")]]]></CDATA>
+        </Field>
+        <Field FieldName="Usr401kRole" TypeName="int" MapDbTable="EPEmployeeContract" TextAttributes="#CDATA" StorageName="AddColumn">
+            <CDATA name="TextAttributes"><![CDATA[[PXDBInt]
+[PXIntList(new int[] {01, 02, 03, 04, 05, 06}, new string[] {"Lead Auditor", "Data Intelligence Auditor", "Sample Auditor", "Supervisor", "Manager", "Partner"})]
+[PXUIField(DisplayName="401k Role")]]]></CDATA>
+        </Field>
+    </DAC>
+</Customization>
