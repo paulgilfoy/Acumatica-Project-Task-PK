@@ -28,3 +28,15 @@ ContractExt.usrPGAcctStatus
 [PXDBInt]
 [PXIntList(new int[] {01, 02, 03, 04}, new string[] {"Acct Status 1", "Acct Status 2", "Acct Status 3", "Acct Status 4"})]
 [PXUIField(DisplayName="Acct Status")]
+
+
+ContractExt.usrPGAuditStatus
+[PXDBInt]
+[PXIntList(new int[] {01, 02, 03, 04}, new string[] {"Audit Status 1", "Audit Status 2", "Audit Status 3", "Audit Status 4"})]
+[PXUIField(DisplayName="Audit Status")]
+
+
+ContractExt.usrPGTechStatus
+[PXDBInt]
+[PXIntList(new int[] {01, 02, 03, 04}, new string[] {"Tech Status 1", "Tech Status 2", "Tech Status 3", "Tech Status 4"})]
+[PXUIField(DisplayName="Tech Status")]
