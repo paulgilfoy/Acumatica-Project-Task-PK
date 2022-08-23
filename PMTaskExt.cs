@@ -45,3 +45,8 @@ PMTaskExt.usrPGTechReviewer
 [PXUIField(DisplayName = "Tech Reviewer", Visibility = PXUIVisibility.SelectorVisible)]
 
 
+PMTaskExt.usrPGDepartment
+[PXDBString(10)]
+[PXDefault(typeof(Search<PX.Objects.CT.ContractExt.usrPGDepartment, Where<PX.Objects.CT.ContractExt.contractID, Equal<Current<PMTask.projectID>>>>), PersistingCheck = PXPersistingCheck.Nothing)]
+[PXUIField(DisplayName="Department")]
+
