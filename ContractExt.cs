@@ -2,7 +2,7 @@
 
 ContractExt.usr401kStatus
 [PXDBInt]
-[PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16}, new string[] {"Setup/Engagement Letter/Invoice", "Plan Doc Gather and Plan Design", "Payroll Doc Gather", "Data Preprocessing and Validation", "Initial RECs and DIs", "EIC Inquiries", "Risk Assessment and Sample Selection", "Sample Testing", "Remaining Audit Steps", "Deficiency Resolution", "Initial Review", "Preparation of Final Deliverables", "Technical Review", "Waiting on Management Rep Letter", "Final Bill", "Completed"})]
+[PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17}, new string[] {"Setup/Engagement Letter/Invoice", "Plan Doc Gather and Plan Design", "Payroll Doc Gather", "Data Preprocessing and Validation", "Initial RECs and DIs", "EIC Inquiries", "Risk Assessment and Sample Selection", "Sample Testing", "Remaining Audit Steps", "Deficiency Resolution", "In Initial Review", "Preparation of Final Deliverables", "Technical Review", "Waiting on Management Rep Letter", "Final Bill", "Complete", "Waiting on 5500"})]
 [PXUIField(DisplayName="401k Status")]
 
 
