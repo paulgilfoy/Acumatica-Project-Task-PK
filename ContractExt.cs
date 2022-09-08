@@ -46,7 +46,7 @@ ContractExt.usrPGAcctStatus
 
 ContractExt.usrPGAuditStatus
 [PXDBInt]
-[PXIntList(new int[] {01, 02, 03, 04}, new string[] {"Audit Status 1", "Audit Status 2", "Audit Status 3", "Audit Status 4"})]
+[PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11}, new string[] {"Ready to Prep", "In Preparation", "Fieldwork in Process", "In Initial Review", "Clearing Points", "In Final Review", "Financial Statements", "Technical Review", "Ready to Deliver", "Bill Client", "Complete"})]
 [PXUIField(DisplayName="Audit Status")]
 
 
