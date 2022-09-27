@@ -29,7 +29,7 @@ PMTaskExt.usrPGReviewer
 
 PMTaskExt.usrPGTaskStatus
 [PXDBInt]
-[PXIntList(new int[] {01, 02, 03, 04}, new string[] {"Not Started", "In Process", "Waiting on Information", "Ready for Review"})]
+[PXIntList(new int[] {01, 02, 03, 04, 05}, new string[] {"Not Started", "In Process", "Waiting on Information", "Ready for Review", "Bill Client"})]
 [PXUIField(DisplayName="Task Status")]
 
 
