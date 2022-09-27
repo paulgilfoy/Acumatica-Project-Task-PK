@@ -82,20 +82,15 @@ namespace PX.Objects.PM
 
     #region UsrPGTaskStatus
     [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04}, new string[] {"Not Started", "In Process", "Waiting on Information", "Ready for Review"})]
+    [PXIntList(new int[] {01, 02, 03, 04, 05}, new string[] {"Not Started", "In Process", "Waiting on Information", "Ready for Review", "Bill Client"})]
     [PXUIField(DisplayName="Task Status")]
     public virtual int? UsrPGTaskStatus { get; set; }
     public abstract class usrPGTaskStatus : PX.Data.BQL.BqlInt.Field<usrPGTaskStatus> { }
     #endregion
 
     #region UsrPGDepartment
-    //SOLVE THIS!!!!
-    var task = Base.Task.Current;
-    var project = null ; 
-    var contractExt = PXCache<PX.Objects.CT.ConstractExt>.GetExtension<ContractExt>(task);
-    var pmTaskExt = PXCache<PMTaskExt>.GetExtension<PMTaskExt>(task);
     [PXDBString(10)]
-    [PXDefault(typeof(Search<ContractExt.usrPGDepartment, Where<Contract.contractID, Equal<Current<PMTask.projectID>>>>), PersistingCheck = PXPersistingCheck.Nothing)]
+    [PXSelector(typeof(PX.Objects.EP.EPDepartment.departmentID))]
     [PXUIField(DisplayName="Department")]
     public virtual string UsrPGDepartment { get; set; }
     public abstract class usrPGDepartment : PX.Data.BQL.BqlString.Field<usrPGDepartment> { }
