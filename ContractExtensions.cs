@@ -23,7 +23,7 @@ namespace PX.Objects.CT
   {
     #region Usr401kStatus
     [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, new string[] {"Setup/Engagement Letter/Invoice", "Payroll Doc Gather",  "Plan Doc Gather", "Plan Designr", "Data Preprocessing and Validation", "Initial RECs and DIs", "EIC Inquiries", "Risk Assessment and Sample Selection", "Sample Testing", "Remaining Audit Steps", "Deficiency Resolution", "In Initial Review", "Preparation of Final Deliverables", "Technical Review", "Waiting on Management Rep Letter", "Final Bill", "Complete", "Waiting on 5500", "Compliance Testing"})]
+    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18}, new string[] {"Setup/Engagement Letter/Invoice", "Payroll Doc Gather",  "Plan Doc Gather", "Plan Design", "Data Preprocessing and Validation", "Initial RECs and DIs", "EIC Inquiries", "Risk Assessment and Sample Selection", "Sample Testing", "Remaining Audit Steps", "Deficiency Resolution", "In Initial Review", "Preparation of Final Deliverables", "Technical Review", "Waiting on Management Rep Letter", "Final Bill", "Complete", "Waiting on 5500"})]
     [PXUIField(DisplayName="401k Status")]
     public virtual int? Usr401kStatus { get; set; }
     public abstract class usr401kStatus : PX.Data.BQL.BqlInt.Field<usr401kStatus> { }
