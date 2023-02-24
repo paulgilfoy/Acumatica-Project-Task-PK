@@ -24,22 +24,14 @@ namespace PX.Objects.PM
 {
   public class PMTaskExt : PXCacheExtension<PX.Objects.PM.PMTask>
   {
-    #region UsrPGAccountingStatus
+    #region UsrPGTaskStatus
     [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08}, new string[] {"In Preparation", "Initial Review (Acctg)", "Clearing Points", "In Final Review", "Bill Client", "Invoice", "Complete", "Meet with Client"})]
-    [PXUIField(DisplayName="Accounting Status")]
-    public virtual int? UsrPGAccountingStatus { get; set; }
-    public abstract class usrPGAccountingStatus: PX.Data.BQL.BqlInt.Field<usrPGAccountingStatus> { }
+    [PXIntList(new int[] {01, 02, 03, 04, 05, 06}, new string[] {"In Preparation", "Initial Review", "Clearing Points", "In Final Review", "Bill Client", "Complete"})]
+    [PXUIField(DisplayName="Task Status")]
+    public virtual int? UsrPGTaskStatus { get; set; }
+    public abstract class usrPGTaskStatus : PX.Data.BQL.BqlInt.Field<usrPGTaskStatus> { }
     #endregion
-
-    #region UsrPGTaxStatus
-    [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14}, new string[] {"Ready to Assign", "Information Requested (from Client)", "Information Requested (In-House)", "Ready to Prep", "In Preparation", "In Initial Review", "Clearing Points", "In Final Review", "Technical Review", "Ready to Deliver", "Bill Client", "Invoice", "Complete", "Waiting on 8879 Form"})]
-    [PXUIField(DisplayName="Tax Status")]
-    public virtual int? UsrPGTaxStatus { get; set; }
-    public abstract class usrPGTaxStatus : PX.Data.BQL.BqlInt.Field<usrPGTaxStatus> { }
-    #endregion
-
+    
     #region UsrPGDueDate
     [PXDBDate]
     [PXUIField(DisplayName="Due Date")]
@@ -86,22 +78,6 @@ namespace PX.Objects.PM
     [PXUIField(DisplayName = "Tech Reviewer", Visibility = PXUIVisibility.SelectorVisible)]
     public virtual int? UsrPGTechReviewer { get; set; }
     public abstract class usrPGTechReviewer : PX.Data.BQL.BqlInt.Field<usrPGTechReviewer> { }
-    #endregion
-
-    #region UsrPGTaskStatus
-    [PXDBInt]
-    [PXIntList(new int[] {00, 01, 02, 03, 04, 05}, new string[] {"Not Started", "In Process", "Waiting on Information", "Ready for Review", "Bill Client", "Complete"})]
-    [PXUIField(DisplayName="Task Status")]
-    public virtual int? UsrPGTaskStatus { get; set; }
-    public abstract class usrPGTaskStatus : PX.Data.BQL.BqlInt.Field<usrPGTaskStatus> { }
-    #endregion
-
-    #region PGAcctTaskStatus
-    [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08}, new string[] {"In Preparation", "Initial Review (Acctg)", "Clearing Points", "In Final Review", "Bill Client", "Invoice", "Complete", "Meet with Client"})]
-    [PXUIField(DisplayName="Acct Status")]
-    public virtual int? PGAcctTaskStatus { get; set; }
-    public abstract class pgAcctTaskStatus : PX.Data.BQL.BqlInt.Field<pgAcctTaskStatus> { }
     #endregion
 
     #region UsrPGDepartment

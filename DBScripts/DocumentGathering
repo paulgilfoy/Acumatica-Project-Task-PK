@@ -1,0 +1,112 @@
+USE [Acumatica22202]
+GO
+
+DROP TABLE IF EXISTS [dbo].[PMDocumentGathering]
+GO
+
+/****** Object:  Table [dbo].[PMDocumentGathering]    Script Date: 02/23/2023 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[PMDocumentGathering](
+	[ProjectID] [int] NOT NULL,
+	[ProjectCD]	[nvarchar](30) NOT NULL,
+	[Description] [nvarchar](50),
+	[Active] [bit] NOT NULL,
+	[FirstContactDate_Payroll] [datetime],
+	[MPR] [int],
+	[MPR_LastModifiedDateTime] [datetime],
+	[PayrollVerification] [int],
+	[PayrollVerification_LastModifiedDateTime] [datetime],
+	[FirstContactDate_PlanDocuments] [datetime],
+	[SPD] [int],
+	[SPD_LastModifiedDateTime] [datetime],
+	[AA] [int],
+	[AA_LastModifiedDateTime] [datetime],
+	[BPD] [int],
+	[BPD_LastModifiedDateTime] [datetime],
+	[IRS] [int],
+	[IRS_LastModifiedDateTime] [datetime],
+	[SATrustree] [int],
+	[SATrustree_LastModifiedDateTime] [datetime],
+	[SATPA] [int],
+	[SATPA_LastModifiedDateTime] [datetime],
+	[SAInvestment] [int],
+	[SAInvestment_LastModifiedDateTime] [datetime],
+	[LoanPolicy] [int],
+	[LoanPolicy_LastModifiedDateTime] [datetime],
+	[QDIA] [int],
+	[QDIA_LastModifiedDateTime] [datetime],
+	[FirstContactDate_PlanDocPreproc] [datetime],
+	[EC] [int],
+	[EC_LastModifiedDateTime] [datetime],
+	[PAS] [int],
+	[PAS_LastModifiedDateTime] [datetime],
+	[Cont] [int],
+	[Cont_LastModifiedDateTime] [datetime],
+	[Dist] [int],
+	[Dist_LastModifiedDateTime] [datetime],
+	[Loans] [int],
+	[Loans_LastModifiedDateTime] [datetime],
+	[DefElection] [int],
+	[DefElection_LastModifiedDateTime] [datetime],
+	[FirstContactDate_AnnualDocuments] [datetime],
+	[FiftyFive_5500] [int],
+	[FiftyFive_5500_LastModifiedDateTime] [datetime],
+	[TrustState] [int],
+	[TrustState_LastModifiedDateTime] [datetime],
+	[TrustCert] [int],
+	[TrustCert_LastModifiedDateTime] [datetime],
+	[FidelityBond] [int],
+	[FidelityBond_LastModifiedDateTime] [datetime],
+	[ComplianceTest] [int],
+	[ComplianceTest_LastModifiedDateTime] [datetime],
+	[RKFeeDisc] [int],
+	[RKFeeDisc_LastModifiedDateTime] [datetime],
+	[InvestAllocation] [int],
+	[InvestAllocation_LastModifiedDateTime] [datetime],
+	[FirstContactDate_FirstYearPK] [datetime],
+	[CLientAuth] [int],
+	[CLientAuth_LastModifiedDateTime] [datetime],
+	[Communication] [int],
+	[Communication_LastModifiedDateTime] [datetime],
+	[PY5500] [int],
+	[PY5500_LastModifiedDateTime] [datetime],
+	[PYTrustState] [int],
+	[PYTrustState_LastModifiedDateTime] [datetime],
+	[PYTrustCert] [int],
+	[PYTrustCert_LastModifiedDateTime] [datetime],
+	[PYCompliance] [int],
+	[PYCompliance_LastModifiedDateTime] [datetime],
+	[FirstContactDate_PlanDesign] [datetime],
+	[PlanProvisions] [int],
+	[PlanProvisions_LastModifiedDateTime] [datetime],
+	[PreProcessDate] [int],
+	[PreProcessDate_LastModifiedDateTime] [datetime],
+	[CreatedDateTime] [datetime] NOT NULL,
+	[CreatedByID] [uniqueidentifier] NOT NULL,
+	[CreatedByScreenID] [char](8) NOT NULL,
+	[LastModifiedDateTime] [datetime] NOT NULL,
+	[LastModifiedByID] [uniqueidentifier] NOT NULL,
+	[LastModifiedByScreenID] [char](8) NOT NULL,
+	[tstamp] [timestamp] NOT NULL,
+	[NoteID] [uniqueidentifier] NOT NULL,
+ CONSTRAINT [PK_PMDocumentGathering] PRIMARY KEY CLUSTERED 
+(
+	[ProjectID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[PMDocumentGathering] ADD  CONSTRAINT [DF_PMDocumentGathering_ProjectID]  DEFAULT ((0)) FOR [ProjectID]
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX [PMDocumentGathering_ProjectCD_Uindex] ON [dbo].[PMDocumentGathering]
+(
+	[ProjectID] ASC,
+	[ProjectCD] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
