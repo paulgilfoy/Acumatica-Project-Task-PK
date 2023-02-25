@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
 using PX.Data;
+using PX.Objects.PM;
+using PX.Data.BQL.Fluent;
 
 namespace ProjectTask
 {
@@ -8,18 +11,25 @@ namespace ProjectTask
   public class PMDocumentGathering : IBqlTable
   {
     #region ProjectID
-    [PXDBIdentity]
-    public virtual int? ProjectID { get; set; }
     public abstract class projectID : PX.Data.BQL.BqlInt.Field<projectID> { }
-    #endregion
 
-    #region ProjectCD
-    [PXDBString(30, IsKey = true, IsUnicode = true, InputMask = "")]
-    [PXSelector(typeof(PX.Objects.PM.PMProject.contractCD))]
-    [PXUIField(DisplayName = "Project ID")]
-    public virtual string ProjectCD { get; set; }
-    public abstract class projectCD : PX.Data.BQL.BqlString.Field<projectCD> { }
-    #endregion
+		/// copy from PX.Objects.PM.PMTask
+		protected Int32? _ProjectID;
+		[Project(DisplayName = "Project ID", IsKey = true)]
+		[PXParent(typeof(Select<PMProject, Where<PMProject.contractID, Equal<Current<PMDocumentGathering.projectID>>>>))]
+		[PXDBDefault(typeof(PMProject.contractID))]
+		public virtual Int32? ProjectID
+		{
+			get
+			{
+				return this._ProjectID;
+			}
+			set
+			{
+				this._ProjectID = value;
+			}
+		}
+		#endregion
 
     #region Description
     [PXDBString(50, IsUnicode = true, InputMask = "")]

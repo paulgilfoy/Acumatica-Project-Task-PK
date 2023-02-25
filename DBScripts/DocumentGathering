@@ -13,7 +13,6 @@ GO
 
 CREATE TABLE [dbo].[PMDocumentGathering](
 	[ProjectID] [int] NOT NULL,
-	[ProjectCD]	[nvarchar](30) NOT NULL,
 	[Description] [nvarchar](50),
 	[Active] [bit] NOT NULL,
 	[FirstContactDate_Payroll] [datetime],
@@ -104,9 +103,8 @@ GO
 ALTER TABLE [dbo].[PMDocumentGathering] ADD  CONSTRAINT [DF_PMDocumentGathering_ProjectID]  DEFAULT ((0)) FOR [ProjectID]
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX [PMDocumentGathering_ProjectCD_Uindex] ON [dbo].[PMDocumentGathering]
+CREATE UNIQUE NONCLUSTERED INDEX [PMDocumentGathering_ProjectID_Uindex] ON [dbo].[PMDocumentGathering]
 (
-	[ProjectID] ASC,
-	[ProjectCD] ASC
+	[ProjectID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
