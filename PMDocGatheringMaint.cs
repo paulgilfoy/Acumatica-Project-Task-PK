@@ -14,7 +14,7 @@ namespace ProjectTask
     
     public PXSelectJoin<PMDocumentGathering,
       LeftJoin<PMProject, On<PMDocumentGathering.projectID, Equal<PMProject.contractID>>>,
-      Where<PMProject.nonProject, Equal<False>, And<PMProject.baseType, Equal<CT.CTPRType.project>>>> DocGathering;
+      Where<PMProject.nonProject, Equal<False>, And<PMProject.baseType, Equal<PX.Objects.CT.CTPRType.project>>>> DocGathering;
     
 		public PXSelect<PMDocumentGathering, Where<PMDocumentGathering.projectID, Equal<Current<PMDocumentGathering.projectID>>>> DocGatheringProperties;
     
@@ -256,11 +256,11 @@ namespace ProjectTask
 
     //Annual Documents
 
-    protected void PMDocumentGathering_FiftyFive_5500_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_Form_5500_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
-      row.FiftyFive_5500_LastModifiedDateTime = PX.Common.PXTimeZoneInfo.Now.Date;
+      row.Form_5500_LastModifiedDateTime = PX.Common.PXTimeZoneInfo.Now.Date;
       if (row.FirstContactDate_AnnualDocuments == null)
       {
         row.FirstContactDate_AnnualDocuments = PX.Common.PXTimeZoneInfo.Now.Date;
@@ -343,11 +343,11 @@ namespace ProjectTask
 
     //First Year PK Client
 
-    protected void PMDocumentGathering_CLientAuth_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_ClientAuth_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
-      row.CLientAuth_LastModifiedDateTime = PX.Common.PXTimeZoneInfo.Now.Date;
+      row.ClientAuth_LastModifiedDateTime = PX.Common.PXTimeZoneInfo.Now.Date;
       if (row.FirstContactDate_FirstYearPK == null)
       {
         row.FirstContactDate_FirstYearPK = PX.Common.PXTimeZoneInfo.Now.Date;

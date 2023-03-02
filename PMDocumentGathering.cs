@@ -31,11 +31,11 @@ namespace ProjectTask
 		}
 		#endregion
 
-    #region Description
+    #region Additional_Notes
     [PXDBString(50, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Additional Notes")]
-    public virtual string Description { get; set; }
-    public abstract class description : PX.Data.BQL.BqlString.Field<description> { }
+    public virtual string Additional_Notes { get; set; }
+    public abstract class additional_Notes : PX.Data.BQL.BqlString.Field<additional_Notes> { }
     #endregion
 
     #region Active
@@ -53,11 +53,11 @@ namespace ProjectTask
     public abstract class firstContactDate_Payroll : PX.Data.BQL.BqlDateTime.Field<firstContactDate_Payroll> { }
     #endregion
 
-    #region Mpr
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    #region MPR
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "MPR")]
-    public virtual int? Mpr { get; set; }
+    public virtual int? MPR { get; set; }
     public abstract class mpr : PX.Data.BQL.BqlInt.Field<mpr> { }
     #endregion
 
@@ -68,9 +68,15 @@ namespace ProjectTask
     public abstract class mPR_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<mPR_LastModifiedDateTime> { }
     #endregion
 
+    #region MPR_LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? MPR_LastModifiedByID { get; set; }
+    public abstract class mPR_LastModifiedByID : PX.Data.BQL.BqlGuid.Field<mPR_LastModifiedByID> { }
+    #endregion
+
     #region PayrollVerification
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Payroll Verification")]
     public virtual int? PayrollVerification { get; set; }
     public abstract class payrollVerification : PX.Data.BQL.BqlInt.Field<payrollVerification> { }
@@ -79,9 +85,16 @@ namespace ProjectTask
     #region PayrollVerification_LastModifiedDateTime
     [PXDBDate()]
     [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PayrollVerification_LastModifiedDateTime { get; set; }
-    public abstract class payrollVerification_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<payrollVerification_LastModifiedDateTime> { }
+    public virtual DateTime? PayrollVer_LastModifiedDateTime { get; set; }
+    public abstract class payrollVer_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<payrollVer_LastModifiedDateTime> { }
     #endregion
+
+    #region PayrollVer_LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? PayrollVer_LastModifiedByID { get; set; }
+    public abstract class payrollVer_LastModifiedByID : PX.Data.BQL.BqlGuid.Field<payrollVer_LastModifiedByID> { }
+    #endregion
+
 
     #region FirstContactDate_PlanDocuments
     [PXDBDate()]
@@ -90,11 +103,11 @@ namespace ProjectTask
     public abstract class firstContactDate_PlanDocuments : PX.Data.BQL.BqlDateTime.Field<firstContactDate_PlanDocuments> { }
     #endregion
 
-    #region Spd
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    #region SPD
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "SPD")]
-    public virtual int? Spd { get; set; }
+    public virtual int? SPD { get; set; }
     public abstract class spd : PX.Data.BQL.BqlInt.Field<spd> { }
     #endregion
 
@@ -105,9 +118,16 @@ namespace ProjectTask
     public abstract class sPD_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sPD_LastModifiedDateTime> { }
     #endregion
 
-    #region Aa
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    #region SPD_LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? SPD_LastModifiedByID { get; set; }
+    public abstract class sPD_LastModifiedByID : PX.Data.BQL.BqlGuid.Field<sPD_LastModifiedByID> { }
+    #endregion
+
+
+    #region AA
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "AA + (Cycle 3 Amedment)")]
     public virtual int? Aa { get; set; }
     public abstract class aa : PX.Data.BQL.BqlInt.Field<aa> { }
@@ -120,11 +140,18 @@ namespace ProjectTask
     public abstract class aA_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<aA_LastModifiedDateTime> { }
     #endregion
 
-    #region Bpd
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    #region AA_LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? AA_LastModifiedByID { get; set; }
+    public abstract class aA_LastModifiedByID : PX.Data.BQL.BqlGuid.Field<aA_LastModifiedByID> { }
+    #endregion
+
+
+    #region BPD
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "BPD")]
-    public virtual int? Bpd { get; set; }
+    public virtual int? BPD { get; set; }
     public abstract class bpd : PX.Data.BQL.BqlInt.Field<bpd> { }
     #endregion
 
@@ -135,11 +162,18 @@ namespace ProjectTask
     public abstract class bPD_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<bPD_LastModifiedDateTime> { }
     #endregion
 
-    #region Irs
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    #region BPD_LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? BPD_LastModifiedByID { get; set; }
+    public abstract class bPD_LastModifiedByID : PX.Data.BQL.BqlGuid.Field<bPD_LastModifiedByID> { }
+    #endregion
+
+
+    #region IRS
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "IRS Opinion Letter")]
-    public virtual int? Irs { get; set; }
+    public virtual int? IRS { get; set; }
     public abstract class irs : PX.Data.BQL.BqlInt.Field<irs> { }
     #endregion
 
@@ -150,9 +184,16 @@ namespace ProjectTask
     public abstract class iRS_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<iRS_LastModifiedDateTime> { }
     #endregion
 
+    #region IRS_LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? IRS_LastModifiedByID { get; set; }
+    public abstract class iRS_LastModifiedByID : PX.Data.BQL.BqlGuid.Field<iRS_LastModifiedByID> { }
+    #endregion
+
+
     #region SATrustree
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "SA - Trustree/Custodian")]
     public virtual int? SATrustree { get; set; }
     public abstract class sATrustree : PX.Data.BQL.BqlInt.Field<sATrustree> { }
@@ -165,12 +206,19 @@ namespace ProjectTask
     public abstract class sATrustree_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sATrustree_LastModifiedDateTime> { }
     #endregion
 
-    #region Satpa
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    #region SATrustree_LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? SATrustree_LastModifiedByID { get; set; }
+    public abstract class sATrustree_LastModifiedByID : PX.Data.BQL.BqlGuid.Field<sATrustree_LastModifiedByID> { }
+    #endregion
+
+
+    #region SATPA
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "SA - TPA")]
-    public virtual int? Satpa { get; set; }
-    public abstract class satpa : PX.Data.BQL.BqlInt.Field<satpa> { }
+    public virtual int? SATPA { get; set; }
+    public abstract class sATPA : PX.Data.BQL.BqlInt.Field<sATPA> { }
     #endregion
 
     #region SATPA_LastModifiedDateTime
@@ -180,9 +228,16 @@ namespace ProjectTask
     public abstract class sATPA_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sATPA_LastModifiedDateTime> { }
     #endregion
 
+    #region SATPA_LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? SATPA_LastModifiedByID { get; set; }
+    public abstract class sATPA_LastModifiedByID : PX.Data.BQL.BqlGuid.Field<sATPA_LastModifiedByID> { }
+    #endregion
+
+
     #region SAInvestment
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "SA - Investment Advisor")]
     public virtual int? SAInvestment { get; set; }
     public abstract class sAInvestment : PX.Data.BQL.BqlInt.Field<sAInvestment> { }
@@ -195,9 +250,16 @@ namespace ProjectTask
     public abstract class sAInvestment_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sAInvestment_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region LoanPolicy
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Loan Policy")]
     public virtual int? LoanPolicy { get; set; }
     public abstract class loanPolicy : PX.Data.BQL.BqlInt.Field<loanPolicy> { }
@@ -210,9 +272,16 @@ namespace ProjectTask
     public abstract class loanPolicy_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<loanPolicy_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region Qdia
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "QDIA")]
     public virtual int? Qdia { get; set; }
     public abstract class qdia : PX.Data.BQL.BqlInt.Field<qdia> { }
@@ -225,6 +294,13 @@ namespace ProjectTask
     public abstract class qDIA_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<qDIA_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region FirstContactDate_PlanDocPreproc
     [PXDBDate()]
     [PXUIField(DisplayName = "First Contact")]
@@ -233,8 +309,8 @@ namespace ProjectTask
     #endregion
 
     #region Ec
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "EC")]
     public virtual int? Ec { get; set; }
     public abstract class ec : PX.Data.BQL.BqlInt.Field<ec> { }
@@ -247,9 +323,16 @@ namespace ProjectTask
     public abstract class eC_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<eC_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region Pas
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "PAS")]
     public virtual int? Pas { get; set; }
     public abstract class pas : PX.Data.BQL.BqlInt.Field<pas> { }
@@ -262,9 +345,16 @@ namespace ProjectTask
     public abstract class pAS_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pAS_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region Cont
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Cont")]
     public virtual int? Cont { get; set; }
     public abstract class cont : PX.Data.BQL.BqlInt.Field<cont> { }
@@ -277,9 +367,16 @@ namespace ProjectTask
     public abstract class cont_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<cont_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region Dist
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Dist")]
     public virtual int? Dist { get; set; }
     public abstract class dist : PX.Data.BQL.BqlInt.Field<dist> { }
@@ -292,9 +389,16 @@ namespace ProjectTask
     public abstract class dist_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<dist_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region Loans
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Loans")]
     public virtual int? Loans { get; set; }
     public abstract class loans : PX.Data.BQL.BqlInt.Field<loans> { }
@@ -307,9 +411,16 @@ namespace ProjectTask
     public abstract class loans_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<loans_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region DefElection
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Def Elections and Changes")]
     public virtual int? DefElection { get; set; }
     public abstract class defElection : PX.Data.BQL.BqlInt.Field<defElection> { }
@@ -322,6 +433,13 @@ namespace ProjectTask
     public abstract class defElection_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<defElection_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region FirstContactDate_AnnualDocuments
     [PXDBDate()]
     [PXUIField(DisplayName = "First Contact")]
@@ -329,24 +447,31 @@ namespace ProjectTask
     public abstract class firstContactDate_AnnualDocuments : PX.Data.BQL.BqlDateTime.Field<firstContactDate_AnnualDocuments> { }
     #endregion
 
-    #region 5500
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    #region Form_5500
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "5500")]
-    public virtual int? FiftyFive_5500 { get; set; }
-    public abstract class fiftyFive_5500 : PX.Data.BQL.BqlInt.Field<fiftyFive_5500> { }
+    public virtual int? Form_5500 { get; set; }
+    public abstract class form_5500 : PX.Data.BQL.BqlInt.Field<form_5500> { }
     #endregion
 
-    #region 5500_LastModifiedDateTime
+    #region Form_5500_LastModifiedDateTime
     [PXDBDate()]
     [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? FiftyFive_5500_LastModifiedDateTime { get; set; }
-    public abstract class fiftyFive_5500_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<fiftyFive_5500_LastModifiedDateTime> { }
+    public virtual DateTime? Form_5500_LastModifiedDateTime { get; set; }
+    public abstract class form_5500_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<form_5500_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region TrustState
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Trust Statement")]
     public virtual int? TrustState { get; set; }
     public abstract class trustState : PX.Data.BQL.BqlInt.Field<trustState> { }
@@ -359,9 +484,16 @@ namespace ProjectTask
     public abstract class trustState_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<trustState_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region TrustCert
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Trust Certification")]
     public virtual int? TrustCert { get; set; }
     public abstract class trustCert : PX.Data.BQL.BqlInt.Field<trustCert> { }
@@ -374,9 +506,16 @@ namespace ProjectTask
     public abstract class trustCert_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<trustCert_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region FidelityBond
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Fidelity Bond")]
     public virtual int? FidelityBond { get; set; }
     public abstract class fidelityBond : PX.Data.BQL.BqlInt.Field<fidelityBond> { }
@@ -389,9 +528,16 @@ namespace ProjectTask
     public abstract class fidelityBond_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<fidelityBond_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region ComplianceTest
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Compliance Testing")]
     public virtual int? ComplianceTest { get; set; }
     public abstract class complianceTest : PX.Data.BQL.BqlInt.Field<complianceTest> { }
@@ -404,9 +550,16 @@ namespace ProjectTask
     public abstract class complianceTest_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<complianceTest_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region RKFeeDisc
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "RK Fee Disc")]
     public virtual int? RKFeeDisc { get; set; }
     public abstract class rKFeeDisc : PX.Data.BQL.BqlInt.Field<rKFeeDisc> { }
@@ -419,9 +572,16 @@ namespace ProjectTask
     public abstract class rKFeeDisc_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<rKFeeDisc_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region InvestAllocation
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Investment Allocation Report")]
     public virtual int? InvestAllocation { get; set; }
     public abstract class investAllocation : PX.Data.BQL.BqlInt.Field<investAllocation> { }
@@ -434,6 +594,13 @@ namespace ProjectTask
     public abstract class investAllocation_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<investAllocation_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region FirstContactDate_FirstYearPK
     [PXDBDate()]
     [PXUIField(DisplayName = "First Contact")]
@@ -441,24 +608,31 @@ namespace ProjectTask
     public abstract class firstContactDate_FirstYearPK : PX.Data.BQL.BqlDateTime.Field<firstContactDate_FirstYearPK> { }
     #endregion
 
-    #region CLientAuth
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    #region ClientAuth
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Client Authorization Letter")]
-    public virtual int? CLientAuth { get; set; }
-    public abstract class cLientAuth : PX.Data.BQL.BqlInt.Field<cLientAuth> { }
+    public virtual int? ClientAuth { get; set; }
+    public abstract class clientAuth : PX.Data.BQL.BqlInt.Field<clientAuth> { }
     #endregion
 
-    #region CLientAuth_LastModifiedDateTime
+    #region ClientAuth_LastModifiedDateTime
     [PXDBDate()]
     [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? CLientAuth_LastModifiedDateTime { get; set; }
-    public abstract class cLientAuth_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<cLientAuth_LastModifiedDateTime> { }
+    public virtual DateTime? ClientAuth_LastModifiedDateTime { get; set; }
+    public abstract class clientAuth_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<clientAuth_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region Communication
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Communication with Predecessor Auditor")]
     public virtual int? Communication { get; set; }
     public abstract class communication : PX.Data.BQL.BqlInt.Field<communication> { }
@@ -471,9 +645,16 @@ namespace ProjectTask
     public abstract class communication_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<communication_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region Py5500
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "PY 5500")]
     public virtual int? Py5500 { get; set; }
     public abstract class py5500 : PX.Data.BQL.BqlInt.Field<py5500> { }
@@ -486,9 +667,16 @@ namespace ProjectTask
     public abstract class pY5500_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pY5500_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region PYTrustState
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "PY Trust Statement")]
     public virtual int? PYTrustState { get; set; }
     public abstract class pYTrustState : PX.Data.BQL.BqlInt.Field<pYTrustState> { }
@@ -501,9 +689,16 @@ namespace ProjectTask
     public abstract class pYTrustState_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYTrustState_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region PYTrustCert
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "PY Trust Certification")]
     public virtual int? PYTrustCert { get; set; }
     public abstract class pYTrustCert : PX.Data.BQL.BqlInt.Field<pYTrustCert> { }
@@ -516,9 +711,16 @@ namespace ProjectTask
     public abstract class pYTrustCert_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYTrustCert_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region PYCompliance
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "PY Compliance Testing")]
     public virtual int? PYCompliance { get; set; }
     public abstract class pYCompliance : PX.Data.BQL.BqlInt.Field<pYCompliance> { }
@@ -531,6 +733,13 @@ namespace ProjectTask
     public abstract class pYCompliance_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYCompliance_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region FirstContactDate_PlanDesign
     [PXDBDate()]
     [PXUIField(DisplayName = "First Contact")]
@@ -539,8 +748,8 @@ namespace ProjectTask
     #endregion
 
     #region PlanProvisions
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Relevant Plan Provisions")]
     public virtual int? PlanProvisions { get; set; }
     public abstract class planProvisions : PX.Data.BQL.BqlInt.Field<planProvisions> { }
@@ -553,9 +762,16 @@ namespace ProjectTask
     public abstract class planProvisions_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<planProvisions_LastModifiedDateTime> { }
     #endregion
 
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
+
     #region PreProcessDate
-    [PXDBInt()]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 10, 99}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXDBString(2)]
+    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
     [PXUIField(DisplayName = "Submitted for PreProcess Date")]
     public virtual int? PreProcessDate { get; set; }
     public abstract class preProcessDate : PX.Data.BQL.BqlInt.Field<preProcessDate> { }
@@ -567,6 +783,13 @@ namespace ProjectTask
     public virtual DateTime? PreProcessDate_LastModifiedDateTime { get; set; }
     public abstract class preProcessDate_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<preProcessDate_LastModifiedDateTime> { }
     #endregion
+
+    #region _LastModifiedByID
+    [PXDBLastModifiedByID()]
+    public virtual Guid? _LastModifiedByID { get; set; }
+    public abstract class _LastModifiedByID : PX.Data.BQL.BqlGuid.Field<_LastModifiedByID> { }
+    #endregion
+
 
     #region CreatedDateTime
     [PXDBCreatedDateTime()]
