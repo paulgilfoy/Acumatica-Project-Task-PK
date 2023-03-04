@@ -4,6 +4,7 @@ using PX.Data;
 using PX.Objects.PM;
 using PX.Objects.CT;
 using PX.Data.BQL.Fluent;
+using PX.Objects.EP;
 
 namespace ProjectTask
 {
@@ -17,6 +18,8 @@ namespace ProjectTask
       Where<PMProject.nonProject, Equal<False>, And<PMProject.baseType, Equal<PX.Objects.CT.CTPRType.project>>>> DocGathering;
     
 		public PXSelect<PMDocumentGathering, Where<PMDocumentGathering.projectID, Equal<Current<PMDocumentGathering.projectID>>>> DocGatheringProperties;
+
+    public PXSelect<PX.Objects.EP.EPEmployee, Where<PX.Objects.EP.EPEmployee.BAccountID, Equal<Current<AccessInfo.UserID>>>> Current_User;
     
     public PXSave<PMDocumentGathering> Save;
     public PXCancel<PMDocumentGathering> Cancel;
@@ -40,11 +43,12 @@ namespace ProjectTask
 
     //Payroll Preprocessing Basic Requirement
 
-    protected void PMDocumentGathering_Mpr_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_MPR_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
       row.MPR_LastModifiedDateTime = PX.Common.PXTimeZoneInfo.Now.Date;
+      row.MPR_LastModifiedByID = Current_User.BAccountID;
       if (row.FirstContactDate_Payroll == null)
       {
         row.FirstContactDate_Payroll = PX.Common.PXTimeZoneInfo.Now.Date;
@@ -56,7 +60,7 @@ namespace ProjectTask
     {
       
       var row = (PMDocumentGathering)e.Row;
-      row.PayrollVerification_LastModifiedDateTime = PX.Common.PXTimeZoneInfo.Now.Date;
+      row.PayrollVer_LastModifiedDateTime = PX.Common.PXTimeZoneInfo.Now.Date;
       if (row.FirstContactDate_Payroll == null)
       {
         row.FirstContactDate_Payroll = PX.Common.PXTimeZoneInfo.Now.Date;
@@ -69,7 +73,7 @@ namespace ProjectTask
 
     //Plan Document
 
-    protected void PMDocumentGathering_Spd_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_SPD_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
@@ -81,7 +85,7 @@ namespace ProjectTask
       
     }
 
-    protected void PMDocumentGathering_Aa_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_AA_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
@@ -94,7 +98,7 @@ namespace ProjectTask
       
     }
 
-    protected void PMDocumentGathering_Bpd_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_BPD_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
@@ -106,7 +110,7 @@ namespace ProjectTask
       
     }
 
-    protected void PMDocumentGathering_Irs_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_IRS_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
@@ -130,7 +134,7 @@ namespace ProjectTask
       
     }
 
-    protected void PMDocumentGathering_Satpa_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_SATPA_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
@@ -166,7 +170,7 @@ namespace ProjectTask
       
     }
 
-    protected void PMDocumentGathering_Qdia_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_QDIA_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
@@ -182,7 +186,7 @@ namespace ProjectTask
 
     //PlanDoc Preprocessing Basic Requirement
 
-    protected void PMDocumentGathering_Ec_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_EC_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
@@ -194,7 +198,7 @@ namespace ProjectTask
       
     }
 
-    protected void PMDocumentGathering_Pas_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_PAS_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
@@ -367,7 +371,7 @@ namespace ProjectTask
       
     }
 
-    protected void PMDocumentGathering_Py5500_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
+    protected void PMDocumentGathering_PY5500_FieldUpdated(PXCache cache, PXFieldUpdatedEventArgs e)
     {
       
       var row = (PMDocumentGathering)e.Row;
