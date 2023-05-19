@@ -4,9 +4,23 @@ using PX.Data;
 using PX.Objects.PM;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CT;
+using PX.Objects.EP;
 
 namespace ProjectTask
 {
+  public class Payroll : Constant<string>
+  {
+      public Payroll() : base("02PAYROLL") { }
+  }
+  public class PlanDoc : Constant<string>
+  {
+      public PlanDoc() : base("03PLANDOC") { }
+  }
+  public class PlanDesign : Constant<string>
+  {
+      public PlanDesign() : base("04PLANDESIGN") { }
+  }
+    
   [Serializable]
   [PXCacheName("PMDocumentGathering")]
   public class PMDocumentGathering : IBqlTable
@@ -25,25 +39,6 @@ namespace ProjectTask
 		[PXParent(typeof(Select<PMProject, Where<PMProject.contractID, Equal<Current<PMDocumentGathering.projectID>>>>))]
 		[PXDBDefault(typeof(PMProject.contractID))]
 
-        // [PXSelector(
-        //     typeof(Search<PMProject.contractID,
-        //         Where<PMProject.usrPGDepartment, Equal<Department>>>),
-        //     DescriptionField = typeof(PMProject.contractCD))]
-
-        // [PXSelector(
-        //     typeof(Search2<PMProject.contractID,
-        //         InnerJoin<Contract, On<Contract.contractID,Equal<PMProject.contractID>>>.GetExtension<PX.Objects.CT.ContractExt>(),
-        //             Where<Contract.usrPGDepartment, Equal<Department>>>>),
-        //     typeof(PMproject.contractCD),
-        //     DescriptionField = typeof(PMProject.description))]
-
-
-        // [PXSelector(typeof(Search5<POOrder.orderNbr,
-        //     InnerJoin<POReceiptLine, On<POReceiptLine.pOType, Equal<POOrder.orderType>,
-        //         And<POReceiptLine.pONbr, Equal<POOrder.orderNbr>,
-        //         And<POReceiptLine.receiptNbr, Equal<Current<POReceipt.receiptNbr>>>>>>,
-        //         Aggregate<GroupBy<POOrder.orderType,
-        //         GroupBy<POOrder.orderNbr>>>>))]
         public virtual Int32? ProjectID
 		{
 			get
@@ -71,6 +66,9 @@ namespace ProjectTask
     public virtual bool? Active { get; set; }
     public abstract class active : PX.Data.BQL.BqlBool.Field<active> { }
     #endregion
+
+
+    //Payroll Preprocessing
 
     #region FirstContactDate_Payroll
     [PXDBDate()]
@@ -137,6 +135,8 @@ namespace ProjectTask
     public abstract class payrollVer_LastModUserName : PX.Data.BQL.BqlString.Field<payrollVer_LastModUserName> { }
     #endregion
 
+
+    //Plan Documents
 
     #region FirstContactDate_PlanDocuments
     [PXDBDate()]
@@ -361,6 +361,9 @@ namespace ProjectTask
     public abstract class qDIA_LastModUserName : PX.Data.BQL.BqlString.Field<qDIA_LastModUserName> { }
     #endregion
 
+
+    //PlanDoc Preprocessing
+
     #region FirstContactDate_PlanDocPreproc
     [PXDBDate()]
     [PXUIField(DisplayName = "First Contact")]
@@ -519,6 +522,9 @@ namespace ProjectTask
     public abstract class defElection_LastModUserName : PX.Data.BQL.BqlString.Field<defElection_LastModUserName> { }
     #endregion
 
+
+    //Plan Design
+
     #region FirstContactDate_PlanDesign
     [PXDBDate()]
     [PXUIField(DisplayName = "First Contact")]
@@ -583,6 +589,8 @@ namespace ProjectTask
     public virtual string PreProcessDate_LastModUserName { get; set; }
     public abstract class preProcessDate_LastModUserName : PX.Data.BQL.BqlString.Field<preProcessDate_LastModUserName> { }
     #endregion
+
+    //Annual Documents
 
     #region FirstContactDate_AnnualDocuments
     [PXDBDate()]
@@ -766,6 +774,8 @@ namespace ProjectTask
     #endregion
 
 
+    //First Year PK
+
     #region FirstContactDate_FirstYearPK
     [PXDBDate()]
     [PXUIField(DisplayName = "First Contact")]
@@ -924,6 +934,60 @@ namespace ProjectTask
     public abstract class pYCompliance_LastModUserName : PX.Data.BQL.BqlString.Field<pYCompliance_LastModUserName> { }
     #endregion
 
+
+    //v1.02 
+
+    #region RKAccess
+    [PXDBString(2)]
+    [PXStringList(new string[] {"RQ", "CM", "NA"}, new string[] {"Requested", "Complete", "n/a"})]
+    [PXUIField(DisplayName = "RK Access")]
+    public virtual string RKAccess { get; set; }
+    public abstract class rKAccess : PX.Data.BQL.BqlString.Field<rKAccess> { }
+    #endregion
+    
+    #region PayrollProvider
+    [PXDBString(3)]
+    [PXStringList(new string[] {"AD1", "AD2", "AD3", "APS", "CBI", "CPS", "CPA", "DPS", "EHR", "GAP", "HPS", "ISH", "KBP", "NET", "PCX", "PSW", "PCR", "PLC", "PDY", "PMR", "PRO", "PYT", "UKG", "VSW", "OPP"}, new string[] {"ADP", "ADP Autopay", "ADP Workforce Now", "Alliance Payroll Services, Inc.", "CBIZ, Inc.", "Coastal Payroll Services, Inc.", "CertiPay America, LLC", "Dominion Payroll Services", "ExponentHR", "G&A Partners", "Heartland Payroll Solutions, Inc.", "iSolved HCM, LLC", "Kelly Benefits Payroll", "Netchex", "Paychex, Inc.", "Paycom Software, Inc.", "Paycor, Inc.", "Paylocity Corporation", "Payday LLC", "PayMaster, Inc.", "Proliant Inc.", "Paytime", "Ultimate Kronos Group Incorporated", "Viventium Softwre, Inc.", "Other Payroll Provider"})]
+    [PXUIField(DisplayName = "Payroll Provider")]
+    public virtual string PayrollProvider { get; set; }
+    public abstract class payrollProvider : PX.Data.BQL.BqlString.Field<payrollProvider> { }
+    #endregion
+
+    #region RecordKeeperName
+    [PXDBString(3)]
+    [PXStringList(new string[] {"AD1", "ARB", "ACS", "ATR", "AUL", "BFB", "BOK", "CGR", "CAF", "CMF", "EFY", "EM1", "EM2", "EM3", "ERP", "EQU", "ERI", "FWS", "JH1", "JH2", "LND", "LNA", "LRS", "MAT", "MM1", "MM2", "NWG", "NFS", "OAR", "PCX", "PCS", "PLI", "PRI", "RAL", "RPC", "CST", "SFG", "SIC", "TRP", "TRS", "UCG", "VYF", "ORK"}, new string[] {"ADP", "Alerus Retirement and Benefits", "Ascensus,  LLC", "AT Retirement Services,  LLC", "American United Life Insurance Company", "Betterment for Business", "BOK Financial", "Capital Group Retirement Plan Services", "Capital/American Funds Service Company", "CMFG Life Insurance Company", "Employee Fiduciary,  LLC", "Empower Retirement", "Empower Retirement PRS/CAS/PAS", "Empower Retirement TRAC", "EPIC Retirement Plan Services", "Equitable", "ERISA Consultants", "Fidelity Workplace Services,  LLC", "John Hancock", "John Hancock Retirement Plan Services,  LLC and John Hancock Trust Company", "Lincoln Director", "Lincoln Alliance", "Leading Retirement Solutions", "Mid Atlantic Trust Company", "MassMutual Retirement Services Business", "MassMutual Retirement Services Business/TRAC", "Newport Group,  Inc.", "Nationwide Financial Services,  Inc.", "OneAmerica Retirement Services", "Paychex,  Inc.", "Professional Capital Services,  LLC", "Principal Life Insurance Company", "Prudential Retirement Insurance and Annuity Company", "RHI Acquisition LLC - Definiti and Retirement Horizons", "The Retirement Plan Company,  LLC", "Charles Schwab Trust Bank", "Securian Financial Group", "Standard Insurance Company", "T. Rowe Price Retirement Plan Services,  Inc. and T. Rowe Price Services,  Inc.", "Transamerica Retirement Solutions,  LLC", "USI Consulting Group Retirement Plan Services - Uniondale", "Voya Financial", "Other RK"})]
+    [PXUIField(DisplayName = "Record Keeper")]
+    public virtual string RecordKeeperName { get; set; }
+    public abstract class recordKeeperName : PX.Data.BQL.BqlString.Field<recordKeeperName> { }
+    #endregion
+
+    #region Payroll_Preparer
+    [PXDBInt]
+    [PXEPEmployeeSelector]
+    [PXUIField(DisplayName = "Payroll Preparer", Visibility = PXUIVisibility.SelectorVisible)]
+    // [PXDefault(
+    //   typeof(Search<PMTask.usrPGPreparer,
+    //     Where<PMTask.projectID, Equal<PMDocumentGathering.projectID>,
+    //     And<PMTask.taskCD, Equal<Payroll>>>>))]
+    public virtual int? Payroll_Preparer { get; set; }
+    public abstract class payroll_Preparer : PX.Data.BQL.BqlInt.Field<payroll_Preparer> { }
+    #endregion
+
+    #region PlanDoc_Preparer
+    [PXDBInt]
+    [PXEPEmployeeSelector]
+    [PXUIField(DisplayName = "PlanDoc Preparer", Visibility = PXUIVisibility.SelectorVisible)]
+    public virtual int? PlanDoc_Preparer { get; set; }
+    public abstract class planDoc_Preparer : PX.Data.BQL.BqlInt.Field<planDoc_Preparer> { }
+    #endregion
+
+    #region PlanDesign_Preparer
+    [PXDBInt]
+    [PXEPEmployeeSelector]
+    [PXUIField(DisplayName = "PlanDesign Preparer", Visibility = PXUIVisibility.SelectorVisible)]
+    public virtual int? PlanDesign_Preparer { get; set; }
+    public abstract class planDesign_Preparer : PX.Data.BQL.BqlInt.Field<planDesign_Preparer> { }
+    #endregion
 
     #region CreatedDateTime
     [PXDBCreatedDateTime()]
