@@ -184,6 +184,13 @@
             Instantiates Generic Inquiry graph with custom schema that contains aggregation function on the specific field.
             </summary>
         </member>
+        <member name="M:PX.Dashboards.Widgets.KPIScoreWidget.NormalizeValue(System.Double)">
+            <summary>
+            Normalize <paramref name="value"/> by rounding it to fixed number of fractional digits.
+            </summary>
+            <param name="value">Value to be normalized</param>
+            <returns>Normalized value</returns>
+        </member>
         <member name="P:PX.Dashboards.Widgets.PXTrendcardWidget.CssClass">
             <summary>
             Gets the CSS class name of the topmost panel.

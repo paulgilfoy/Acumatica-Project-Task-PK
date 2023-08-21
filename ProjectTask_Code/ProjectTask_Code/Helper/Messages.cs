@@ -106,6 +106,7 @@
         public const string TPARKContacted = "TPA/RK Contacted";
         public const string WaitingonInfo = "Waiting on Info";
         public const string InProcess = "In Process";
+        public const string ClearingPoints = "Clearing Points";
         public const string Completed = "Completed";
         public const string Ghost = "Ghost";
         public const string NA = "n/a";

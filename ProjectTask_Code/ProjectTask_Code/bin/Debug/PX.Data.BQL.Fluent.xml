@@ -37,6 +37,11 @@
             Indicates that only the most left table from a joined projection will be used
             </summary>
         </member>
+        <member name="T:PX.Data.BQL.Fluent.FbqlJoins.Inner`1.On`1.Straight">
+            <summary>
+            If possible, prevents the DBMS optimizer from reordering joined tables, which can impact performance in both directions, so use it wisely.
+            </summary>
+        </member>
         <member name="T:PX.Data.BQL.Fluent.FbqlJoins.Left`1">
             <summary>
             Defines an left join with a <typeparamref name="TJoinedTable"/>.
@@ -1395,8 +1400,14 @@
         <member name="T:PX.Data.BQL.Fluent.SelectFrom`2">
             <exclude/>
         </member>
+        <member name="T:PX.Data.BQL.Fluent.SelectFrom`2.InnerJoin`1.On`1.Straight">
+            <inheritdoc cref="T:PX.Data.BQL.Fluent.FbqlJoins.Inner`1.On`1.Straight"/>
+        </member>
         <member name="T:PX.Data.BQL.Fluent.SelectFromMirror`2">
             <exclude/>
+        </member>
+        <member name="T:PX.Data.BQL.Fluent.SelectFromMirror`2.InnerJoin`1.On`1.Straight">
+            <inheritdoc cref="T:PX.Data.BQL.Fluent.FbqlJoins.Inner`1.On`1.Straight"/>
         </member>
         <member name="T:PX.Data.BQL.Fluent.FbqlUpdateBase`6">
             <exclude/>
@@ -1436,8 +1447,14 @@
         <member name="T:PX.Data.BQL.Fluent.Update`3">
             <exclude/>
         </member>
+        <member name="T:PX.Data.BQL.Fluent.Update`3.InnerJoin`1.On`1.Straight">
+            <inheritdoc cref="T:PX.Data.BQL.Fluent.FbqlJoins.Inner`1.On`1.Straight"/>
+        </member>
         <member name="T:PX.Data.BQL.Fluent.UpdateMirror`3">
             <exclude/>
+        </member>
+        <member name="T:PX.Data.BQL.Fluent.UpdateMirror`3.InnerJoin`1.On`1.Straight">
+            <inheritdoc cref="T:PX.Data.BQL.Fluent.FbqlJoins.Inner`1.On`1.Straight"/>
         </member>
     </members>
 </doc>

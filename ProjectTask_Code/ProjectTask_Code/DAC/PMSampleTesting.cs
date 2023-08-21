@@ -206,11 +206,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "CO-01")]
     public virtual string CO01 { get; set; }
@@ -236,11 +236,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "CO-02")]
     public virtual string CO02 { get; set; }
@@ -266,11 +266,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "CO-03")]
     public virtual string CO03 { get; set; }
@@ -296,11 +296,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "CO-04")]
     public virtual string CO04 { get; set; }
@@ -326,11 +326,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "CO-05")]
     public virtual string CO05 { get; set; }
@@ -356,11 +356,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "CO-06")]
     public virtual string CO06 { get; set; }
@@ -386,11 +386,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "CO-07")]
     public virtual string CO07 { get; set; }
@@ -416,11 +416,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "CO-08")]
     public virtual string CO08 { get; set; }
@@ -446,11 +446,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "BP-01")]
     public virtual string BP01 { get; set; }
@@ -476,11 +476,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "LO-01")]
     public virtual string LO01 { get; set; }
@@ -506,11 +506,11 @@ namespace ProjectTask
     [PXStringList(
             new string[] 
             {
-                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
+                SampleStatus.Contacted1, SampleStatus.Contacted2, SampleStatus.ClientCalled, SampleStatus.TPARKContacted, SampleStatus.WaitingonInfo, SampleStatus.InProcess, SampleStatus.ClearingPoints, SampleStatus.Completed, SampleStatus.Ghost, SampleStatus.NA, SampleStatus.Reviewed
             }, 
             new string[]
             {
-                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
+                MessageSampleStatus.Contacted1, MessageSampleStatus.Contacted2, MessageSampleStatus.ClientCalled, MessageSampleStatus.TPARKContacted, MessageSampleStatus.WaitingonInfo, MessageSampleStatus.InProcess, MessageSampleStatus.ClearingPoints, MessageSampleStatus.Completed, MessageSampleStatus.Ghost, MessageSampleStatus.NA, MessageSampleStatus.Reviewed
             })]
     [PXUIField(DisplayName = "IA-08")]
     public virtual string IA08 { get; set; }

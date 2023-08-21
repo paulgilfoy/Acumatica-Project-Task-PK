@@ -815,17 +815,20 @@
         <member name="P:PX.CCProcessingBase.Interfaces.V2.DocumentData.DocType">
             <summary>The document type.</summary>
             <value>Receives the value from one of the following DAC fields, depending on the type of the document from which the operation was invoked:
-            <list type="bullet"><item>For an AR payment, <strong>ARPayment.DocType</strong></item><item>For a cash sale, <strong>ARCashSale.</strong><strong>DocType</strong></item><item>For a sales invoice, <strong>SOInvoice.</strong><strong>DocType</strong></item><item>For a sales order, <strong>SOOrder.</strong><strong>DocType</strong></item></list></value>
+            <list type="bullet"><item><description>For an AR payment, <strong>ARPayment.DocType</strong></description></item>
+            <item><description>For a cash sale, <strong>ARCashSale.</strong><strong>DocType</strong></description></item>
+            <item><description>For a sales invoice, <strong>SOInvoice.</strong><strong>DocType</strong></description></item>
+            <item><description>For a sales order, <strong>SOOrder.</strong><strong>DocType</strong></description></item></list></value>
         </member>
         <member name="P:PX.CCProcessingBase.Interfaces.V2.DocumentData.DocRefNbr">
             <summary>The document reference number.</summary>
             <value>
               <para>Receives the value from one of the following DAC fields, depending on the type of the document from which the operation was invoked:</para>
               <list type="bullet">
-                <item>For an AR payment, <strong>ARPayment.RefNbr</strong></item>
-                <item>For a cash sale, <strong>ARCashSale.RefNbr</strong></item>
-                <item>For a sales invoice, <strong>SOInvoice.RefNbr</strong></item>
-                <item>For a sales order, <strong>SOOrder.RefNbr</strong></item>
+                <item><description>For an AR payment, <strong>ARPayment.RefNbr</strong></description></item>
+                <item><description>For a cash sale, <strong>ARCashSale.RefNbr</strong></description></item>
+                <item><description>For a sales invoice, <strong>SOInvoice.RefNbr</strong></description></item>
+                <item><description>For a sales order, <strong>SOOrder.RefNbr</strong></description></item>
               </list>
             </value>
         </member>
@@ -1548,10 +1551,10 @@
             <value>
               <para>Receives the value from one of the following DAC fields depending on the type of the document from which the operation was invoked:</para>
               <list type="bullet">
-                <item>For an AR payment, <strong>ARPayment.CuryDocBal</strong>.</item>
-                <item>For a cash sale, <strong>ARCashSale.CuryDocBal</strong>.</item>
-                <item>For a sales invoice, <strong>SOInvoice.CuryPaymentAmt</strong>.</item>
-                <item>For a sales order, <strong>SOOrder.CuryUnpaidBalance</strong> + <strong>SOOrder.CuryCCPreAuthAmount</strong>. If the sum is negative, 0 is passed.</item>
+                <item><description>For an AR payment, <strong>ARPayment.CuryDocBal</strong>.</description></item>
+                <item><description>For a cash sale, <strong>ARCashSale.CuryDocBal</strong>.</description></item>
+                <item><description>For a sales invoice, <strong>SOInvoice.CuryPaymentAmt</strong>.</description></item>
+                <item><description>For a sales order, <strong>SOOrder.CuryUnpaidBalance</strong> + <strong>SOOrder.CuryCCPreAuthAmount</strong>. If the sum is negative, 0 is passed.</description></item>
               </list>
             </value>
         </member>
@@ -1745,6 +1748,11 @@
         <member name="P:PX.CCProcessingBase.Interfaces.V2.TransactionData.FeeType">
             <summary>
             Fee Type. Transaction type or some other parameter can be used. Used to determine Entry Type.
+            </summary>
+        </member>
+        <member name="P:PX.CCProcessingBase.Interfaces.V2.TransactionData.IsLocalValidation">
+            <summary>
+            Is local validation. This transaction has been restored from db.
             </summary>
         </member>
         <member name="T:PX.CCProcessingBase.Interfaces.V2.TransactionSearchParams">

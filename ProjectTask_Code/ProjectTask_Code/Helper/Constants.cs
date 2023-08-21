@@ -108,6 +108,7 @@ namespace ProjectTask
         public const string TPARKContacted = "RK";
         public const string WaitingonInfo = "WI";
         public const string InProcess = "IP";
+        public const string ClearingPoints = "CP";
         public const string Completed = "CM";
         public const string Ghost = "GH";
         public const string NA = "NA";

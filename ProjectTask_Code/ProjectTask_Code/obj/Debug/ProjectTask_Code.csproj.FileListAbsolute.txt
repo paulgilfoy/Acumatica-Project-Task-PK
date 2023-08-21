@@ -86,7 +86,6 @@ C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\DotNetOpenAuth.Cor
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\IdentityModel.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.OidcClient.dll
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Api.Web.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.CCProcessingBase.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.AddressValidator.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Api.ContractBased.dll
@@ -134,7 +133,6 @@ C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.Web.Infr
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.IdentityModel.Tokens.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.Net.Http.Headers.dll
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Web.Customization.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Mvc.Core.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Authorization.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.AspNetCore.dll
@@ -165,12 +163,8 @@ C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCo
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\System.Web.WebPages.Deployment.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.IdentityModel.Logging.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Api.Webhooks.dll
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Web.Customization.MSILEdit.dll
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Web.Customization.Abstractions.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.CodeAnalysis.CSharp.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.CodeAnalysis.dll
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.AssemblyPatcher.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Http.Extensions.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Mvc.Abstractions.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Authorization.Policy.dll
@@ -181,7 +175,6 @@ C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCo
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Mvc.Formatters.Json.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Mvc.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.Extensions.ObjectPool.dll
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNet.SignalR.Core.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.MySql.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\System.Text.Encoding.CodePages.dll
@@ -220,7 +213,6 @@ C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.DbServices.xml
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.BulkInsert.xml
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.CCProcessingBase.xml
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Api.ContractBased.dll.config
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.LicensePolicy.dll.config
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.BarcodeProcessing.xml
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Dashboards.Widgets.xml
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Dashboards.Widgets.dll.config
@@ -232,7 +224,6 @@ C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.BusinessProcess
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.BusinessProcess.dll.config
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Dashboards.xml
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Dashboards.dll.config
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Web.Customization.xml
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Api.Shared.dll.config
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Dashboards.Caching.dll.config
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.DataSync.Core.dll.config
@@ -241,8 +232,6 @@ C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.PushNotificatio
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.SmsProvider.Core.dll.config
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.SmsProvider.UI.xml
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.SmsProvider.UI.dll.config
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Api.Webhooks.xml
-C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.Api.Webhooks.dll.config
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.MySql.dll.config
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\de\Microsoft.Data.Services.Client.resources.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\es\Microsoft.Data.Services.Client.resources.dll
@@ -286,3 +275,11 @@ C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\obj\Debug\ProjectTask_Code.c
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\obj\Debug\ProjectTask_Code.csproj.CopyComplete
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\obj\Debug\ProjectTask_Code.dll
 C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\obj\Debug\ProjectTask_Code.pdb
+C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.ACHPlugInBase.dll
+C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.Extensions.Diagnostics.HealthChecks.dll
+C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.SignalR.Core.dll
+C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.SignalR.Common.dll
+C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+C:\PMDocGathering\ProjectTask_Code\ProjectTask_Code\bin\Debug\PX.SmsProvider.Core.xml

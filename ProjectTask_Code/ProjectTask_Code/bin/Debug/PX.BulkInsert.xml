@@ -373,12 +373,6 @@
     <member name="F:PX.BulkInsert.Installer.ScriptExecutor.UpdateProgress">
       <exclude />
     </member>
-    <member name="F:PX.BulkInsert.Installer.ScriptExecutor.LogFile">
-      <exclude />
-    </member>
-    <member name="F:PX.BulkInsert.Installer.ScriptExecutor.LoggerAction">
-      <exclude />
-    </member>
     <member name="M:PX.BulkInsert.Installer.ScriptExecutor.#ctor(PX.DbServices.Points.DbmsBase.PointDbmsBase,System.Action{System.Nullable{System.Single},System.String})">
       <exclude />
     </member>
@@ -441,7 +435,8 @@
             the update to a newer version of the application or when an Acumatica ERP customization is being published. By using classes that implement this interface, the
             system updates the XML versions of reports that are stored in the database with the latest changes in data access classes (DACs).</summary>
       <example>
-        <code title="Example" description="An example of the UserReportUpgrader interface implementation is shown in the following code. You can create this class in any part of your application's project. " lang="CS">
+        <para>An example of the UserReportUpgrader interface implementation is shown in the following code. You can create this class in any part of your application's project. </para>
+        <code title="Example" lang="CS">
             using System;
             using System.Collections.Generic;
             using System.Linq;
@@ -508,9 +503,8 @@
         <para>The method returns a <code>System.XML.XmlElement</code> object that contains an updated report.</para>
       </returns>
       <example>
-        <para>
-        </para>
-        <code title="Example" description=" An example of the UserReportUpgrader interface implementation is shown in the following code. You can create this class in any part of your application’s project. " lang="CS">
+        <para>An example of the UserReportUpgrader interface implementation is shown in the following code. You can create this class in any part of your application's project. </para>
+        <code title="Example" lang="CS">
             using System;
             using System.Collections.Generic;
             using System.Linq;

@@ -31,7 +31,6 @@
             </summary>
         </member>
         <member name="P:PX.BarcodeProcessing.BarcodeDrivenStateMachine`2.ScanModes">
-            <summary>Holds the collection of all modes of the barcode-driven Acumatica ERP form.</summary>
             <value>
             The value is populated on the extension initialization and is based on the results of
             the protected <see cref="M:PX.BarcodeProcessing.BarcodeDrivenStateMachine`2.CreateScanModes">CreateScanModes()</see>method.
@@ -168,15 +167,20 @@
             <summary>Starts an awaitable long-running operation upon a document (usually within a ScanCommand&lt;TScanBasis&gt;).</summary>
             <typeparam name="TData">The type of the data.</typeparam>
             <param name="action">The action.</param>
-            <returns>
-              <br />
-            </returns>
             <remarks>You should configure the long-running operation by using the following methods:
             <see cref="M:PX.BarcodeProcessing.ScanLongRunAwaiter`2.WithDescription(System.String,System.Object[])"/>,
             <see cref="M:PX.BarcodeProcessing.ScanLongRunAwaiter`2.ActualizeDataBy(System.Func{`0,`1,`1})"/>,
             <see cref="M:PX.BarcodeProcessing.ScanLongRunAwaiter`2.OnSuccess(System.Action{PX.BarcodeProcessing.ScanLongRunAwaiter{`0,`1}.ISuccessProcessor})"/>,
             <see cref="M:PX.BarcodeProcessing.ScanLongRunAwaiter`2.OnFail(System.Action{PX.BarcodeProcessing.ScanLongRunAwaiter{`0,`1}.IResultProcessor})"/>, and
             <see cref="M:PX.BarcodeProcessing.ScanLongRunAwaiter`2.BeginAwait(`1)"/>.</remarks>
+        </member>
+        <member name="M:PX.BarcodeProcessing.BarcodeDrivenStateMachine`2.AwaitFor``1(System.Func{`0,``0,System.Threading.CancellationToken,System.Threading.Tasks.Task})">
+            <summary>
+            Starts an asynchronous long-running operation upon a document (usually within a ScanCommand&lt;TScanBasis&gt;).
+            </summary>
+            <typeparam name="TData">The type of the data.</typeparam>
+            <param name="asyncAction">The asynchronous action.</param>
+            <returns></returns>
         </member>
         <member name="M:PX.BarcodeProcessing.BarcodeDrivenStateMachine`2.get_PrimaryItemType(System.Func{System.Type})">
             <summary>

@@ -7,6 +7,12 @@
     <member name="T:PX.DbServices.Commands.CommandBase">
       <summary>A base class for the commands that are executed by the data points.</summary>
     </member>
+    <member name="P:PX.DbServices.Commands.Ddl.CmdCreateRecordStatusPartition.AffectedTable">
+      <inheritdoc />
+    </member>
+    <member name="P:PX.DbServices.Commands.Ddl.CmdCreateRecordStatusPartition.CommandType">
+      <inheritdoc />
+    </member>
     <member name="T:PX.DbServices.Messages">
       <exclude />
     </member>
@@ -326,6 +332,9 @@
       <param name="exclusiveWrite">The value is <tt>false</tt> by default.</param>
       <param name="transferObserver">The value is <tt>null</tt> by default.</param>
     </member>
+    <member name="M:PX.DbServices.Points.DbmsBase.AcumaticaDbKeeperBase`1.getGeneratePartitionScript">
+      <inheritdoc />
+    </member>
     <member name="M:PX.DbServices.Points.DbmsBase.AcumaticaDbKeeperBase.DialectBasedDefaultValue(PX.DbServices.Model.Entities.TableColumn)">
       <summary>
             Returns a default value for a column whose type's default value may be interpreted differently by
@@ -549,8 +558,26 @@
     <member name="M:PX.DbServices.Points.FileSystem.PointFileSystem.MakeRelativePath(System.String,System.String)">
       <exclude />
     </member>
+    <member name="M:PX.DbServices.Points.MsSql.AcumaticaDbKeeperMsSql.GenerateDatabaseRecordStatusPartition(PX.DbServices.Model.Entities.TableHeader)">
+      <inheritdoc />
+    </member>
     <member name="T:PX.DbServices.Points.MsSql.MsSqlScripter">
       <summary>The class that generates SQL valid for Microsoft SQL Server databases.</summary>
+    </member>
+    <member name="M:PX.DbServices.Points.MsSql.MsSqlScripter.Script(PX.DbServices.Commands.Ddl.CmdCreateRecordStatusPartition)">
+      <inheritdoc />
+    </member>
+    <member name="M:PX.DbServices.Points.MsSql.PointMsSqlServer.CanCreatePartitions">
+      <summary>
+             Creating a partitioned table requires CREATE TABLE permission in the database and ALTER permission on the schema in which the table is being created. Creating a partitioned index requires ALTER permission on the table or view where the index is being created. Creating either a partitioned table or index requires any one of the following additional permissions:
+            
+             ALTER ANY DATASPACE permission. This permission defaults to members of the sysadmin fixed server role and the db_owner and db_ddladmin fixed database roles.
+            	CONTROL or ALTER permission on the database in which the partition function and partition scheme are being created.
+            	CONTROL SERVER or ALTER ANY DATABASE permission on the server of the database in which the partition function and partition scheme are being created.
+             </summary>
+    </member>
+    <member name="M:PX.DbServices.Points.MsSql.NativeMetadata.MsSqlSchemaReader.GetPartitions(System.String,PX.DbServices.Points.DbmsBase.SchemaReaderBase.CacheUsage)">
+      <inheritdoc />
     </member>
     <member name="M:PX.DbServices.Points.MySql.AcumaticaDbKeeperMySql.DialectBasedDefaultValue(PX.DbServices.Model.Entities.TableColumn)">
       <inheritdoc />
@@ -558,8 +585,23 @@
     <member name="M:PX.DbServices.Points.MySql.AcumaticaDbKeeperMySql.DialectBasedTypesEqual(PX.DbServices.Model.Entities.TableColumn,PX.DbServices.Model.Entities.TableColumn)">
       <inheritdoc />
     </member>
+    <member name="M:PX.DbServices.Points.MySql.AcumaticaDbKeeperMySql.GenerateDatabaseRecordStatusPartition(PX.DbServices.Model.Entities.TableHeader)">
+      <inheritdoc />
+    </member>
+    <member name="M:PX.DbServices.Points.MySql.AcumaticaDbKeeperMySql.IsNativeFk(System.Nullable{PX.DbServices.Model.Entities.TableForeignKey.Implementation})">
+      <inheritdoc />
+    </member>
     <member name="T:PX.DbServices.Points.MySql.MySqlScripter">
       <summary>The class that generates SQL valid for MySQL Server databases.</summary>
+    </member>
+    <member name="M:PX.DbServices.Points.MySql.MySqlScripter.Script(PX.DbServices.Commands.Ddl.CmdCreateRecordStatusPartition)">
+      <inheritdoc />
+    </member>
+    <member name="M:PX.DbServices.Points.MySql.NativeMetadata.MySqlSchemaReader.GetPartitions(System.String,PX.DbServices.Points.DbmsBase.SchemaReaderBase.CacheUsage)">
+      <inheritdoc />
+    </member>
+    <member name="M:PX.DbServices.Points.MySql.PointMySql.CanCreatePartitions">
+      <inheritdoc />
     </member>
     <member name="T:PX.DbServices.Points.Point">
       <summary>

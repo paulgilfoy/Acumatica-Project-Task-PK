@@ -108,8 +108,8 @@
             <param name="cancellationToken">Cancellation token.</param>
             <param name="onSendingFailed">Delegate that should be called if notification was not send. It persists notification result to database to resend it later.</param>
             <param name="finalizer">Delegate that should be called in the end of method in any cases (should be called in finally)</param>
-            <example>
-            	<code title="Example" description="The following code shows a sample implementation of the method." lang="CS">
+            <example><para>The following code shows a sample implementation of the method.</para>
+            	<code title="Example" lang="CS">
             using System;
             using System.Threading;
             using PX.PushNotifications;

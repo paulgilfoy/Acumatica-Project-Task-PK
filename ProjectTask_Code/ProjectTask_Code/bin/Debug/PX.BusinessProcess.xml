@@ -4,6 +4,14 @@
         <name>PX.BusinessProcess</name>
     </assembly>
     <members>
+        <member name="P:PX.BusinessProcess.DAC.ActionExecution.ShowCreatedByEventsTabExpr">
+            <summary>
+            A service field. It is used to hide "Created by Events" tab on SM204007 page.
+            </summary>
+        </member>
+        <member name="T:PX.BusinessProcess.DAC.BPEvent.actionName2">
+            <exclude/>
+        </member>
         <member name="T:PX.BusinessProcess.DAC.MobileNotification.notificationID">
             <exclude/>
         </member>
@@ -59,8 +67,8 @@
         </member>
         <member name="T:PX.BusinessProcess.Subscribers.ActionHandlers.IEventAction">
             <summary>The interface for a subscriber that the system executes once the business event has occurred.</summary>
-            <example>
-              <code title="Example" description="The following example shows sample implementation of a custom subscriber that writes notification data to a text file." lang="CS">
+            <example><para>The following example shows sample implementation of a custom subscriber that writes notification data to a text file.</para>
+              <code title="Example" lang="CS">
             //The custom subscriber that the system executes once the business event has occurred
             public class CustomEventAction : IEventAction
             {
@@ -151,8 +159,8 @@
             <remarks>If you want an action to be displayed in the <strong>Create Subscriber</strong> menu on the toolbar of the <strong>Subscribers</strong> tab of
             the Business Events (SM302050) form, you need to implement this interface instead of
             the <see cref="T:PX.BusinessProcess.Subscribers.Factories.IBPSubscriberActionHandlerFactory">IBPSubscriberActionHandlerFactory</see> interface.</remarks>
-            <example>
-              <code title="Example" description="The following example shows sample implementation of the class that creates and executes the custom subscriber." lang="CS">
+            <example><para>The following example shows sample implementation of the class that creates and executes the custom subscriber.</para>
+              <code title="Example" lang="CS">
             //The class that creates and executes the custom subscriber
             class CustomSubscriberHandlerFactory : IBPSubscriberActionHandlerFactoryWithCreateAction
             {

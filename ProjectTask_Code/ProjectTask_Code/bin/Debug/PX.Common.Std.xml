@@ -1681,6 +1681,12 @@
             <param name="number">The zero-based index of the segment.</param>
             <exception cref="T:System.IndexOutOfRangeException">There is no element with the specified number.</exception>
         </member>
+        <member name="M:PX.Common.Extensions.StringExtensions.DecodeHtml(System.String)">
+            <summary>Decodes newline symbols from html format </summary>
+        </member>
+        <member name="M:PX.Common.Extensions.StringExtensions.EncodeHtml(System.String)">
+            <summary>Encodes newline symbols in html format </summary>
+        </member>
         <member name="M:PX.Common.Extensions.StringExtensions.Truncate(System.String,System.Int32)">
             <summary>
             Returns the string, truncated at the specified length. Returns the original string if its length is not
@@ -1875,11 +1881,619 @@
         </member>
         <member name="M:PX.Common.GS1.Parser.Parse(System.String,System.Boolean)">
             <summary>
-            Parse the ean128 code
+            Parse the GS1 code
             </summary>
             <param name="data">The raw scanner data</param>
             <param name="throwException">If an exception will be thrown if an AI cannot be found</param>
-            <returns>The different parts of the ean128 code</returns>
+            <returns>The different parts of the GS1 code</returns>
+        </member>
+        <member name="T:PX.Common.GS1.StartCodes">
+            <summary>
+            The set of supported GS1 symbology identifiers.
+            </summary>
+        </member>
+        <member name="F:PX.Common.GS1.StartCodes.EAN128">
+            <summary>
+            A symbology identifier that indicates that a barcode is of GS1-128 (EAN128) linear type.
+            </summary>
+        </member>
+        <member name="F:PX.Common.GS1.StartCodes.DataBar">
+            <summary>
+            A symbology identifier that indicates that a barcode is of GS1-DataBar linear type.
+            </summary>
+        </member>
+        <member name="F:PX.Common.GS1.StartCodes.DataMatrix">
+            <summary>
+            A symbology identifier that indicates that a barcode is of GS1-DataMatrix 2D type.
+            </summary>
+        </member>
+        <member name="F:PX.Common.GS1.StartCodes.QR">
+            <summary>
+            A symbology identifier that indicates that a barcode is of GS1-QR 2D type.
+            </summary>
+        </member>
+        <member name="P:PX.Common.GS1.StartCodes.All">
+            <summary>
+            An enumeration of all supported symbology identifiers.
+            </summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes">
+            <summary>
+            A set of Application Identifier (AI).
+            </summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.SSCC">
+            <summary>(00) - Serial Shipping Container Code (SSCC). A value has a fixed length of 18 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GTIN">
+            <summary>(01) - Global Trade Item Number (GTIN). A value has a fixed length of 14 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Content">
+            <summary>(02) - GTIN of contained trade items. A value has a fixed length of 14 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.BatchLot">
+            <summary>(10) - Batch or lot number. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ProductionDate">
+            <summary>(11) - Production date (YYMMDD). A value has a fixed length of 6 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.DueDate">
+            <summary>(12) - Due date (YYMMDD). A value has a fixed length of 6 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PackDate">
+            <summary>(13) - Packaging date (YYMMDD). A value has a fixed length of 6 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.BestBeforeDate">
+            <summary>(15) - Best before date (YYMMDD). A value has a fixed length of 6 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.SellByDate">
+            <summary>(16) - Sell by date (YYMMDD). A value has a fixed length of 6 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ExpireDate">
+            <summary>(17) - Expiration date (YYMMDD). A value has a fixed length of 6 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ProductVariant">
+            <summary>(20) - Internal product variant. A value has a fixed length of 2 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Serial">
+            <summary>(21) - Serial number. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CPV">
+            <summary>(22) - Consumer product variant. A value has a variable length of 29 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.AdditionalID">
+            <summary>(240) - Additional product identification assigned by the manufacturer. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CustomerPartNumber">
+            <summary>(241) - Customer part number. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.MTOVariant">
+            <summary>(242) - Made-to-Order variation number. A value has a variable length of 6 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PCN">
+            <summary>(243) - Packaging component number. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.SecondarySerial">
+            <summary>(250) - Secondary serial number. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.RefToSource">
+            <summary>(251) - Reference to source entity. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GDTI">
+            <summary>(253) - Global Document Type Identifier (GDTI). A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GLNExt">
+            <summary>(254) - GLN extension component. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GCN">
+            <summary>(255) - Global Coupon Number (GCN). A value has a variable length of 25 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.VarCount">
+            <summary>(30) - Variable count of items (variable measure trade item). A value has a variable length of 8 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.KGPerSqrMetre">
+            <summary>(337n) - Kilograms per square metre. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Length">
+            <summary>The set of "Length" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Length.InMetres">
+            <summary>(311n) - Length or first dimension, metres (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Length.InInches">
+            <summary>(321n) - Length or first dimension, inches (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Length.InFeet">
+            <summary>(322n) - Length or first dimension, feet (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Length.InYards">
+            <summary>(323n) - Length or first dimension, yards (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Length.Logistic">
+            <summary>The set of "Logistic Length" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Length.Logistic.InMetres">
+            <summary>(331n) - Length or first dimension, metres. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Length.Logistic.InInches">
+            <summary>(341n) - Length or first dimension, inches. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Length.Logistic.InFeet">
+            <summary>(342n) - Length or first dimension, feet. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Length.Logistic.InYards">
+            <summary>(343n) - Length or first dimension, yards. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Width">
+            <summary>The set of "Width" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Width.InMetres">
+            <summary>(312n) - Width, diameter, or second dimension, metres (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Width.InInches">
+            <summary>(324n) - Width, diameter, or second dimension, inches (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Width.InFeet">
+            <summary>(325n) - Width, diameter, or second dimension, feet (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Width.InYards">
+            <summary>(326n) - Width, diameter, or second dimension, yards (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Width.Logistic">
+            <summary>The set of "Logistic Width" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Width.Logistic.InMetres">
+            <summary>(332n) - Width, diameter, or second dimension, metres. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Width.Logistic.InInches">
+            <summary>(344n) - Width, diameter, or second dimension, inches. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Width.Logistic.InFeet">
+            <summary>(345n) - Width, diameter, or second dimension, feet. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Width.Logistic.InYards">
+            <summary>(346n) - Width, diameter, or second dimension, yards. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Height">
+            <summary>The set of "Height" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Height.InMetres">
+            <summary>(313n) - Depth, thickness, height, or third dimension, metres (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Height.InInches">
+            <summary>(327n) - Depth, thickness, height, or third dimension, inches (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Height.InFeet">
+            <summary>(328n) - Depth, thickness, height, or third dimension, feet (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Height.InYards">
+            <summary>(329n) - Depth, thickness, height, or third dimension, yards (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Height.Logistic">
+            <summary>The set of "Logistic Height" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Height.Logistic.InMetres">
+            <summary>(333n) - Depth, thickness, height, or third dimension, metres. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Height.Logistic.InInches">
+            <summary>(347n) - Depth, thickness, height, or third dimension, inches. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Height.Logistic.InFeet">
+            <summary>(348n) - Depth, thickness, height, or third dimension, feet. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Height.Logistic.InYards">
+            <summary>(349n) - Depth, thickness, height, or third dimension, yards. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Weight">
+            <summary>The set of "Weight" application identifiers.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Weight.Net">
+            <summary>The set of "Net Weight" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Weight.Net.InKG">
+            <summary>(310n) - Net weight, kilograms (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Weight.Net.InLB">
+            <summary>(320n) - Net weight, pounds (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Weight.Net.InOz">
+            <summary>(357n) - Net weight (or volume), ounces (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Weight.Net.InTroyOz">
+            <summary>(356n) - Net weight, troy ounces (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Weight.Gross">
+            <summary>The set of "Gross Weight" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Weight.Gross.InKG">
+            <summary>(330n) - Logistic weight, kilograms. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Weight.Gross.InLB">
+            <summary>(340n) - Logistic weight, pounds. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Area">
+            <summary>The set of "Area" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Area.InSqrMetres">
+            <summary>(314n) - Area, square metres (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Area.InSqrInches">
+            <summary>(350n) - Area, square inches (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Area.InSqrFeet">
+            <summary>(351n) - Area, square feet (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Area.InSqrYards">
+            <summary>(352n) - Area, square yards (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Area.Logistic">
+            <summary>The set of "Logistic Area" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Area.Logistic.InSqrMetres">
+            <summary>(334n) - Area, square metres. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Area.Logistic.InSqrInches">
+            <summary>(353n) - Area, square inches. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Area.Logistic.InSqrFeet">
+            <summary>(354n) - Area, square feet. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Area.Logistic.InSqrYards">
+            <summary>(355n) - Area, square yards. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Volume">
+            <summary>The set of "Volume" application identifiers.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Volume.Net">
+            <summary>The set of "Net Volume" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Net.InLitres">
+            <summary>(315n) - Net volume, litres (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Net.InCubicMetres">
+            <summary>(316n) - Net volume, cubic metres (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Net.InQuarts">
+            <summary>(360n) - Net volume, quarts (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Net.InGallonsUS">
+            <summary>(361n) - Net volume, gallons U.S. (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Net.InCubicInches">
+            <summary>(364n) - Net volume, cubic inches (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Net.InCubicFeet">
+            <summary>(365n) - Net volume, cubic feet (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Net.InCubicYards">
+            <summary>(366n) - Net volume, cubic yards (variable measure trade item). A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.Volume.Logistic">
+            <summary>The set of "Logistic Volume" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Logistic.InLitres">
+            <summary>(335n) - Logistic volume, litres. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Logistic.InCubicMetres">
+            <summary>(336n) - Logistic volume, cubic metres. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Logistic.InQuarts">
+            <summary>(362n) - Logistic volume, quarts. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Logistic.InGallonsUS">
+            <summary>(363n) - Logistic volume, gallons U.S. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Logistic.InCubicInches">
+            <summary>(367n) - Logistic volume, cubic inches. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Logistic.InCubicFeet">
+            <summary>(368n) - Logistic volume, cubic feet. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Volume.Logistic.InCubicYards">
+            <summary>(369n) - Logistic volume, cubic yards. A value has a fixed length of 6 digits. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Count">
+            <summary>(37) - Count of trade items or trade item pieces contained in a logistic unit. A value has a variable length of 8 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Amount">
+            <summary>(390n) - Applicable amount payable or Coupon value, local currency. A value has a variable length of 15 digits maximum. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.AmountCury">
+            <summary>(391n) - Applicable amount payable with ISO currency code. A value has a variable length of 18 digits maximum. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Price">
+            <summary>(392n) - Applicable amount payable, single monetary area (variable measure trade item). A value has a variable length of 15 digits maximum. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PriceCury">
+            <summary>(393n) - Applicable amount payable with ISO currency code (variable measure trade item). A value has a variable length of 18 digits maximum. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PercentOff">
+            <summary>(394n) - Percentage discount of a coupon. A value has a variable length of 4 digits maximum. The "n" symbol of the code stands for a number of decimal places of the value.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.OrderNbr">
+            <summary>(400) - Customer's purchase order number. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GINC">
+            <summary>(401) - Global Identification Number for Consignment (GINC). A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GSIN">
+            <summary>(402) - Global Shipment Identification Number (GSIN). A value has a variable length of 17 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Route">
+            <summary>(403) - Routing code. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ShipToLocation">
+            <summary>(410) - Ship to - Deliver to Global Location Number. A value has a fixed length of 13 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.BillToLocation">
+            <summary>(411) - Bill to - Invoice to Global Location Number. A value has a fixed length of 13 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PurchaseFromLocation">
+            <summary>(412) - Purchased from Global Location Number. A value has a fixed length of 13 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ShipForLocation">
+            <summary>(413) - Ship for - Deliver for - Forward to Global Location Number. A value has a fixed length of 13 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.LocationNbr">
+            <summary>(414) - Identification of a physical location - Global Location Number. A value has a fixed length of 13 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PayTo">
+            <summary>(415) - Global Location Number of the invoicing party. A value has a fixed length of 13 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ProdOrServiceLocation">
+            <summary>(416) - GLN of the production or service location. A value has a fixed length of 13 digits.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ShipToPost">
+            <summary>(420) - Ship to - Deliver to postal code within a single postal authority. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ShipToPostCountry">
+            <summary>(421) - Ship to - Deliver to postal code with ISO country code. A value has a variable length of 12 alphanumeric symbols.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.CountryOf">
+            <summary>The set of "Country of ..." application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CountryOf.Origin">
+            <summary>(422) - Country of origin of a trade item. A value has a variable length of 3 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CountryOf.InitProcessing">
+            <summary>(423) - Country of initial processing. A value has a variable length of 15 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CountryOf.Processing">
+            <summary>(424) - Country of processing. A value has a variable length of 3 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CountryOf.Disassembly">
+            <summary>(425) - Country of disassembly. A value has a variable length of 15 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CountryOf.FullProcess">
+            <summary>(426) - Country covering full process chain. A value has a variable length of 3 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CountryOf.OriginSubdivision">
+            <summary>(427) - Country subdivision of origin. A value has a variable length of 3 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.NSN">
+            <summary>(7001) - NATO Stock Number (NSN). A value has a variable length of 13 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.MeatCut">
+            <summary>(7002) - UN/ECE meat carcasses and cuts classification. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ExpiryTime">
+            <summary>(7003) - Expiration date and time. A value has a variable length of 10 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ActivePotency">
+            <summary>(7004) - Active potency. A value has a variable length of 4 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CatchArea">
+            <summary>(7005) - Catch area. A value has a variable length of 12 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.FirstFreezeDate">
+            <summary>(7006) - First freeze date. A value has a variable length of 6 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.HarvestDate">
+            <summary>(7007) - Harvest date. A value has a variable length of 12 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.AquaticSpecies">
+            <summary>(7008) - Species for fishery purposes. A value has a variable length of 3 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.FishingGearType">
+            <summary>(7009) - Fishing gear type. A value has a variable length of 10 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ProductionMethod">
+            <summary>(7010) - Production method. A value has a variable length of 2 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.RefurbishmentLot">
+            <summary>(7020) - Refurbishment lot ID. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.FunctionalStatus">
+            <summary>(7021) - Functional status. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.RevisionStatus">
+            <summary>(7022) - Revision status. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GIAIofAssembly">
+            <summary>(7023) - Global Individual Asset Identifier (GIAI) of an assembly. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ProcessorNbr">
+            <summary>(703s) - Number of processor with ISO Country Code. A value has a variable length of 30 alphanumeric symbols. The "s" symbol of the code stands for the sequence number, allowing for multiple occurences of the AI.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.NHRN">
+            <summary>The set of "National Healthcare Reimbursement Number (NHRN)" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.NHRN.PZN">
+            <summary>(710) - National Healthcare Reimbursement Number (NHRN) – Germany PZN. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.NHRN.CIP">
+            <summary>(711) - National Healthcare Reimbursement Number (NHRN) – France CIP. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.NHRN.CN">
+            <summary>(712) - National Healthcare Reimbursement Number (NHRN) – Spain CN. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.NHRN.DRN">
+            <summary>(713) - National Healthcare Reimbursement Number (NHRN) – Brasil DRN. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.NHRN.AIM">
+            <summary>(714) - National Healthcare Reimbursement Number (NHRN) – Portugal AIM. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CertificationReference">
+            <summary>(723s) - Certification reference. A value has a variable length of 30 alphanumeric symbols. The "s" symbol of the code stands for the sequence number, allowing for multiple occurences of the AI.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.Dimensions">
+            <summary>(8001) - Roll products (width, length, core diameter, direction, splices). A value has a variable length of 14 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CMT">
+            <summary>(8002) - Cellular mobile telephone identifier. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GRAI">
+            <summary>(8003) - Global Returnable Asset Identifier (GRAI). A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GIAI">
+            <summary>(8004) - Global Individual Asset Identifier (GIAI). A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PricePerUnit">
+            <summary>(8005) - Price per unit of measure. A value has a variable length of 6 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ITIP">
+            <summary>(8006) - Identification of an individual trade item piece. A value has a variable length of 16 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.IBAN">
+            <summary>(8007) - International Bank Account Number (IBAN). A value has a variable length of 34 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ProductionTime">
+            <summary>(8008) - Date and time of production. A value has a variable length of 12 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.OPTSEN">
+            <summary>(8009) - Optically Readable Sensor Indicator. A value has a variable length of 50 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CPID">
+            <summary>(8010) - Component/Part Identifier (CPID). A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CPIDSerial">
+            <summary>(8011) - Component/Part Identifier serial number (CPID SERIAL). A value has a variable length of 12 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.SoftwareVersion">
+            <summary>(8012) - Software version. A value has a variable length of 20 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GMN">
+            <summary>(8013) - Global Model Number (GMN). A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GSRNProvider">
+            <summary>(8017) - Global Service Relation Number to identify the relationship between an organisation offering services and the provider of services. A value has a variable length of 18 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.GSRNRecipient">
+            <summary>(8018) - Global Service Relation Number to identify the relationship between an organisation offering services and the recipient of services. A value has a variable length of 18 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.SRIN">
+            <summary>(8019) - Service Relation Instance Number (SRIN). A value has a variable length of 10 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PaymentSlipRefNbr">
+            <summary>(8020) - Payment slip reference number. A value has a variable length of 25 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ITIPContent">
+            <summary>(8026) - Identification of pieces of a trade item (ITIP) contained in a logistic unit. A value has a variable length of 18 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CCI">
+            <summary>(8110) - Coupon code identification for use in North America. A value has a variable length of 70 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.LoyaltyPoints">
+            <summary>(8111) - Loyalty points of a coupon. A value has a variable length of 4 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PositiveOffer">
+            <summary>(8112) - Positive offer file coupon code identification for use in North America. A value has a variable length of 70 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.ProductURL">
+            <summary>(8200) - Extended Packaging URL. A value has a variable length of 70 digits maximum.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.PartnerInfo">
+            <summary>(90) - Information mutually agreed between trading partners. A value has a variable length of 30 alphanumeric symbols.</summary>
+        </member>
+        <member name="T:PX.Common.GS1.Codes.CompanyInternal">
+            <summary>The set of "Company internal information" application identifiers.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.A">
+            <summary>(91) - Company internal information "A". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.B">
+            <summary>(91) - Company internal information "B". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.C">
+            <summary>(93) - Company internal information "C". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.D">
+            <summary>(94) - Company internal information "D". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.E">
+            <summary>(95) - Company internal information "E". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.F">
+            <summary>(96) - Company internal information "F". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.G">
+            <summary>(97) - Company internal information "G". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.H">
+            <summary>(98) - Company internal information "H". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="F:PX.Common.GS1.Codes.CompanyInternal.I">
+            <summary>(99) - Company internal information "I". A value has a variable length of 90 alphanumeric symbols.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.KilogramCodes">
+            <summary>The set of "Weight in Kilograms" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.PoundCodes">
+            <summary>The set of "Weight in Pounds" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.OunceCodes">
+            <summary>The set of "Weight in Ounces" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.TroyOunceCodes">
+            <summary>The set of "Weight in Troy Ounces" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.KilogramPerSqrMetreCodes">
+            <summary>The set of "Pressure in Kilograms Per Square Metres" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.MetreCodes">
+            <summary>The set of "Linear Dimension in Metres" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.InchCodes">
+            <summary>The set of "Linear Dimension in Inches" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.FootCodes">
+            <summary>The set of "Linear Dimension in Feet" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.YardCodes">
+            <summary>The set of "Linear Dimension in Yards" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.SqrMetreCodes">
+            <summary>The set of "Area in Square Metres" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.SqrInchCodes">
+            <summary>The set of "Area in Square Inches" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.SqrFootCodes">
+            <summary>The set of "Area in Square Feet" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.SqrYardCodes">
+            <summary>The set of "Area in Square Yards" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.CubicMetreCodes">
+            <summary>The set of "Volume in Cubic Metres" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.CubicInchCodes">
+            <summary>The set of "Volume in Cubic Inches" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.CubicFootCodes">
+            <summary>The set of "Volume in Cubic Feet" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.CubicYardCodes">
+            <summary>The set of "Volume in Yards" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.LitreCodes">
+            <summary>The set of "Volume in Litres" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.QuartCodes">
+            <summary>The set of "Volume in Quarts" application identifiers.</summary>
+        </member>
+        <member name="P:PX.Common.GS1.Codes.GallonUSCodes">
+            <summary>The set of "Volume in US Gallons" application identifiers.</summary>
         </member>
         <member name="T:PX.Common.IAsyncOP">
             <summary>
@@ -3841,19 +4455,19 @@
              <c>PXInternalUseOnlyAttribute</c> attribute and consider them internal.</para>
              <para>The following code objects that are not marked with this attribute are considered internal, too:
              <list type="bullet">
-             <item>Types that inherit an internal type</item>
-             <item>Nested types that are declared in an internal type</item>
-             <item>Members of an internal type</item>
-             <item>Methods that override an internal method</item>
-             <item>Properties that override an internal property</item>
-             <item>Events that override an internal event</item>
+             <item><description>Types that inherit an internal type</description></item>
+             <item><description>Nested types that are declared in an internal type</description></item>
+             <item><description>Members of an internal type</description></item>
+             <item><description>Methods that override an internal method</description></item>
+             <item><description>Properties that override an internal property</description></item>
+             <item><description>Events that override an internal event</description></item>
              </list></para>
              <para>However, if a virtual type member is marked with the <c>PXInternalUseOnlyAttribute</c> attribute
              and in a derived class it is shadowed with the <c>new</c> keyword, this member in the
              derived class is not considered as internal.</para>
              </remarks>
-             <example>
-             <code title="Example" description="MyGraphBase, MyGraph, MyGraphExtBase, MyGraphExt, PublicDAC2.InternalString, InternalDAC, InternalDAC.Base, DerivedDAC (due to the recursiveness of declaring an object code internal) are considered internal." lang="CS">
+             <example><para>MyGraphBase, MyGraph, MyGraphExtBase, MyGraphExt, PublicDAC2.InternalString, InternalDAC, InternalDAC.Base, DerivedDAC (due to the recursiveness of declaring an object code internal) are considered internal.</para>
+             <code title="Example" lang="CS">
              [PXInternalUseOnly]
              public class MyGraphBase {}
             

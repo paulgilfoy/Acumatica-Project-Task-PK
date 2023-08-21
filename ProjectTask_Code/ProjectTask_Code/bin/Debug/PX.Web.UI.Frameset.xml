@@ -4,6 +4,11 @@
         <name>PX.Web.UI.Frameset</name>
     </assembly>
     <members>
+        <member name="M:PX.Web.UI.Frameset.ContainerBuilderExtensions.MapExceptionsToStatusCode(Autofac.ContainerBuilder)">
+            <summary>
+                Maps the certain exception types to the certain status codes.
+            </summary>
+        </member>
         <member name="T:PX.Web.UI.Frameset.Model.DAC.MUIAuditFields.createdByID">
             <exclude/>
         </member>
