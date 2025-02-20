@@ -26,7 +26,7 @@ namespace PX.Objects.PM
   {
     #region UsrPGTaskStatus
     [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06}, new string[] {"In Preparation", "Initial Review", "Clearing Points", "In Final Review", "Bill Client", "Complete"})]
+    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09}, new string[] {"In Preparation", "Initial Review", "Waiting on Client", "On Hold", "Stuck, need help", "Clearing Points", "In Final Review", "Bill Client", "Complete"})]
     [PXUIField(DisplayName="Task Status")]
     public virtual int? UsrPGTaskStatus { get; set; }
     public abstract class usrPGTaskStatus : PX.Data.BQL.BqlInt.Field<usrPGTaskStatus> { }

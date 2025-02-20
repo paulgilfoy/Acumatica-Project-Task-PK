@@ -8,18 +8,11 @@ using PX.Objects.EP;
 
 namespace ProjectTask
 {
-  public class Payroll : Constant<string>
-  {
-      public Payroll() : base("02PAYROLL") { }
-  }
-  public class PlanDoc : Constant<string>
-  {
-      public PlanDoc() : base("03PLANDOC") { }
-  }
-  public class PlanDesign : Constant<string>
-  {
-      public PlanDesign() : base("04PLANDESIGN") { }
-  }
+    /// <summary>
+    /// Used in PriceKubecka's 401k audit practice. 
+    /// For the purpose of tracking the gathering of relevant 401k documents 
+    /// The documents will eventually be imported into Autire
+    /// </summary>
     
   [Serializable]
   [PXCacheName("PMDocumentGathering")]
@@ -28,35 +21,30 @@ namespace ProjectTask
     #region ProjectID
     public abstract class projectID : PX.Data.BQL.BqlInt.Field<projectID> { }
 
-        private class Department : Constant<string>
-        {
-            public Department() : base("401K") { }
-        }
-
-		/// copy from PX.Objects.PM.PMTask
-		protected Int32? _ProjectID;
-		[Project(DisplayName = "Project ID", IsKey = true)]
-		[PXParent(typeof(Select<PMProject, Where<PMProject.contractID, Equal<Current<PMDocumentGathering.projectID>>>>))]
-		[PXDBDefault(typeof(PMProject.contractID))]
+    /// copy from PX.Objects.PM.PMTask
+    protected Int32? _ProjectID;
+    [Project(DisplayName = "Project ID", IsKey = true)]
+    [PXParent(typeof(Select<PMProject, Where<PMProject.contractID, Equal<Current<PMDocumentGathering.projectID>>>>))]
+    [PXDBDefault(typeof(PMProject.contractID))]
 
         public virtual Int32? ProjectID
-		{
-			get
-			{
-				return this._ProjectID;
-			}
-			set
-			{
-				this._ProjectID = value;
-			}
-		}
-		#endregion
+    {
+      get
+      {
+        return this._ProjectID;
+      }
+      set
+      {
+        this._ProjectID = value;
+      }
+    }
+    #endregion
 
-    #region Additional_Notes
+    #region AdditionalNotes
     [PXDBString(255, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Additional Notes")]
-    public virtual string Additional_Notes { get; set; }
-    public abstract class additional_Notes : PX.Data.BQL.BqlString.Field<additional_Notes> { }
+    public virtual string AdditionalNotes { get; set; }
+    public abstract class additionalNotes : PX.Data.BQL.BqlString.Field<additionalNotes> { }
     #endregion
 
     #region Active
@@ -70,876 +58,98 @@ namespace ProjectTask
 
     //Payroll Preprocessing
 
-    #region FirstContactDate_Payroll
+    #region FirstContactDatePayroll
     [PXDBDate()]
     [PXUIField(DisplayName = "First Contact")]
-    public virtual DateTime? FirstContactDate_Payroll { get; set; }
-    public abstract class firstContactDate_Payroll : PX.Data.BQL.BqlDateTime.Field<firstContactDate_Payroll> { }
+    public virtual DateTime? FirstContactDatePayroll { get; set; }
+    public abstract class firstContactDatePayroll : PX.Data.BQL.BqlDateTime.Field<firstContactDatePayroll> { }
     #endregion
 
-    #region Notes_Payroll
+    #region NotesPayroll
     [PXDBString(510, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Notes")]
-    public virtual string Notes_Payroll { get; set; }
-    public abstract class notes_Payroll : PX.Data.BQL.BqlString.Field<notes_Payroll> { }
+    public virtual string NotesPayroll { get; set; }
+    public abstract class notesPayroll : PX.Data.BQL.BqlString.Field<notesPayroll> { }
     #endregion
 
-    #region Payroll_Complete
+    #region PayrollComplete
     [PXDBBool()]
     [PXUIField(DisplayName = "Complete")]
-    public virtual bool? Payroll_Complete { get; set; }
-    public abstract class payroll_Complete : PX.Data.BQL.BqlBool.Field<payroll_Complete> { }
+    public virtual bool? PayrollComplete { get; set; }
+    public abstract class payrollComplete : PX.Data.BQL.BqlBool.Field<payrollComplete> { }
+    #endregion
+
+    #region PayrollPreparer
+    [PXDBInt]
+    [PXEPEmployeeSelector]
+    [PXUIField(DisplayName = "Payroll Preparer", Visibility = PXUIVisibility.SelectorVisible)]
+    public virtual int? PayrollPreparer { get; set; }
+    public abstract class payrollPreparer : PX.Data.BQL.BqlInt.Field<payrollPreparer> { }
     #endregion
 
     #region MPR
     [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
     [PXUIField(DisplayName = "MPR")]
     public virtual string MPR { get; set; }
     public abstract class mpr : PX.Data.BQL.BqlString.Field<mpr> { }
     #endregion
 
-    #region MPR_LastModifiedDateTime
+    #region MPRLastModifiedDateTime
     [PXDBDate()]
     [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? MPR_LastModifiedDateTime { get; set; }
-    public abstract class mPR_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<mPR_LastModifiedDateTime> { }
+    public virtual DateTime? MPRLastModifiedDateTime { get; set; }
+    public abstract class mPRLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<mPRLastModifiedDateTime> { }
     #endregion
 
-    #region MPR_LastModUserName
+    #region MPRLastModUserName
     [PXDBString(256, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string MPR_LastModUserName { get; set; }
-    public abstract class mPR_LastModUserName : PX.Data.BQL.BqlString.Field<mPR_LastModUserName> { }
+    public virtual string MPRLastModUserName { get; set; }
+    public abstract class mPRLastModUserName : PX.Data.BQL.BqlString.Field<mPRLastModUserName> { }
     #endregion
 
     #region PayrollVerification
     [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
     [PXUIField(DisplayName = "Payroll Verification")]
     public virtual string PayrollVerification { get; set; }
     public abstract class payrollVerification : PX.Data.BQL.BqlString.Field<payrollVerification> { }
     #endregion
 
-    #region PayrollVer_LastModifiedDateTime
+    #region PayrollVerLastModifiedDateTime
     [PXDBDate()]
     [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PayrollVer_LastModifiedDateTime { get; set; }
-    public abstract class payrollVer_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<payrollVer_LastModifiedDateTime> { }
+    public virtual DateTime? PayrollVerLastModifiedDateTime { get; set; }
+    public abstract class payrollVerLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<payrollVerLastModifiedDateTime> { }
     #endregion
 
-    #region PayrollVer_LastModUserName
+    #region PayrollVerLastModUserName
     [PXDBString(256, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string PayrollVer_LastModUserName { get; set; }
-    public abstract class payrollVer_LastModUserName : PX.Data.BQL.BqlString.Field<payrollVer_LastModUserName> { }
+    public virtual string PayrollVerLastModUserName { get; set; }
+    public abstract class payrollVerLastModUserName : PX.Data.BQL.BqlString.Field<payrollVerLastModUserName> { }
     #endregion
-
-
-    //Plan Documents
-
-    #region FirstContactDate_PlanDocuments
-    [PXDBDate()]
-    [PXUIField(DisplayName = "First Contact")]
-    public virtual DateTime? FirstContactDate_PlanDocuments { get; set; }
-    public abstract class firstContactDate_PlanDocuments : PX.Data.BQL.BqlDateTime.Field<firstContactDate_PlanDocuments> { }
-    #endregion
-
-    #region Notes_PlanDocuments
-    [PXDBString(510, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Notes")]
-    public virtual string Notes_PlanDocuments { get; set; }
-    public abstract class notes_PlanDocuments : PX.Data.BQL.BqlString.Field<notes_PlanDocuments> { }
-    #endregion
-
-    #region PlanDocuments_Complete
-    [PXDBBool()]
-    [PXUIField(DisplayName = "Complete")]
-    public virtual bool? PlanDocuments_Complete { get; set; }
-    public abstract class planDocuments_Complete : PX.Data.BQL.BqlBool.Field<planDocuments_Complete> { }
-    #endregion
-
-    #region SPD
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "SPD")]
-    public virtual string SPD { get; set; }
-    public abstract class spd : PX.Data.BQL.BqlString.Field<spd> { }
-    #endregion
-
-    #region SPD_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? SPD_LastModifiedDateTime { get; set; }
-    public abstract class sPD_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sPD_LastModifiedDateTime> { }
-    #endregion
-
-    #region SPD_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string SPD_LastModUserName { get; set; }
-    public abstract class sPD_LastModUserName : PX.Data.BQL.BqlString.Field<sPD_LastModUserName> { }
-    #endregion
-
-    #region AA
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "AA + (Cycle 3 Amedment)")]
-    public virtual string AA { get; set; }
-    public abstract class aA : PX.Data.BQL.BqlString.Field<aA> { }
-    #endregion
-
-    #region AA_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? AA_LastModifiedDateTime { get; set; }
-    public abstract class aA_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<aA_LastModifiedDateTime> { }
-    #endregion
-
-    #region AA_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string AA_LastModUserName { get; set; }
-    public abstract class aA_LastModUserName : PX.Data.BQL.BqlString.Field<aA_LastModUserName> { }
-    #endregion
-
-
-    #region BPD
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "BPD")]
-    public virtual string BPD { get; set; }
-    public abstract class bpd : PX.Data.BQL.BqlString.Field<bpd> { }
-    #endregion
-
-    #region BPD_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? BPD_LastModifiedDateTime { get; set; }
-    public abstract class bPD_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<bPD_LastModifiedDateTime> { }
-    #endregion
-
-    #region BPD_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string BPD_LastModUserName { get; set; }
-    public abstract class bPD_LastModUserName : PX.Data.BQL.BqlString.Field<bPD_LastModUserName> { }
-    #endregion
-
-
-    #region IRS
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "IRS Opinion Letter")]
-    public virtual string IRS { get; set; }
-    public abstract class irs : PX.Data.BQL.BqlString.Field<irs> { }
-    #endregion
-
-    #region IRS_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? IRS_LastModifiedDateTime { get; set; }
-    public abstract class iRS_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<iRS_LastModifiedDateTime> { }
-    #endregion
-
-    #region IRS_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string IRS_LastModUserName { get; set; }
-    public abstract class iRS_LastModUserName : PX.Data.BQL.BqlString.Field<iRS_LastModUserName> { }
-    #endregion
-
-
-    #region SATrustree
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "SA - Trustree/Custodian")]
-    public virtual string SATrustree { get; set; }
-    public abstract class sATrustree : PX.Data.BQL.BqlString.Field<sATrustree> { }
-    #endregion
-
-    #region SATrustree_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? SATrustree_LastModifiedDateTime { get; set; }
-    public abstract class sATrustree_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sATrustree_LastModifiedDateTime> { }
-    #endregion
-
-    #region SATrustree_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string SATrustree_LastModUserName { get; set; }
-    public abstract class sATrustree_LastModUserName : PX.Data.BQL.BqlString.Field<sATrustree_LastModUserName> { }
-    #endregion
-
-
-    #region SATPA
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "SA - TPA")]
-    public virtual string SATPA { get; set; }
-    public abstract class sATPA : PX.Data.BQL.BqlString.Field<sATPA> { }
-    #endregion
-
-    #region SATPA_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? SATPA_LastModifiedDateTime { get; set; }
-    public abstract class sATPA_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sATPA_LastModifiedDateTime> { }
-    #endregion
-
-    #region SATPA_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string SATPA_LastModUserName { get; set; }
-    public abstract class sATPA_LastModUserName : PX.Data.BQL.BqlString.Field<sATPA_LastModUserName> { }
-    #endregion
-
-    #region SAInvestment
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "SA - Investment Advisor")]
-    public virtual string SAInvestment { get; set; }
-    public abstract class sAInvestment : PX.Data.BQL.BqlString.Field<sAInvestment> { }
-    #endregion
-
-    #region SAInvestment_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? SAInvestment_LastModifiedDateTime { get; set; }
-    public abstract class sAInvestment_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sAInvestment_LastModifiedDateTime> { }
-    #endregion
-
-    #region SAInvestment_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string SAInvestment_LastModUserName { get; set; }
-    public abstract class sAInvestment_LastModUserName : PX.Data.BQL.BqlString.Field<sAInvestment_LastModUserName> { }
-    #endregion
-
-    #region LoanPolicy
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "Loan Policy")]
-    public virtual string LoanPolicy { get; set; }
-    public abstract class loanPolicy : PX.Data.BQL.BqlString.Field<loanPolicy> { }
-    #endregion
-
-    #region LoanPolicy_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? LoanPolicy_LastModifiedDateTime { get; set; }
-    public abstract class loanPolicy_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<loanPolicy_LastModifiedDateTime> { }
-    #endregion
-
-    #region LoanPolicy_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string LoanPolicy_LastModUserName { get; set; }
-    public abstract class loanPolicy_LastModUserName : PX.Data.BQL.BqlString.Field<loanPolicy_LastModUserName> { }
-    #endregion
-
-    #region QDIA
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "QDIA")]
-    public virtual string QDIA { get; set; }
-    public abstract class qDIA : PX.Data.BQL.BqlString.Field<qDIA> { }
-    #endregion
-
-    #region QDIA_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? QDIA_LastModifiedDateTime { get; set; }
-    public abstract class qDIA_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<qDIA_LastModifiedDateTime> { }
-    #endregion
-
-    #region QDIA_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string QDIA_LastModUserName { get; set; }
-    public abstract class qDIA_LastModUserName : PX.Data.BQL.BqlString.Field<qDIA_LastModUserName> { }
-    #endregion
-
-
-    //PlanDoc Preprocessing
-
-    #region FirstContactDate_PlanDocPreproc
-    [PXDBDate()]
-    [PXUIField(DisplayName = "First Contact")]
-    public virtual DateTime? FirstContactDate_PlanDocPreproc { get; set; }
-    public abstract class firstContactDate_PlanDocPreproc : PX.Data.BQL.BqlDateTime.Field<firstContactDate_PlanDocPreproc> { }
-    #endregion
-
-    #region Notes_PlanDocPreproc
-    [PXDBString(510, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Notes")]
-    public virtual string Notes_PlanDocPreproc { get; set; }
-    public abstract class notes_PlanDocPreproc : PX.Data.BQL.BqlString.Field<notes_PlanDocPreproc> { }
-    #endregion
-
-    #region PlanDocPreproc_Complete
-    [PXDBBool()]
-    [PXUIField(DisplayName = "Complete")]
-    public virtual bool? PlanDocPreproc_Complete { get; set; }
-    public abstract class planDocPreproc_Complete : PX.Data.BQL.BqlBool.Field<planDocPreproc_Complete> { }
-    #endregion
-
-    #region EC
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "EC")]
-    public virtual string EC { get; set; }
-    public abstract class eC : PX.Data.BQL.BqlString.Field<eC> { }
-    #endregion
-
-    #region EC_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? EC_LastModifiedDateTime { get; set; }
-    public abstract class eC_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<eC_LastModifiedDateTime> { }
-    #endregion
-
-    #region EC_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string EC_LastModUserName { get; set; }
-    public abstract class eC_LastModUserName : PX.Data.BQL.BqlString.Field<eC_LastModUserName> { }
-    #endregion
-
-
-    #region PAS
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "PAS")]
-    public virtual string PAS { get; set; }
-    public abstract class pAS : PX.Data.BQL.BqlString.Field<pAS> { }
-    #endregion
-
-    #region PAS_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PAS_LastModifiedDateTime { get; set; }
-    public abstract class pAS_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pAS_LastModifiedDateTime> { }
-    #endregion
-
-    #region PAS_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string PAS_LastModUserName { get; set; }
-    public abstract class pAS_LastModUserName : PX.Data.BQL.BqlString.Field<pAS_LastModUserName> { }
-    #endregion
-
-
-    #region Cont
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "Cont")]
-    public virtual string Cont { get; set; }
-    public abstract class cont : PX.Data.BQL.BqlString.Field<cont> { }
-    #endregion
-
-    #region Cont_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? Cont_LastModifiedDateTime { get; set; }
-    public abstract class cont_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<cont_LastModifiedDateTime> { }
-    #endregion
-
-    #region Cont_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string Cont_LastModUserName { get; set; }
-    public abstract class cont_LastModUserName : PX.Data.BQL.BqlString.Field<cont_LastModUserName> { }
-    #endregion
-
-
-    #region Dist
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "Dist")]
-    public virtual string Dist { get; set; }
-    public abstract class dist : PX.Data.BQL.BqlString.Field<dist> { }
-    #endregion
-
-    #region Dist_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? Dist_LastModifiedDateTime { get; set; }
-    public abstract class dist_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<dist_LastModifiedDateTime> { }
-    #endregion
-
-    #region Dist_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string Dist_LastModUserName { get; set; }
-    public abstract class dist_LastModUserName : PX.Data.BQL.BqlString.Field<dist_LastModUserName> { }
-    #endregion
-
-
-    #region Loans
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "Loans")]
-    public virtual string Loans { get; set; }
-    public abstract class loans : PX.Data.BQL.BqlString.Field<loans> { }
-    #endregion
-
-    #region Loans_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? Loans_LastModifiedDateTime { get; set; }
-    public abstract class loans_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<loans_LastModifiedDateTime> { }
-    #endregion
-
-    #region Loans_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string Loans_LastModUserName { get; set; }
-    public abstract class loans_LastModUserName : PX.Data.BQL.BqlString.Field<loans_LastModUserName> { }
-    #endregion
-
-
-    #region DefElection
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "Def Elections and Changes")]
-    public virtual string DefElection { get; set; }
-    public abstract class defElection : PX.Data.BQL.BqlString.Field<defElection> { }
-    #endregion
-
-    #region DefElection_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? DefElection_LastModifiedDateTime { get; set; }
-    public abstract class defElection_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<defElection_LastModifiedDateTime> { }
-    #endregion
-
-    #region DefElection_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string DefElection_LastModUserName { get; set; }
-    public abstract class defElection_LastModUserName : PX.Data.BQL.BqlString.Field<defElection_LastModUserName> { }
-    #endregion
-
-
-    //Plan Design
-
-    #region FirstContactDate_PlanDesign
-    [PXDBDate()]
-    [PXUIField(DisplayName = "First Contact")]
-    public virtual DateTime? FirstContactDate_PlanDesign { get; set; }
-    public abstract class firstContactDate_PlanDesign : PX.Data.BQL.BqlDateTime.Field<firstContactDate_PlanDesign> { }
-    #endregion
-
-    #region Notes_PlanDesign
-    [PXDBString(510, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Notes")]
-    public virtual string Notes_PlanDesign { get; set; }
-    public abstract class notes_PlanDesign : PX.Data.BQL.BqlString.Field<notes_PlanDesign> { }
-    #endregion
-
-    #region PlanDesign_Complete
-    [PXDBBool()]
-    [PXUIField(DisplayName = "Complete")]
-    public virtual bool? PlanDesign_Complete { get; set; }
-    public abstract class planDesign_Complete : PX.Data.BQL.BqlBool.Field<planDesign_Complete> { }
-    #endregion
-
-    #region PlanProvisions
-    [PXDBString(2)]
-    [PXStringList(new string[] {"WI", "IP", "CM"}, new string[] {"Waiting on Info", "In Process", "Completed"})]
-    [PXUIField(DisplayName = "Relevant Plan Provisions")]
-    public virtual string PlanProvisions { get; set; }
-    public abstract class planProvisions : PX.Data.BQL.BqlString.Field<planProvisions> { }
-    #endregion
-
-    #region PlanProvisions_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PlanProvisions_LastModifiedDateTime { get; set; }
-    public abstract class planProvisions_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<planProvisions_LastModifiedDateTime> { }
-    #endregion
-
-    #region PlanProvisions_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string PlanProvisions_LastModUserName { get; set; }
-    public abstract class planProvisions_LastModUserName : PX.Data.BQL.BqlString.Field<planProvisions_LastModUserName> { }
-    #endregion
-
-    #region PreProcessDate
-    [PXDBString(2)]
-    [PXStringList(new string[] {"WI", "IP", "CM"}, new string[] {"Waiting on Info", "In Process", "Completed"})]
-    [PXUIField(DisplayName = "Submitted for PreProcess Date")]
-    public virtual string PreProcessDate { get; set; }
-    public abstract class preProcessDate : PX.Data.BQL.BqlString.Field<preProcessDate> { }
-    #endregion
-
-    #region PreProcessDate_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PreProcessDate_LastModifiedDateTime { get; set; }
-    public abstract class preProcessDate_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<preProcessDate_LastModifiedDateTime> { }
-    #endregion
-
-    #region PreProcessDate_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string PreProcessDate_LastModUserName { get; set; }
-    public abstract class preProcessDate_LastModUserName : PX.Data.BQL.BqlString.Field<preProcessDate_LastModUserName> { }
-    #endregion
-
-    //Annual Documents
-
-    #region FirstContactDate_AnnualDocuments
-    [PXDBDate()]
-    [PXUIField(DisplayName = "First Contact")]
-    public virtual DateTime? FirstContactDate_AnnualDocuments { get; set; }
-    public abstract class firstContactDate_AnnualDocuments : PX.Data.BQL.BqlDateTime.Field<firstContactDate_AnnualDocuments> { }
-    #endregion
-
-    #region Notes_AnnualDocuments
-    [PXDBString(510, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Notes")]
-    public virtual string Notes_AnnualDocuments { get; set; }
-    public abstract class notes_AnnualDocuments : PX.Data.BQL.BqlString.Field<notes_AnnualDocuments> { }
-    #endregion
-
-    #region AnnualDocuments_Complete
-    [PXDBBool()]
-    [PXUIField(DisplayName = "Complete")]
-    public virtual bool? AnnualDocuments_Complete { get; set; }
-    public abstract class annualDocuments_Complete : PX.Data.BQL.BqlBool.Field<annualDocuments_Complete> { }
-    #endregion
-
-    #region Form_5500
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "5500")]
-    public virtual string Form_5500 { get; set; }
-    public abstract class form_5500 : PX.Data.BQL.BqlString.Field<form_5500> { }
-    #endregion
-
-    #region Form_5500_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? Form_5500_LastModifiedDateTime { get; set; }
-    public abstract class form_5500_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<form_5500_LastModifiedDateTime> { }
-    #endregion
-
-    #region Form_5500_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string Form_5500_LastModUserName { get; set; }
-    public abstract class form_5500_LastModUserName : PX.Data.BQL.BqlString.Field<form_5500_LastModUserName> { }
-    #endregion
-
-
-    #region TrustState
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "Trust Statement")]
-    public virtual string TrustState { get; set; }
-    public abstract class trustState : PX.Data.BQL.BqlString.Field<trustState> { }
-    #endregion
-
-    #region TrustState_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? TrustState_LastModifiedDateTime { get; set; }
-    public abstract class trustState_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<trustState_LastModifiedDateTime> { }
-    #endregion
-
-    #region TrustState_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string TrustState_LastModUserName { get; set; }
-    public abstract class trustState_LastModUserName : PX.Data.BQL.BqlString.Field<trustState_LastModUserName> { }
-    #endregion
-
-
-    #region TrustCert
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "Trust Certification")]
-    public virtual string TrustCert { get; set; }
-    public abstract class trustCert : PX.Data.BQL.BqlString.Field<trustCert> { }
-    #endregion
-
-    #region TrustCert_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? TrustCert_LastModifiedDateTime { get; set; }
-    public abstract class trustCert_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<trustCert_LastModifiedDateTime> { }
-    #endregion
-
-    #region TrustCert_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string TrustCert_LastModUserName { get; set; }
-    public abstract class trustCert_LastModUserName : PX.Data.BQL.BqlString.Field<trustCert_LastModUserName> { }
-    #endregion
-
-
-    #region FidelityBond
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "Fidelity Bond")]
-    public virtual string FidelityBond { get; set; }
-    public abstract class fidelityBond : PX.Data.BQL.BqlString.Field<fidelityBond> { }
-    #endregion
-
-    #region FidelityBond_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? FidelityBond_LastModifiedDateTime { get; set; }
-    public abstract class fidelityBond_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<fidelityBond_LastModifiedDateTime> { }
-    #endregion
-
-    #region FidelityBond_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string FidelityBond_LastModUserName { get; set; }
-    public abstract class fidelityBond_LastModUserName : PX.Data.BQL.BqlString.Field<fidelityBond_LastModUserName> { }
-    #endregion
-
-
-    #region ComplianceTest
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "Compliance Testing")]
-    public virtual string ComplianceTest { get; set; }
-    public abstract class complianceTest : PX.Data.BQL.BqlString.Field<complianceTest> { }
-    #endregion
-
-    #region ComplianceTest_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? ComplianceTest_LastModifiedDateTime { get; set; }
-    public abstract class complianceTest_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<complianceTest_LastModifiedDateTime> { }
-    #endregion
-
-    #region ComplianceTest_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string ComplianceTest_LastModUserName { get; set; }
-    public abstract class complianceTest_LastModUserName : PX.Data.BQL.BqlString.Field<complianceTest_LastModUserName> { }
-    #endregion
-
-
-    #region RKFeeDisc
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost"})]
-    [PXUIField(DisplayName = "RK Fee Disc")]
-    public virtual string RKFeeDisc { get; set; }
-    public abstract class rKFeeDisc : PX.Data.BQL.BqlString.Field<rKFeeDisc> { }
-    #endregion
-
-    #region RKFeeDisc_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? RKFeeDisc_LastModifiedDateTime { get; set; }
-    public abstract class rKFeeDisc_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<rKFeeDisc_LastModifiedDateTime> { }
-    #endregion
-
-    #region RKFeeDisc_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string RKFeeDisc_LastModUserName { get; set; }
-    public abstract class rKFeeDisc_LastModUserName : PX.Data.BQL.BqlString.Field<rKFeeDisc_LastModUserName> { }
-    #endregion
-
-
-    #region InvestAllocation
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "Investment Allocation Report")]
-    public virtual string InvestAllocation { get; set; }
-    public abstract class investAllocation : PX.Data.BQL.BqlString.Field<investAllocation> { }
-    #endregion
-
-    #region InvestAllocation_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? InvestAllocation_LastModifiedDateTime { get; set; }
-    public abstract class investAllocation_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<investAllocation_LastModifiedDateTime> { }
-    #endregion
-
-    #region InvestAllocation_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string InvestAllocation_LastModUserName { get; set; }
-    public abstract class investAllocation_LastModUserName : PX.Data.BQL.BqlString.Field<investAllocation_LastModUserName> { }
-    #endregion
-
-
-    //First Year PK
-
-    #region FirstContactDate_FirstYearPK
-    [PXDBDate()]
-    [PXUIField(DisplayName = "First Contact")]
-    public virtual DateTime? FirstContactDate_FirstYearPK { get; set; }
-    public abstract class firstContactDate_FirstYearPK : PX.Data.BQL.BqlDateTime.Field<firstContactDate_FirstYearPK> { }
-    #endregion
-
-    #region Notes_FirstYearPK
-    [PXDBString(510, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Notes")]
-    public virtual string Notes_FirstYearPK { get; set; }
-    public abstract class notes_FirstYearPK : PX.Data.BQL.BqlString.Field<notes_FirstYearPK> { }
-    #endregion
-
-    #region FirstYearPK_Complete
-    [PXDBBool()]
-    [PXUIField(DisplayName = "Complete")]
-    public virtual bool? FirstYearPK_Complete { get; set; }
-    public abstract class firstYearPK_Complete : PX.Data.BQL.BqlBool.Field<firstYearPK_Complete> { }
-    #endregion
-
-    #region ClientAuth
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "Client Authorization Letter")]
-    public virtual string ClientAuth { get; set; }
-    public abstract class clientAuth : PX.Data.BQL.BqlString.Field<clientAuth> { }
-    #endregion
-
-    #region ClientAuth_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? ClientAuth_LastModifiedDateTime { get; set; }
-    public abstract class clientAuth_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<clientAuth_LastModifiedDateTime> { }
-    #endregion
-
-    #region ClientAuth_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string ClientAuth_LastModUserName { get; set; }
-    public abstract class clientAuth_LastModUserName : PX.Data.BQL.BqlString.Field<clientAuth_LastModUserName> { }
-    #endregion
-
-
-    #region Communication
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "Communication with Predecessor Auditor")]
-    public virtual string Communication { get; set; }
-    public abstract class communication : PX.Data.BQL.BqlString.Field<communication> { }
-    #endregion
-
-    #region Communication_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? Communication_LastModifiedDateTime { get; set; }
-    public abstract class communication_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<communication_LastModifiedDateTime> { }
-    #endregion
-
-    #region Communication_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string Communication_LastModUserName { get; set; }
-    public abstract class communication_LastModUserName : PX.Data.BQL.BqlString.Field<communication_LastModUserName> { }
-    #endregion
-
-
-    #region PY5500
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "PY 5500")]
-    public virtual string PY5500 { get; set; }
-    public abstract class pY5500 : PX.Data.BQL.BqlString.Field<pY5500> { }
-    #endregion
-
-    #region PY5500_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PY5500_LastModifiedDateTime { get; set; }
-    public abstract class pY5500_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pY5500_LastModifiedDateTime> { }
-    #endregion
-
-    #region PY5500_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string PY5500_LastModUserName { get; set; }
-    public abstract class pY5500_LastModUserName : PX.Data.BQL.BqlString.Field<pY5500_LastModUserName> { }
-    #endregion
-
-
-    #region PYTrustState
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "PY Trust Statement")]
-    public virtual string PYTrustState { get; set; }
-    public abstract class pYTrustState : PX.Data.BQL.BqlString.Field<pYTrustState> { }
-    #endregion
-
-    #region PYTrustState_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PYTrustState_LastModifiedDateTime { get; set; }
-    public abstract class pYTrustState_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYTrustState_LastModifiedDateTime> { }
-    #endregion
-
-    #region PYTrustState_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string PYTrustState_LastModUserName { get; set; }
-    public abstract class pYTrustState_LastModUserName : PX.Data.BQL.BqlString.Field<pYTrustState_LastModUserName> { }
-    #endregion
-
-
-    #region PYTrustCert
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "PY Trust Certification")]
-    public virtual string PYTrustCert { get; set; }
-    public abstract class pYTrustCert : PX.Data.BQL.BqlString.Field<pYTrustCert> { }
-    #endregion
-
-    #region PYTrustCert_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PYTrustCert_LastModifiedDateTime { get; set; }
-    public abstract class pYTrustCert_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYTrustCert_LastModifiedDateTime> { }
-    #endregion
-
-    #region PYTrustCert_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string PYTrustCert_LastModUserName { get; set; }
-    public abstract class pYTrustCert_LastModUserName : PX.Data.BQL.BqlString.Field<pYTrustCert_LastModUserName> { }
-    #endregion
-
-
-    #region PYCompliance
-    [PXDBString(2)]
-    [PXStringList(new string[] {"C1", "C2", "CC", "WI", "IP", "CM", "GH", "NA"}, new string[] {"Client Contacted 1", "Client Contacted 2", "Client Called", "Waiting on Info", "In Process", "Completed", "Ghost", "n/a"})]
-    [PXUIField(DisplayName = "PY Compliance Testing")]
-    public virtual string PYCompliance { get; set; }
-    public abstract class pYCompliance : PX.Data.BQL.BqlString.Field<pYCompliance> { }
-    #endregion
-
-    #region PYCompliance_LastModifiedDateTime
-    [PXDBDate()]
-    [PXUIField(DisplayName = "Last Modified")]
-    public virtual DateTime? PYCompliance_LastModifiedDateTime { get; set; }
-    public abstract class pYCompliance_LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYCompliance_LastModifiedDateTime> { }
-    #endregion
-
-    #region PYCompliance_LastModUserName
-    [PXDBString(256, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Last Modified By")]
-    public virtual string PYCompliance_LastModUserName { get; set; }
-    public abstract class pYCompliance_LastModUserName : PX.Data.BQL.BqlString.Field<pYCompliance_LastModUserName> { }
-    #endregion
-
-
-    //v1.02 
 
     #region RKAccess
     [PXDBString(2)]
-    [PXStringList(new string[] {"RQ", "CM", "NA"}, new string[] {"Requested", "Complete", "n/a"})]
+    [PXStringList(new string[] { AccessStatus.Requested, AccessStatus.Completed, AccessStatus.NA}, new string[] {MessageAccessStatus.Requested, MessageAccessStatus.Completed, MessageAccessStatus.NA})]
     [PXUIField(DisplayName = "RK Access")]
     public virtual string RKAccess { get; set; }
     public abstract class rKAccess : PX.Data.BQL.BqlString.Field<rKAccess> { }
@@ -947,7 +157,63 @@ namespace ProjectTask
     
     #region PayrollProvider
     [PXDBString(3)]
-    [PXStringList(new string[] {"AD1", "AD2", "AD3", "APS", "CBI", "CPS", "CPA", "DPS", "EHR", "GAP", "HPS", "ISH", "KBP", "NET", "PCX", "PSW", "PCR", "PLC", "PDY", "PMR", "PRO", "PYT", "UKG", "VSW", "OPP"}, new string[] {"ADP", "ADP Autopay", "ADP Workforce Now", "Alliance Payroll Services, Inc.", "CBIZ, Inc.", "Coastal Payroll Services, Inc.", "CertiPay America, LLC", "Dominion Payroll Services", "ExponentHR", "G&A Partners", "Heartland Payroll Solutions, Inc.", "iSolved HCM, LLC", "Kelly Benefits Payroll", "Netchex", "Paychex, Inc.", "Paycom Software, Inc.", "Paycor, Inc.", "Paylocity Corporation", "Payday LLC", "PayMaster, Inc.", "Proliant Inc.", "Paytime", "Ultimate Kronos Group Incorporated", "Viventium Softwre, Inc.", "Other Payroll Provider"})]
+    [PXStringList(
+            new string[] 
+            {
+                PayrollProviderList.ADP1,
+                PayrollProviderList.ADP2,
+                PayrollProviderList.ADP3,
+                PayrollProviderList.Alliance,
+                PayrollProviderList.CBIZ,
+                PayrollProviderList.CertiPay,
+                PayrollProviderList.Coastal,
+                PayrollProviderList.Dominion,
+                PayrollProviderList.ExponentHR,
+                PayrollProviderList.GAPartners,
+                PayrollProviderList.Heartland,
+                PayrollProviderList.ISolved,
+                PayrollProviderList.Kelly,
+                PayrollProviderList.Netchex,
+                PayrollProviderList.Paychex,
+                PayrollProviderList.Paycom,
+                PayrollProviderList.Paycor,
+                PayrollProviderList.Payday,
+                PayrollProviderList.Paylocity,
+                PayrollProviderList.PayMaster,
+                PayrollProviderList.Paytime,
+                PayrollProviderList.Proliant,
+                PayrollProviderList.Ultimate,
+                PayrollProviderList.Viventium,
+                PayrollProviderList.OtherPR
+            },
+            new string[]
+            {
+                MessagePayrollProviderList.ADP1,
+                MessagePayrollProviderList.ADP2,
+                MessagePayrollProviderList.ADP3,
+                MessagePayrollProviderList.Alliance,
+                MessagePayrollProviderList.CBIZ,
+                MessagePayrollProviderList.CertiPay,
+                MessagePayrollProviderList.Coastal,
+                MessagePayrollProviderList.Dominion,
+                MessagePayrollProviderList.ExponentHR,
+                MessagePayrollProviderList.GAPartners,
+                MessagePayrollProviderList.Heartland,
+                MessagePayrollProviderList.ISolved,
+                MessagePayrollProviderList.Kelly,
+                MessagePayrollProviderList.Netchex,
+                MessagePayrollProviderList.Paychex,
+                MessagePayrollProviderList.Paycom,
+                MessagePayrollProviderList.Paycor,
+                MessagePayrollProviderList.Payday,
+                MessagePayrollProviderList.Paylocity,
+                MessagePayrollProviderList.PayMaster,
+                MessagePayrollProviderList.Paytime,
+                MessagePayrollProviderList.Proliant,
+                MessagePayrollProviderList.Ultimate,
+                MessagePayrollProviderList.Viventium,
+                MessagePayrollProviderList.OtherPR
+            })]
     [PXUIField(DisplayName = "Payroll Provider")]
     public virtual string PayrollProvider { get; set; }
     public abstract class payrollProvider : PX.Data.BQL.BqlString.Field<payrollProvider> { }
@@ -955,39 +221,1170 @@ namespace ProjectTask
 
     #region RecordKeeperName
     [PXDBString(3)]
-    [PXStringList(new string[] {"AD1", "ARB", "ACS", "ATR", "AUL", "BFB", "BOK", "CGR", "CAF", "CMF", "EFY", "EM1", "EM2", "EM3", "ERP", "EQU", "ERI", "FWS", "JH1", "JH2", "LND", "LNA", "LRS", "MAT", "MM1", "MM2", "NWG", "NFS", "OAR", "PCX", "PCS", "PLI", "PRI", "RAL", "RPC", "CST", "SFG", "SIC", "TRP", "TRS", "UCG", "VYF", "ORK"}, new string[] {"ADP", "Alerus Retirement and Benefits", "Ascensus,  LLC", "AT Retirement Services,  LLC", "American United Life Insurance Company", "Betterment for Business", "BOK Financial", "Capital Group Retirement Plan Services", "Capital/American Funds Service Company", "CMFG Life Insurance Company", "Employee Fiduciary,  LLC", "Empower Retirement", "Empower Retirement PRS/CAS/PAS", "Empower Retirement TRAC", "EPIC Retirement Plan Services", "Equitable", "ERISA Consultants", "Fidelity Workplace Services,  LLC", "John Hancock", "John Hancock Retirement Plan Services,  LLC and John Hancock Trust Company", "Lincoln Director", "Lincoln Alliance", "Leading Retirement Solutions", "Mid Atlantic Trust Company", "MassMutual Retirement Services Business", "MassMutual Retirement Services Business/TRAC", "Newport Group,  Inc.", "Nationwide Financial Services,  Inc.", "OneAmerica Retirement Services", "Paychex,  Inc.", "Professional Capital Services,  LLC", "Principal Life Insurance Company", "Prudential Retirement Insurance and Annuity Company", "RHI Acquisition LLC - Definiti and Retirement Horizons", "The Retirement Plan Company,  LLC", "Charles Schwab Trust Bank", "Securian Financial Group", "Standard Insurance Company", "T. Rowe Price Retirement Plan Services,  Inc. and T. Rowe Price Services,  Inc.", "Transamerica Retirement Solutions,  LLC", "USI Consulting Group Retirement Plan Services - Uniondale", "Voya Financial", "Other RK"})]
+    [PXStringList(
+            new string[] 
+            {
+                RecordKeeperList.ADP,
+                RecordKeeperList.Alerus,
+                RecordKeeperList.Ascensus,
+                RecordKeeperList.ATRetirement,
+                RecordKeeperList.American,
+                RecordKeeperList.Betterment,
+                RecordKeeperList.BOK,
+                RecordKeeperList.CapitalGroup,
+                RecordKeeperList.CapitalAmerican,
+                RecordKeeperList.CMFG,
+                RecordKeeperList.EmployeeFid,
+                RecordKeeperList.Empower1,
+                RecordKeeperList.Empower2,
+                RecordKeeperList.Empower3,
+                RecordKeeperList.EPIC,
+                RecordKeeperList.Equitable,
+                RecordKeeperList.ERISA,
+                RecordKeeperList.Fidelity,
+                RecordKeeperList.John1,
+                RecordKeeperList.John2,
+                RecordKeeperList.Lincoln1,
+                RecordKeeperList.Lincoln2,
+                RecordKeeperList.Leading,
+                RecordKeeperList.MidAtlantic,
+                RecordKeeperList.MassMutual1,
+                RecordKeeperList.MassMutual2,
+                RecordKeeperList.Newport,
+                RecordKeeperList.Nationwide,
+                RecordKeeperList.OneAmerica,
+                RecordKeeperList.Paychex,
+                RecordKeeperList.Professional,
+                RecordKeeperList.Principal,
+                RecordKeeperList.Prudential,
+                RecordKeeperList.RHIAcquisition,
+                RecordKeeperList.Retirement,
+                RecordKeeperList.Charles,
+                RecordKeeperList.Securian,
+                RecordKeeperList.Standard,
+                RecordKeeperList.TRowe,
+                RecordKeeperList.Transamerica,
+                RecordKeeperList.USIConslting,
+                RecordKeeperList.Voya,
+                RecordKeeperList.OtherRK
+    },
+            new string[]
+            {
+                MessageRecordKeeperList.ADP,
+                MessageRecordKeeperList.Alerus,
+                MessageRecordKeeperList.Ascensus,
+                MessageRecordKeeperList.ATRetirement,
+                MessageRecordKeeperList.American,
+                MessageRecordKeeperList.Betterment,
+                MessageRecordKeeperList.BOK,
+                MessageRecordKeeperList.CapitalGroup,
+                MessageRecordKeeperList.CapitalAmerican,
+                MessageRecordKeeperList.CMFG,
+                MessageRecordKeeperList.EmployeeFid,
+                MessageRecordKeeperList.Empower1,
+                MessageRecordKeeperList.Empower2,
+                MessageRecordKeeperList.Empower3,
+                MessageRecordKeeperList.EPIC,
+                MessageRecordKeeperList.Equitable,
+                MessageRecordKeeperList.ERISA,
+                MessageRecordKeeperList.Fidelity,
+                MessageRecordKeeperList.John1,
+                MessageRecordKeeperList.John2,
+                MessageRecordKeeperList.Lincoln1,
+                MessageRecordKeeperList.Lincoln2,
+                MessageRecordKeeperList.Leading,
+                MessageRecordKeeperList.MidAtlantic,
+                MessageRecordKeeperList.MassMutual1,
+                MessageRecordKeeperList.MassMutual2,
+                MessageRecordKeeperList.Newport,
+                MessageRecordKeeperList.Nationwide,
+                MessageRecordKeeperList.OneAmerica,
+                MessageRecordKeeperList.Paychex,
+                MessageRecordKeeperList.Professional,
+                MessageRecordKeeperList.Principal,
+                MessageRecordKeeperList.Prudential,
+                MessageRecordKeeperList.RHIAcquisition,
+                MessageRecordKeeperList.Retirement,
+                MessageRecordKeeperList.Charles,
+                MessageRecordKeeperList.Securian,
+                MessageRecordKeeperList.Standard,
+                MessageRecordKeeperList.TRowe,
+                MessageRecordKeeperList.Transamerica,
+                MessageRecordKeeperList.USIConslting,
+                MessageRecordKeeperList.Voya,
+                MessageRecordKeeperList.OtherRK
+            })]
     [PXUIField(DisplayName = "Record Keeper")]
     public virtual string RecordKeeperName { get; set; }
     public abstract class recordKeeperName : PX.Data.BQL.BqlString.Field<recordKeeperName> { }
     #endregion
 
-    #region Payroll_Preparer
-    [PXDBInt]
-    [PXEPEmployeeSelector]
-    [PXUIField(DisplayName = "Payroll Preparer", Visibility = PXUIVisibility.SelectorVisible)]
-    // [PXDefault(
-    //   typeof(Search<PMTask.usrPGPreparer,
-    //     Where<PMTask.projectID, Equal<PMDocumentGathering.projectID>,
-    //     And<PMTask.taskCD, Equal<Payroll>>>>))]
-    public virtual int? Payroll_Preparer { get; set; }
-    public abstract class payroll_Preparer : PX.Data.BQL.BqlInt.Field<payroll_Preparer> { }
+    //Plan Documents
+
+    #region FirstContactDatePlanDocuments
+    [PXDBDate()]
+    [PXUIField(DisplayName = "First Contact")]
+    public virtual DateTime? FirstContactDatePlanDocuments { get; set; }
+    public abstract class firstContactDatePlanDocuments : PX.Data.BQL.BqlDateTime.Field<firstContactDatePlanDocuments> { }
     #endregion
 
-    #region PlanDoc_Preparer
+    #region NotesPlanDocuments
+    [PXDBString(510, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Notes")]
+    public virtual string NotesPlanDocuments { get; set; }
+    public abstract class notesPlanDocuments : PX.Data.BQL.BqlString.Field<notesPlanDocuments> { }
+    #endregion
+
+    #region PlanDocumentsComplete
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Complete")]
+    public virtual bool? PlanDocumentsComplete { get; set; }
+    public abstract class planDocumentsComplete : PX.Data.BQL.BqlBool.Field<planDocumentsComplete> { }
+    #endregion
+
+    #region SPD
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "SPD")]
+    public virtual string SPD { get; set; }
+    public abstract class spd : PX.Data.BQL.BqlString.Field<spd> { }
+    #endregion
+
+    #region SPDLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? SPDLastModifiedDateTime { get; set; }
+    public abstract class sPDLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sPDLastModifiedDateTime> { }
+    #endregion
+
+    #region SPDLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string SPDLastModUserName { get; set; }
+    public abstract class sPDLastModUserName : PX.Data.BQL.BqlString.Field<sPDLastModUserName> { }
+    #endregion
+
+    #region AA
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "AA + (Cycle 3 Amedment)")]
+    public virtual string AA { get; set; }
+    public abstract class aA : PX.Data.BQL.BqlString.Field<aA> { }
+    #endregion
+
+    #region AALastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? AALastModifiedDateTime { get; set; }
+    public abstract class aALastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<aALastModifiedDateTime> { }
+    #endregion
+
+    #region AALastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string AALastModUserName { get; set; }
+    public abstract class aALastModUserName : PX.Data.BQL.BqlString.Field<aALastModUserName> { }
+    #endregion
+
+
+    #region BPD
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "BPD")]
+    public virtual string BPD { get; set; }
+    public abstract class bpd : PX.Data.BQL.BqlString.Field<bpd> { }
+    #endregion
+
+    #region BPDLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? BPDLastModifiedDateTime { get; set; }
+    public abstract class bPDLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<bPDLastModifiedDateTime> { }
+    #endregion
+
+    #region BPDLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string BPDLastModUserName { get; set; }
+    public abstract class bPDLastModUserName : PX.Data.BQL.BqlString.Field<bPDLastModUserName> { }
+    #endregion
+
+
+    #region IRS
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "IRS Opinion Letter")]
+    public virtual string IRS { get; set; }
+    public abstract class irs : PX.Data.BQL.BqlString.Field<irs> { }
+    #endregion
+
+    #region IRSLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? IRSLastModifiedDateTime { get; set; }
+    public abstract class iRSLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<iRSLastModifiedDateTime> { }
+    #endregion
+
+    #region IRSLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string IRSLastModUserName { get; set; }
+    public abstract class iRSLastModUserName : PX.Data.BQL.BqlString.Field<iRSLastModUserName> { }
+    #endregion
+
+
+    #region SATrustree
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "SA - Trustree/Custodian")]
+    public virtual string SATrustree { get; set; }
+    public abstract class sATrustree : PX.Data.BQL.BqlString.Field<sATrustree> { }
+    #endregion
+
+    #region SATrustreeLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? SATrustreeLastModifiedDateTime { get; set; }
+    public abstract class sATrustreeLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sATrustreeLastModifiedDateTime> { }
+    #endregion
+
+    #region SATrustreeLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string SATrustreeLastModUserName { get; set; }
+    public abstract class sATrustreeLastModUserName : PX.Data.BQL.BqlString.Field<sATrustreeLastModUserName> { }
+    #endregion
+
+
+    #region SATPA
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "SA - TPA")]
+    public virtual string SATPA { get; set; }
+    public abstract class sATPA : PX.Data.BQL.BqlString.Field<sATPA> { }
+    #endregion
+
+    #region SATPALastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? SATPALastModifiedDateTime { get; set; }
+    public abstract class sATPALastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sATPALastModifiedDateTime> { }
+    #endregion
+
+    #region SATPALastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string SATPALastModUserName { get; set; }
+    public abstract class sATPALastModUserName : PX.Data.BQL.BqlString.Field<sATPALastModUserName> { }
+    #endregion
+
+    #region SAInvestment
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "SA - Investment Advisor")]
+    public virtual string SAInvestment { get; set; }
+    public abstract class sAInvestment : PX.Data.BQL.BqlString.Field<sAInvestment> { }
+    #endregion
+
+    #region SAInvestmentLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? SAInvestmentLastModifiedDateTime { get; set; }
+    public abstract class sAInvestmentLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<sAInvestmentLastModifiedDateTime> { }
+    #endregion
+
+    #region SAInvestmentLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string SAInvestmentLastModUserName { get; set; }
+    public abstract class sAInvestmentLastModUserName : PX.Data.BQL.BqlString.Field<sAInvestmentLastModUserName> { }
+    #endregion
+
+    #region LoanPolicy
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "Loan Policy")]
+    public virtual string LoanPolicy { get; set; }
+    public abstract class loanPolicy : PX.Data.BQL.BqlString.Field<loanPolicy> { }
+    #endregion
+
+    #region LoanPolicyLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? LoanPolicyLastModifiedDateTime { get; set; }
+    public abstract class loanPolicyLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<loanPolicyLastModifiedDateTime> { }
+    #endregion
+
+    #region LoanPolicyLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string LoanPolicyLastModUserName { get; set; }
+    public abstract class loanPolicyLastModUserName : PX.Data.BQL.BqlString.Field<loanPolicyLastModUserName> { }
+    #endregion
+
+    #region QDIA
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "QDIA")]
+    public virtual string QDIA { get; set; }
+    public abstract class qDIA : PX.Data.BQL.BqlString.Field<qDIA> { }
+    #endregion
+
+    #region QDIALastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? QDIALastModifiedDateTime { get; set; }
+    public abstract class qDIALastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<qDIALastModifiedDateTime> { }
+    #endregion
+
+    #region QDIALastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string QDIALastModUserName { get; set; }
+    public abstract class qDIALastModUserName : PX.Data.BQL.BqlString.Field<qDIALastModUserName> { }
+    #endregion
+
+
+    //PlanDoc Preprocessing
+
+    #region FirstContactDatePlanDocPreproc
+    [PXDBDate()]
+    [PXUIField(DisplayName = "First Contact")]
+    public virtual DateTime? FirstContactDatePlanDocPreproc { get; set; }
+    public abstract class firstContactDatePlanDocPreproc : PX.Data.BQL.BqlDateTime.Field<firstContactDatePlanDocPreproc> { }
+    #endregion
+
+    #region NotesPlanDocPreproc
+    [PXDBString(510, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Notes")]
+    public virtual string NotesPlanDocPreproc { get; set; }
+    public abstract class notesPlanDocPreproc : PX.Data.BQL.BqlString.Field<notesPlanDocPreproc> { }
+    #endregion
+
+    #region PlanDocPreprocComplete
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Complete")]
+    public virtual bool? PlanDocPreprocComplete { get; set; }
+    public abstract class planDocPreprocComplete : PX.Data.BQL.BqlBool.Field<planDocPreprocComplete> { }
+    #endregion
+
+    #region EC
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "EC")]
+    public virtual string EC { get; set; }
+    public abstract class eC : PX.Data.BQL.BqlString.Field<eC> { }
+    #endregion
+
+    #region ECLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? ECLastModifiedDateTime { get; set; }
+    public abstract class eCLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<eCLastModifiedDateTime> { }
+    #endregion
+
+    #region ECLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string ECLastModUserName { get; set; }
+    public abstract class eCLastModUserName : PX.Data.BQL.BqlString.Field<eCLastModUserName> { }
+    #endregion
+
+
+    #region PAS
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "PAS")]
+    public virtual string PAS { get; set; }
+    public abstract class pAS : PX.Data.BQL.BqlString.Field<pAS> { }
+    #endregion
+
+    #region PASLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? PASLastModifiedDateTime { get; set; }
+    public abstract class pASLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pASLastModifiedDateTime> { }
+    #endregion
+
+    #region PASLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string PASLastModUserName { get; set; }
+    public abstract class pASLastModUserName : PX.Data.BQL.BqlString.Field<pASLastModUserName> { }
+    #endregion
+
+
+    #region Cont
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "Cont")]
+    public virtual string Cont { get; set; }
+    public abstract class cont : PX.Data.BQL.BqlString.Field<cont> { }
+    #endregion
+
+    #region ContLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? ContLastModifiedDateTime { get; set; }
+    public abstract class contLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<contLastModifiedDateTime> { }
+    #endregion
+
+    #region ContLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string ContLastModUserName { get; set; }
+    public abstract class contLastModUserName : PX.Data.BQL.BqlString.Field<contLastModUserName> { }
+    #endregion
+
+
+    #region Dist
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "Dist")]
+    public virtual string Dist { get; set; }
+    public abstract class dist : PX.Data.BQL.BqlString.Field<dist> { }
+    #endregion
+
+    #region DistLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? DistLastModifiedDateTime { get; set; }
+    public abstract class distLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<distLastModifiedDateTime> { }
+    #endregion
+
+    #region DistLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string DistLastModUserName { get; set; }
+    public abstract class distLastModUserName : PX.Data.BQL.BqlString.Field<distLastModUserName> { }
+    #endregion
+
+
+    #region Loans
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "Loans")]
+    public virtual string Loans { get; set; }
+    public abstract class loans : PX.Data.BQL.BqlString.Field<loans> { }
+    #endregion
+
+    #region LoansLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? LoansLastModifiedDateTime { get; set; }
+    public abstract class loansLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<loansLastModifiedDateTime> { }
+    #endregion
+
+    #region LoansLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string LoansLastModUserName { get; set; }
+    public abstract class loansLastModUserName : PX.Data.BQL.BqlString.Field<loansLastModUserName> { }
+    #endregion
+
+
+    #region DefElection
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "Def Elections and Changes")]
+    public virtual string DefElection { get; set; }
+    public abstract class defElection : PX.Data.BQL.BqlString.Field<defElection> { }
+    #endregion
+
+    #region DefElectionLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? DefElectionLastModifiedDateTime { get; set; }
+    public abstract class defElectionLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<defElectionLastModifiedDateTime> { }
+    #endregion
+
+    #region DefElectionLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string DefElectionLastModUserName { get; set; }
+    public abstract class defElectionLastModUserName : PX.Data.BQL.BqlString.Field<defElectionLastModUserName> { }
+    #endregion
+
+
+    //Plan Design
+
+    #region FirstContactDatePlanDesign
+    [PXDBDate()]
+    [PXUIField(DisplayName = "First Contact")]
+    public virtual DateTime? FirstContactDatePlanDesign { get; set; }
+    public abstract class firstContactDatePlanDesign : PX.Data.BQL.BqlDateTime.Field<firstContactDatePlanDesign> { }
+    #endregion
+
+    #region NotesPlanDesign
+    [PXDBString(510, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Notes")]
+    public virtual string NotesPlanDesign { get; set; }
+    public abstract class notesPlanDesign : PX.Data.BQL.BqlString.Field<notesPlanDesign> { }
+    #endregion
+
+    #region PlanDesignComplete
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Complete")]
+    public virtual bool? PlanDesignComplete { get; set; }
+    public abstract class planDesignComplete : PX.Data.BQL.BqlBool.Field<planDesignComplete> { }
+    #endregion
+
+    #region PlanProvisions
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                PlanDesignStatus.WaitingonInfo, PlanDesignStatus.InProcess, PlanDesignStatus.Completed
+            }, 
+            new string[] 
+            {
+                MessagePlanDesignStatus.WaitingonInfo, MessagePlanDesignStatus.InProcess, MessagePlanDesignStatus.Completed
+            })]
+    public virtual string PlanProvisions { get; set; }
+    public abstract class planProvisions : PX.Data.BQL.BqlString.Field<planProvisions> { }
+    #endregion
+
+    #region PlanProvisionsLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? PlanProvisionsLastModifiedDateTime { get; set; }
+    public abstract class planProvisionsLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<planProvisionsLastModifiedDateTime> { }
+    #endregion
+
+    #region PlanProvisionsLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string PlanProvisionsLastModUserName { get; set; }
+    public abstract class planProvisionsLastModUserName : PX.Data.BQL.BqlString.Field<planProvisionsLastModUserName> { }
+    #endregion
+
+    #region PreProcessDate
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                PlanDesignStatus.WaitingonInfo, PlanDesignStatus.InProcess, PlanDesignStatus.Completed
+            }, 
+            new string[] 
+            {
+                MessagePlanDesignStatus.WaitingonInfo, MessagePlanDesignStatus.InProcess, MessagePlanDesignStatus.Completed
+            })]
+    [PXUIField(DisplayName = "Submitted for PreProcess Date")]
+    public virtual string PreProcessDate { get; set; }
+    public abstract class preProcessDate : PX.Data.BQL.BqlString.Field<preProcessDate> { }
+    #endregion
+
+    #region PreProcessDateLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? PreProcessDateLastModifiedDateTime { get; set; }
+    public abstract class preProcessDateLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<preProcessDateLastModifiedDateTime> { }
+    #endregion
+
+    #region PreProcessDateLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string PreProcessDateLastModUserName { get; set; }
+    public abstract class preProcessDateLastModUserName : PX.Data.BQL.BqlString.Field<preProcessDateLastModUserName> { }
+    #endregion
+
+    //Annual Documents
+
+    #region FirstContactDateAnnualDocuments
+    [PXDBDate()]
+    [PXUIField(DisplayName = "First Contact")]
+    public virtual DateTime? FirstContactDateAnnualDocuments { get; set; }
+    public abstract class firstContactDateAnnualDocuments : PX.Data.BQL.BqlDateTime.Field<firstContactDateAnnualDocuments> { }
+    #endregion
+
+    #region NotesAnnualDocuments
+    [PXDBString(510, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Notes")]
+    public virtual string NotesAnnualDocuments { get; set; }
+    public abstract class notesAnnualDocuments : PX.Data.BQL.BqlString.Field<notesAnnualDocuments> { }
+    #endregion
+
+    #region AnnualDocumentsComplete
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Complete")]
+    public virtual bool? AnnualDocumentsComplete { get; set; }
+    public abstract class annualDocumentsComplete : PX.Data.BQL.BqlBool.Field<annualDocumentsComplete> { }
+    #endregion
+
+    #region Form5500
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "5500")]
+    public virtual string Form5500 { get; set; }
+    public abstract class form5500 : PX.Data.BQL.BqlString.Field<form5500> { }
+    #endregion
+
+    #region Form5500LastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? Form5500LastModifiedDateTime { get; set; }
+    public abstract class form5500LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<form5500LastModifiedDateTime> { }
+    #endregion
+
+    #region Form5500LastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string Form5500LastModUserName { get; set; }
+    public abstract class form5500LastModUserName : PX.Data.BQL.BqlString.Field<form5500LastModUserName> { }
+    #endregion
+
+
+    #region TrustState
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "Trust Statement")]
+    public virtual string TrustState { get; set; }
+    public abstract class trustState : PX.Data.BQL.BqlString.Field<trustState> { }
+    #endregion
+
+    #region TrustStateLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? TrustStateLastModifiedDateTime { get; set; }
+    public abstract class trustStateLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<trustStateLastModifiedDateTime> { }
+    #endregion
+
+    #region TrustStateLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string TrustStateLastModUserName { get; set; }
+    public abstract class trustStateLastModUserName : PX.Data.BQL.BqlString.Field<trustStateLastModUserName> { }
+    #endregion
+
+
+    #region TrustCert
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "Trust Certification")]
+    public virtual string TrustCert { get; set; }
+    public abstract class trustCert : PX.Data.BQL.BqlString.Field<trustCert> { }
+    #endregion
+
+    #region TrustCertLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? TrustCertLastModifiedDateTime { get; set; }
+    public abstract class trustCertLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<trustCertLastModifiedDateTime> { }
+    #endregion
+
+    #region TrustCertLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string TrustCertLastModUserName { get; set; }
+    public abstract class trustCertLastModUserName : PX.Data.BQL.BqlString.Field<trustCertLastModUserName> { }
+    #endregion
+
+
+    #region FidelityBond
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "Fidelity Bond")]
+    public virtual string FidelityBond { get; set; }
+    public abstract class fidelityBond : PX.Data.BQL.BqlString.Field<fidelityBond> { }
+    #endregion
+
+    #region FidelityBondLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? FidelityBondLastModifiedDateTime { get; set; }
+    public abstract class fidelityBondLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<fidelityBondLastModifiedDateTime> { }
+    #endregion
+
+    #region FidelityBondLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string FidelityBondLastModUserName { get; set; }
+    public abstract class fidelityBondLastModUserName : PX.Data.BQL.BqlString.Field<fidelityBondLastModUserName> { }
+    #endregion
+
+
+    #region ComplianceTest
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "Compliance Testing")]
+    public virtual string ComplianceTest { get; set; }
+    public abstract class complianceTest : PX.Data.BQL.BqlString.Field<complianceTest> { }
+    #endregion
+
+    #region ComplianceTestLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? ComplianceTestLastModifiedDateTime { get; set; }
+    public abstract class complianceTestLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<complianceTestLastModifiedDateTime> { }
+    #endregion
+
+    #region ComplianceTestLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string ComplianceTestLastModUserName { get; set; }
+    public abstract class complianceTestLastModUserName : PX.Data.BQL.BqlString.Field<complianceTestLastModUserName> { }
+    #endregion
+
+
+    #region RKFeeDisc
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost
+            })]
+    [PXUIField(DisplayName = "RK Fee Disc")]
+    public virtual string RKFeeDisc { get; set; }
+    public abstract class rKFeeDisc : PX.Data.BQL.BqlString.Field<rKFeeDisc> { }
+    #endregion
+
+    #region RKFeeDiscLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? RKFeeDiscLastModifiedDateTime { get; set; }
+    public abstract class rKFeeDiscLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<rKFeeDiscLastModifiedDateTime> { }
+    #endregion
+
+    #region RKFeeDiscLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string RKFeeDiscLastModUserName { get; set; }
+    public abstract class rKFeeDiscLastModUserName : PX.Data.BQL.BqlString.Field<rKFeeDiscLastModUserName> { }
+    #endregion
+
+
+    #region InvestAllocation
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "Investment Allocation Report")]
+    public virtual string InvestAllocation { get; set; }
+    public abstract class investAllocation : PX.Data.BQL.BqlString.Field<investAllocation> { }
+    #endregion
+
+    #region InvestAllocationLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? InvestAllocationLastModifiedDateTime { get; set; }
+    public abstract class investAllocationLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<investAllocationLastModifiedDateTime> { }
+    #endregion
+
+    #region InvestAllocationLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string InvestAllocationLastModUserName { get; set; }
+    public abstract class investAllocationLastModUserName : PX.Data.BQL.BqlString.Field<investAllocationLastModUserName> { }
+    #endregion
+
+
+    //First Year PK
+
+    #region FirstContactDateFirstYearPK
+    [PXDBDate()]
+    [PXUIField(DisplayName = "First Contact")]
+    public virtual DateTime? FirstContactDateFirstYearPK { get; set; }
+    public abstract class firstContactDateFirstYearPK : PX.Data.BQL.BqlDateTime.Field<firstContactDateFirstYearPK> { }
+    #endregion
+
+    #region NotesFirstYearPK
+    [PXDBString(510, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Notes")]
+    public virtual string NotesFirstYearPK { get; set; }
+    public abstract class notesFirstYearPK : PX.Data.BQL.BqlString.Field<notesFirstYearPK> { }
+    #endregion
+
+    #region FirstYearPKComplete
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Complete")]
+    public virtual bool? FirstYearPKComplete { get; set; }
+    public abstract class firstYearPKComplete : PX.Data.BQL.BqlBool.Field<firstYearPKComplete> { }
+    #endregion
+
+    #region ClientAuth
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "Client Authorization Letter")]
+    public virtual string ClientAuth { get; set; }
+    public abstract class clientAuth : PX.Data.BQL.BqlString.Field<clientAuth> { }
+    #endregion
+
+    #region ClientAuthLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? ClientAuthLastModifiedDateTime { get; set; }
+    public abstract class clientAuthLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<clientAuthLastModifiedDateTime> { }
+    #endregion
+
+    #region ClientAuthLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string ClientAuthLastModUserName { get; set; }
+    public abstract class clientAuthLastModUserName : PX.Data.BQL.BqlString.Field<clientAuthLastModUserName> { }
+    #endregion
+
+
+    #region Communication
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "Communication with Predecessor Auditor")]
+    public virtual string Communication { get; set; }
+    public abstract class communication : PX.Data.BQL.BqlString.Field<communication> { }
+    #endregion
+
+    #region CommunicationLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? CommunicationLastModifiedDateTime { get; set; }
+    public abstract class communicationLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<communicationLastModifiedDateTime> { }
+    #endregion
+
+    #region CommunicationLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string CommunicationLastModUserName { get; set; }
+    public abstract class communicationLastModUserName : PX.Data.BQL.BqlString.Field<communicationLastModUserName> { }
+    #endregion
+
+
+    #region PY5500
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "PY 5500")]
+    public virtual string PY5500 { get; set; }
+    public abstract class pY5500 : PX.Data.BQL.BqlString.Field<pY5500> { }
+    #endregion
+
+    #region PY5500LastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? PY5500LastModifiedDateTime { get; set; }
+    public abstract class pY5500LastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pY5500LastModifiedDateTime> { }
+    #endregion
+
+    #region PY5500LastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string PY5500LastModUserName { get; set; }
+    public abstract class pY5500LastModUserName : PX.Data.BQL.BqlString.Field<pY5500LastModUserName> { }
+    #endregion
+
+
+    #region PYTrustState
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "PY Trust Statement")]
+    public virtual string PYTrustState { get; set; }
+    public abstract class pYTrustState : PX.Data.BQL.BqlString.Field<pYTrustState> { }
+    #endregion
+
+    #region PYTrustStateLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? PYTrustStateLastModifiedDateTime { get; set; }
+    public abstract class pYTrustStateLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYTrustStateLastModifiedDateTime> { }
+    #endregion
+
+    #region PYTrustStateLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string PYTrustStateLastModUserName { get; set; }
+    public abstract class pYTrustStateLastModUserName : PX.Data.BQL.BqlString.Field<pYTrustStateLastModUserName> { }
+    #endregion
+
+
+    #region PYTrustCert
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "PY Trust Certification")]
+    public virtual string PYTrustCert { get; set; }
+    public abstract class pYTrustCert : PX.Data.BQL.BqlString.Field<pYTrustCert> { }
+    #endregion
+
+    #region PYTrustCertLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? PYTrustCertLastModifiedDateTime { get; set; }
+    public abstract class pYTrustCertLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYTrustCertLastModifiedDateTime> { }
+    #endregion
+
+    #region PYTrustCertLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string PYTrustCertLastModUserName { get; set; }
+    public abstract class pYTrustCertLastModUserName : PX.Data.BQL.BqlString.Field<pYTrustCertLastModUserName> { }
+    #endregion
+
+
+    #region PYCompliance
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "PY Compliance Testing")]
+    public virtual string PYCompliance { get; set; }
+    public abstract class pYCompliance : PX.Data.BQL.BqlString.Field<pYCompliance> { }
+    #endregion
+
+    #region PYComplianceLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? PYComplianceLastModifiedDateTime { get; set; }
+    public abstract class pYComplianceLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<pYComplianceLastModifiedDateTime> { }
+    #endregion
+
+    #region PYComplianceLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string PYComplianceLastModUserName { get; set; }
+    public abstract class pYComplianceLastModUserName : PX.Data.BQL.BqlString.Field<pYComplianceLastModUserName> { }
+    #endregion
+
+
+    #region PlanDocPreparer
     [PXDBInt]
     [PXEPEmployeeSelector]
     [PXUIField(DisplayName = "PlanDoc Preparer", Visibility = PXUIVisibility.SelectorVisible)]
-    public virtual int? PlanDoc_Preparer { get; set; }
-    public abstract class planDoc_Preparer : PX.Data.BQL.BqlInt.Field<planDoc_Preparer> { }
+    public virtual int? PlanDocPreparer { get; set; }
+    public abstract class planDocPreparer : PX.Data.BQL.BqlInt.Field<planDocPreparer> { }
     #endregion
 
-    #region PlanDesign_Preparer
+    #region PlanDesignPreparer
     [PXDBInt]
     [PXEPEmployeeSelector]
     [PXUIField(DisplayName = "PlanDesign Preparer", Visibility = PXUIVisibility.SelectorVisible)]
-    public virtual int? PlanDesign_Preparer { get; set; }
-    public abstract class planDesign_Preparer : PX.Data.BQL.BqlInt.Field<planDesign_Preparer> { }
+    public virtual int? PlanDesignPreparer { get; set; }
+    public abstract class planDesignPreparer : PX.Data.BQL.BqlInt.Field<planDesignPreparer> { }
     #endregion
+
+    //v1.03
+
+    #region Finch
+    [PXDBBool()]
+    [PXDefault(false)]
+    [PXUIField(DisplayName = "Finch")]
+    public virtual bool? Finch { get; set; }
+    public abstract class finch : PX.Data.BQL.BqlBool.Field<finch> { }
+    #endregion
+
+    //Acumatica Default fields
+
 
     #region CreatedDateTime
     [PXDBCreatedDateTime()]
