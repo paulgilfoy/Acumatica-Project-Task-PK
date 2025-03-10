@@ -150,9 +150,17 @@ namespace ProjectTask
     #region RKAccess
     [PXDBString(2)]
     [PXStringList(new string[] { AccessStatus.Requested, AccessStatus.Completed, AccessStatus.NA}, new string[] {MessageAccessStatus.Requested, MessageAccessStatus.Completed, MessageAccessStatus.NA})]
-    [PXUIField(DisplayName = "RK Access")]
+    [PXUIField(DisplayName = "RK Access - PK")]
     public virtual string RKAccess { get; set; }
     public abstract class rKAccess : PX.Data.BQL.BqlString.Field<rKAccess> { }
+    #endregion
+
+    #region RKAccessAutire
+    [PXDBString(2)]
+    [PXStringList(new string[] { AccessStatus.Requested, AccessStatus.Completed, AccessStatus.NA}, new string[] {MessageAccessStatus.Requested, MessageAccessStatus.Completed, MessageAccessStatus.NA})]
+    [PXUIField(DisplayName = "RK Access - Autire")]
+    public virtual string RKAccessAutire { get; set; }
+    public abstract class rKAccessAutire : PX.Data.BQL.BqlString.Field<rKAccessAutire> { }
     #endregion
     
     #region PayrollProvider
@@ -1376,14 +1384,262 @@ namespace ProjectTask
     //v1.03
 
     #region Finch
-    [PXDBBool()]
-    [PXDefault(false)]
-    [PXUIField(DisplayName = "Finch")]
-    public virtual bool? Finch { get; set; }
-    public abstract class finch : PX.Data.BQL.BqlBool.Field<finch> { }
+    [PXDBString(2)]
+    [PXStringList(
+            new string[] 
+            {
+                DocStatus.Contacted1, DocStatus.Contacted2, DocStatus.ClientCalled, DocStatus.WaitingonInfo, DocStatus.InProcess, DocStatus.Completed, DocStatus.Ghost, DocStatus.NA
+            }, 
+            new string[] 
+            {
+                MessageDocStatus.Contacted1, MessageDocStatus.Contacted2, MessageDocStatus.ClientCalled, MessageDocStatus.WaitingonInfo, MessageDocStatus.InProcess, MessageDocStatus.Completed, MessageDocStatus.Ghost, MessageDocStatus.NA
+            })]
+    [PXUIField(DisplayName = "Finch Connection")]
+    public virtual string Finch { get; set; }
+    public abstract class finch : PX.Data.BQL.BqlString.Field<finch> { }
     #endregion
 
-    //Acumatica Default fields
+    #region FinchLastModifiedDateTime
+    [PXDBDate()]
+    [PXUIField(DisplayName = "Last Modified")]
+    public virtual DateTime? FinchLastModifiedDateTime { get; set; }
+    public abstract class finchLastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<finchLastModifiedDateTime> { }
+    #endregion
+
+    #region FinchLastModUserName
+    [PXDBString(256, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Last Modified By")]
+    public virtual string FinchLastModUserName { get; set; }
+    public abstract class finchLastModUserName : PX.Data.BQL.BqlString.Field<finchLastModUserName> { }
+    #endregion
+
+    // Ash Autire
+
+    #region MPRAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? MPRAshAutire { get; set; }
+    public abstract class mPRAshAutire : PX.Data.BQL.BqlBool.Field<mPRAshAutire> { }
+    #endregion
+
+    #region PayrollAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? PayrollAshAutire { get; set; }
+    public abstract class payrollAshAutire : PX.Data.BQL.BqlBool.Field<payrollAshAutire> { }
+    #endregion
+
+    #region SPDAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? SPDAshAutire { get; set; }
+    public abstract class sPDAshAutire : PX.Data.BQL.BqlBool.Field<sPDAshAutire> { }
+    #endregion
+
+    #region AAAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? AAAshAutire { get; set; }
+    public abstract class aAAshAutire : PX.Data.BQL.BqlBool.Field<aAAshAutire> { }
+    #endregion
+
+    #region BPDAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? BPDAshAutire { get; set; }
+    public abstract class bPDAshAutire : PX.Data.BQL.BqlBool.Field<bPDAshAutire> { }
+    #endregion
+
+    #region IRSAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? IRSAshAutire { get; set; }
+    public abstract class iRSAshAutire : PX.Data.BQL.BqlBool.Field<iRSAshAutire> { }
+    #endregion
+
+    #region SATrustreeAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? SATrustreeAshAutire { get; set; }
+    public abstract class sATrustreeAshAutire : PX.Data.BQL.BqlBool.Field<sATrustreeAshAutire> { }
+    #endregion
+
+    #region SATPAAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? SATPAAshAutire { get; set; }
+    public abstract class sATPAAshAutire : PX.Data.BQL.BqlBool.Field<sATPAAshAutire> { }
+    #endregion
+
+    #region SAInvestmentAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? SAInvestmentAshAutire { get; set; }
+    public abstract class sAInvestmentAshAutire : PX.Data.BQL.BqlBool.Field<sAInvestmentAshAutire> { }
+    #endregion
+
+    #region LoanPolicyAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? LoanPolicyAshAutire { get; set; }
+    public abstract class loanPolicyAshAutire : PX.Data.BQL.BqlBool.Field<loanPolicyAshAutire> { }
+    #endregion
+
+    #region QDIAAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? QDIAAshAutire { get; set; }
+    public abstract class qDIAAshAutire : PX.Data.BQL.BqlBool.Field<qDIAAshAutire> { }
+    #endregion
+
+    #region ECAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? ECAshAutire { get; set; }
+    public abstract class eCAshAutire : PX.Data.BQL.BqlBool.Field<eCAshAutire> { }
+    #endregion
+
+    #region PASAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? PASAshAutire { get; set; }
+    public abstract class pASAshAutire : PX.Data.BQL.BqlBool.Field<pASAshAutire> { }
+    #endregion
+
+    #region ContAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? ContAshAutire { get; set; }
+    public abstract class contAshAutire : PX.Data.BQL.BqlBool.Field<contAshAutire> { }
+    #endregion
+
+    #region DistAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? DistAshAutire { get; set; }
+    public abstract class distAshAutire : PX.Data.BQL.BqlBool.Field<distAshAutire> { }
+    #endregion
+
+    #region LoansAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? LoansAshAutire { get; set; }
+    public abstract class loansAshAutire : PX.Data.BQL.BqlBool.Field<loansAshAutire> { }
+    #endregion
+
+    #region DefElectionAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? DefElectionAshAutire { get; set; }
+    public abstract class defElectionAshAutire : PX.Data.BQL.BqlBool.Field<defElectionAshAutire> { }
+    #endregion
+
+    #region PlanProvisionsAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? PlanProvisionsAshAutire { get; set; }
+    public abstract class planProvisionsAshAutire : PX.Data.BQL.BqlBool.Field<planProvisionsAshAutire> { }
+    #endregion
+
+    #region PreProcessDateAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? PreProcessDateAshAutire { get; set; }
+    public abstract class preProcessDateAshAutire : PX.Data.BQL.BqlBool.Field<preProcessDateAshAutire> { }
+    #endregion
+
+    #region Form5500AshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? Form5500AshAutire { get; set; }
+    public abstract class form5500AshAutire : PX.Data.BQL.BqlBool.Field<form5500AshAutire> { }
+    #endregion
+
+    #region TrustStateAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? TrustStateAshAutire { get; set; }
+    public abstract class trustStateAshAutire : PX.Data.BQL.BqlBool.Field<trustStateAshAutire> { }
+    #endregion
+
+    #region TrustCertAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? TrustCertAshAutire { get; set; }
+    public abstract class trustCertAshAutire : PX.Data.BQL.BqlBool.Field<trustCertAshAutire> { }
+    #endregion
+
+    #region FidelityBondAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? FidelityBondAshAutire { get; set; }
+    public abstract class fidelityBondAshAutire : PX.Data.BQL.BqlBool.Field<fidelityBondAshAutire> { }
+    #endregion
+
+    #region ComplianceTestAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? ComplianceTestAshAutire { get; set; }
+    public abstract class complianceTestAshAutire : PX.Data.BQL.BqlBool.Field<complianceTestAshAutire> { }
+    #endregion
+
+    #region RKFeeDiscAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? RKFeeDiscAshAutire { get; set; }
+    public abstract class rKFeeDiscAshAutire : PX.Data.BQL.BqlBool.Field<rKFeeDiscAshAutire> { }
+    #endregion
+
+    #region InvestAllocationAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? InvestAllocationAshAutire { get; set; }
+    public abstract class investAllocationAshAutire : PX.Data.BQL.BqlBool.Field<investAllocationAshAutire> { }
+    #endregion
+
+    #region ClientAuthAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? ClientAuthAshAutire { get; set; }
+    public abstract class clientAuthAshAutire : PX.Data.BQL.BqlBool.Field<clientAuthAshAutire> { }
+    #endregion
+
+    #region CommunicationAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? CommunicationAshAutire { get; set; }
+    public abstract class communicationAshAutire : PX.Data.BQL.BqlBool.Field<communicationAshAutire> { }
+    #endregion
+
+    #region PY5500AshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? PY5500AshAutire { get; set; }
+    public abstract class pY5500AshAutire : PX.Data.BQL.BqlBool.Field<pY5500AshAutire> { }
+    #endregion
+
+    #region PYTrustStateAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? PYTrustStateAshAutire { get; set; }
+    public abstract class pYTrustStateAshAutire : PX.Data.BQL.BqlBool.Field<pYTrustStateAshAutire> { }
+    #endregion
+
+    #region PYTrustCertAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? PYTrustCertAshAutire { get; set; }
+    public abstract class pYTrustCertAshAutire : PX.Data.BQL.BqlBool.Field<pYTrustCertAshAutire> { }
+    #endregion
+
+    #region PYComplianceAshAutire
+    [PXDBBool()]
+    [PXUIField(DisplayName = "Ash Autire")]
+    public virtual bool? PYComplianceAshAutire { get; set; }
+    public abstract class pYComplianceAshAutire : PX.Data.BQL.BqlBool.Field<pYComplianceAshAutire> { }
+    #endregion
+
+    // Acumatica Default fields
 
 
     #region CreatedDateTime
