@@ -221,11 +221,14 @@ GO
 
 --The section below handles addition of columns.  It first checks to see if the column already exists.
 --Finch
-IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'PMDocumentGathering' AND COLUMN_NAME = 'Finch')
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'PMDocumentGathering' AND COLUMN_NAME = 'Finch')
 BEGIN
     ALTER TABLE [PMDocumentGathering]
-    ADD [Finch] [nvarchar](2);
+    DROP COLUMN [Finch];
 END
+
+ALTER TABLE [PMDocumentGathering]
+ADD [Finch] [nvarchar](2);
 
 --FinchLastModifiedDateTime
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'PMDocumentGathering' AND COLUMN_NAME = 'FinchLastModifiedDateTime')
