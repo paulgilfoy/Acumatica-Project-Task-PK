@@ -1,3 +1,34 @@
-.vs/
+# macOS
 .DS_Store
-*.rsp
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Visual Studio / .NET build output
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+packages/
+
+# JetBrains / VS Code
+.idea/
+.vscode/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Local build artifacts
+builds/
