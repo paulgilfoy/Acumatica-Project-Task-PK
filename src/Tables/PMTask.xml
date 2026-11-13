@@ -1,0 +1,10 @@
+<Table TableName="PMTask">
+	<Column TableName="PMTask" ColumnName="UsrPGDueDate" ColumnType="date" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="PMTask" ColumnName="UsrPGExtendedDueDate" ColumnType="date" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="PMTask" ColumnName="UsrPGIsExtended" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="PMTask" ColumnName="UsrPGPreparer" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="PMTask" ColumnName="UsrPGReviewer" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="PMTask" ColumnName="UsrPGTechReviewer" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="PMTask" ColumnName="UsrPGTaskStatus" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="PMTask" ColumnName="UsrPGDepartment" ColumnType="string" AllowNull="True" MaxLength="10" DecimalPrecision="2" DecimalLength="10" IsNewColumn="True" IsUnicode="True" />
+</Table>

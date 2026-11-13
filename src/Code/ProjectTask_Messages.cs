@@ -28,6 +28,7 @@ namespace ProjectTask
     {
         public const string ADP = "ADP";
         public const string Alerus = "Alerus Retirement and Benefits";
+        public const string Ameritas = "Ameritas";
         public const string Ascensus = "Ascensus,  LLC";
         public const string ATRetirement = "AT Retirement Services,  LLC";
         public const string American = "American United Life Insurance Company";
@@ -44,6 +45,8 @@ namespace ProjectTask
         public const string Equitable = "Equitable";
         public const string ERISA = "ERISA Consultants";
         public const string Fidelity = "Fidelity Workplace Services,  LLC";
+        public const string Guideline = "Guideline";
+        public const string Human = "Human Interest";
         public const string John1 = "John Hancock";
         public const string John2 = "John Hancock Retirement Plan Services,  LLC and John Hancock Trust Company";
         public const string Lincoln1 = "Lincoln Director";
@@ -63,10 +66,12 @@ namespace ProjectTask
         public const string Retirement = "The Retirement Plan Company,  LLC";
         public const string Charles = "Charles Schwab Trust Bank";
         public const string Securian = "Securian Financial Group";
+        public const string Sentinel = "Sentinel";
         public const string Standard = "Standard Insurance Company";
         public const string TRowe = "T. Rowe Price Retirement Plan Services,  Inc. and T. Rowe Price Services,  Inc.";
         public const string Transamerica = "Transamerica Retirement Solutions,  LLC";
         public const string USIConslting = "USI Consulting Group Retirement Plan Services - Uniondale";
+        public const string Vestwell = "Vestwell";
         public const string Voya = "Voya Financial";
         public const string OtherRK = "Other RK";
     }
@@ -77,11 +82,13 @@ namespace ProjectTask
         public const string ADP3 = "ADP Workforce Now";
         public const string Alliance = "Alliance Payroll Services, Inc.";
         public const string CBIZ = "CBIZ, Inc.";
+        public const string Ceridian = "Ceridian Day Force";
         public const string Coastal = "Coastal Payroll Services, Inc.";
         public const string CertiPay = "CertiPay America, LLC";
         public const string Dominion = "Dominion Payroll Services";
         public const string ExponentHR = "ExponentHR";
         public const string GAPartners = "G&A Partners";
+        public const string Gusto = "Gusto";
         public const string Heartland = "Heartland Payroll Solutions, Inc.";
         public const string ISolved = "iSolved HCM, LLC";
         public const string Kelly = "Kelly Benefits Payroll";
@@ -92,6 +99,7 @@ namespace ProjectTask
         public const string Paylocity = "Paylocity Corporation";
         public const string Payday = "Payday LLC";
         public const string PayMaster = "PayMaster, Inc.";
+        public const string PEO = "PEO"; 
         public const string Proliant = "Proliant Inc.";
         public const string Paytime = "Paytime";
         public const string Ultimate = "Ultimate Kronos Group Incorporated";

@@ -15,7 +15,7 @@ namespace ProjectTask
     
   [Serializable]
   [PXCacheName("PMSampleTesting")]
-  public class PMSampleTesting : IBqlTable
+  public class PMSampleTesting : PXBqlTable, IBqlTable
   {
     #region ProjectID
     public abstract class projectID : PX.Data.BQL.BqlInt.Field<projectID> { }
@@ -84,6 +84,7 @@ namespace ProjectTask
             {
                 RecordKeeperList.ADP,
                 RecordKeeperList.Alerus,
+                RecordKeeperList.Ameritas,
                 RecordKeeperList.Ascensus,
                 RecordKeeperList.ATRetirement,
                 RecordKeeperList.American,
@@ -100,6 +101,8 @@ namespace ProjectTask
                 RecordKeeperList.Equitable,
                 RecordKeeperList.ERISA,
                 RecordKeeperList.Fidelity,
+                RecordKeeperList.Guideline,
+                RecordKeeperList.Human,
                 RecordKeeperList.John1,
                 RecordKeeperList.John2,
                 RecordKeeperList.Lincoln1,
@@ -119,10 +122,12 @@ namespace ProjectTask
                 RecordKeeperList.Retirement,
                 RecordKeeperList.Charles,
                 RecordKeeperList.Securian,
+                RecordKeeperList.Sentinel,
                 RecordKeeperList.Standard,
                 RecordKeeperList.TRowe,
                 RecordKeeperList.Transamerica,
                 RecordKeeperList.USIConslting,
+                RecordKeeperList.Vestwell,
                 RecordKeeperList.Voya,
                 RecordKeeperList.OtherRK
     },
@@ -130,6 +135,7 @@ namespace ProjectTask
             {
                 MessageRecordKeeperList.ADP,
                 MessageRecordKeeperList.Alerus,
+                MessageRecordKeeperList.Ameritas,
                 MessageRecordKeeperList.Ascensus,
                 MessageRecordKeeperList.ATRetirement,
                 MessageRecordKeeperList.American,
@@ -146,6 +152,8 @@ namespace ProjectTask
                 MessageRecordKeeperList.Equitable,
                 MessageRecordKeeperList.ERISA,
                 MessageRecordKeeperList.Fidelity,
+                MessageRecordKeeperList.Guideline,
+                MessageRecordKeeperList.Human,
                 MessageRecordKeeperList.John1,
                 MessageRecordKeeperList.John2,
                 MessageRecordKeeperList.Lincoln1,
@@ -165,10 +173,12 @@ namespace ProjectTask
                 MessageRecordKeeperList.Retirement,
                 MessageRecordKeeperList.Charles,
                 MessageRecordKeeperList.Securian,
+                MessageRecordKeeperList.Sentinel,
                 MessageRecordKeeperList.Standard,
                 MessageRecordKeeperList.TRowe,
                 MessageRecordKeeperList.Transamerica,
                 MessageRecordKeeperList.USIConslting,
+                MessageRecordKeeperList.Vestwell,
                 MessageRecordKeeperList.Voya,
                 MessageRecordKeeperList.OtherRK
             })]

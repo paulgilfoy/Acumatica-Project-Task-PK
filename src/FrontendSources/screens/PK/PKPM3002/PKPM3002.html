@@ -1,0 +1,93 @@
+﻿<template>
+	<qp-template id="Sampletest_form" name="1-1" class="equal-height label-size-m" wg-container>
+		<qp-fieldset id="formSlotA" slot="A" view.bind="Sampletest">
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="PMProject__Usr401kStatus"></field>
+			<field name="PMProject__CustomerID_BAccountR_acctName"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formSlotB" slot="B" view.bind="Sampletest">
+			<field name="Complete"></field>
+			<field name="Priority"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="SampletestProperties_tab" active-tab-id="TrackingTab" wg-container>
+
+		<qp-tab id="TrackingTab" caption="Tracking">
+			<qp-template id="TrackingForm" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="SamplesFieldset" view.bind="SampletestProperties" caption="Samples">
+						<field name="CO01Row" caption="CO-01" unbound>
+							<qp-field control-state.bind="SampletestProperties.CO01" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO01LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO01LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="CO02Row" caption="CO-02" unbound>
+							<qp-field control-state.bind="SampletestProperties.CO02" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO02LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO02LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="CO03Row" caption="CO-03" unbound>
+							<qp-field control-state.bind="SampletestProperties.CO03" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO03LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO03LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="CO04Row" caption="CO-04" unbound>
+							<qp-field control-state.bind="SampletestProperties.CO04" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO04LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO04LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="CO05Row" caption="CO-05" unbound>
+							<qp-field control-state.bind="SampletestProperties.CO05" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO05LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO05LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="CO06Row" caption="CO-06" unbound>
+							<qp-field control-state.bind="SampletestProperties.CO06" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO06LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO06LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="CO07Row" caption="CO-07" unbound>
+							<qp-field control-state.bind="SampletestProperties.CO07" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO07LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO07LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="CO08Row" caption="CO-08" unbound>
+							<qp-field control-state.bind="SampletestProperties.CO08" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO08LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.CO08LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="BP01Row" caption="BP-01" unbound>
+							<qp-field control-state.bind="SampletestProperties.BP01" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.BP01LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.BP01LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="LO01Row" caption="LO-01" unbound>
+							<qp-field control-state.bind="SampletestProperties.LO01" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.LO01LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.LO01LastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="IA08Row" caption="IA-08" unbound>
+							<qp-field control-state.bind="SampletestProperties.IA08" class="col-4"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.IA08LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="SampletestProperties.IA08LastModUserName" class="col-2"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="NotesFieldset" view.bind="SampletestProperties" caption="Notes">
+						<field name="AdditionalNotes"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="AdditionalDetailsFieldset" view.bind="SampletestProperties" caption="Additional Details">
+						<field name="RecordKeeperName"></field>
+						<field name="TPA"></field>
+						<field name="Tester"></field>
+						<field name="FirstContactDate"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+	</qp-tabbar>
+</template>

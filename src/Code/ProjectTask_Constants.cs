@@ -30,6 +30,7 @@ namespace ProjectTask
     {
         public const string ADP = "AD1";
         public const string Alerus = "ARB";
+        public const string Ameritas = "AME";
         public const string Ascensus = "ACS";
         public const string ATRetirement = "ATR";
         public const string American = "AUL";
@@ -37,6 +38,7 @@ namespace ProjectTask
         public const string BOK = "BOK";
         public const string CapitalGroup = "CGR";
         public const string CapitalAmerican = "CAF";
+        public const string Charles = "CST";
         public const string CMFG = "CMF";
         public const string EmployeeFid = "EFY";
         public const string Empower1 = "EM1";
@@ -46,6 +48,8 @@ namespace ProjectTask
         public const string Equitable = "EQU";
         public const string ERISA = "ERI";
         public const string Fidelity = "FWS";
+        public const string Guideline = "GUI";
+        public const string Human = "HUM";
         public const string John1 = "JH1";
         public const string John2 = "JH2";
         public const string Lincoln1 = "LND";
@@ -63,13 +67,14 @@ namespace ProjectTask
         public const string Prudential = "PRI";
         public const string RHIAcquisition = "RAL";
         public const string Retirement = "RPC";
-        public const string Charles = "CST";
         public const string Securian = "SFG";
+        public const string Sentinel = "SEN";
         public const string Standard = "SIC";
         public const string TRowe = "TRP";
         public const string Transamerica = "TRS";
         public const string USIConslting = "UCG";
         public const string Voya = "VYF";
+        public const string Vestwell = "VES";
         public const string OtherRK = "ORK";
     }
     public static class PayrollProviderList
@@ -79,11 +84,13 @@ namespace ProjectTask
         public const string ADP3 = "AD3";
         public const string Alliance = "APS";
         public const string CBIZ = "CBI";
+        public const string Ceridian = "CER";
         public const string Coastal = "CPS";
         public const string CertiPay = "CPA";
         public const string Dominion = "DPS";
         public const string ExponentHR = "EHR";
         public const string GAPartners = "GAP";
+        public const string Gusto = "GUS";
         public const string Heartland = "HPS";
         public const string ISolved = "ISH";
         public const string Kelly = "KBP";
@@ -94,6 +101,7 @@ namespace ProjectTask
         public const string Paylocity = "PLC";
         public const string Payday = "PDY";
         public const string PayMaster = "PMR";
+        public const string PEO = "PEO";
         public const string Proliant = "PRO";
         public const string Paytime = "PYT";
         public const string Ultimate = "UKG";

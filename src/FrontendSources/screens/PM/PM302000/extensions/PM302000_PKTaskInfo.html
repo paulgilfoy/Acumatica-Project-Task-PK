@@ -1,0 +1,15 @@
+<template>
+	<qp-fieldset id="PKTaskInfoFieldset" view.bind="TaskProperties" caption="PK Task Info" before="#SummaryTab01">
+		<field name="UsrPGDepartment"></field>
+		<field name="UsrPGTaskStatus"></field>
+		<field name="UsrPGDueDate"></field>
+		<field name="UsrPGPreparer"></field>
+		<field name="UsrPGReviewer"></field>
+		<field name="UsrPGTechReviewer"></field>
+		<field name="UsrPGIsExtended"></field>
+	</qp-fieldset>
+
+	<qp-fieldset id="PKTaskExtensionFieldset" view.bind="TaskProperties" caption="PK Extended Due Date" after="#PKTaskInfoFieldset">
+		<field name="UsrPGExtendedDueDate" if.bind="TaskProperties.UsrPGIsExtended.value == true"></field>
+	</qp-fieldset>
+</template>

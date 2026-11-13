@@ -1,0 +1,313 @@
+﻿<template>
+	<qp-template id="DocGathering_form" name="1-1" class="equal-height label-size-m" wg-container>
+		<qp-fieldset id="formSlotA" slot="A" view.bind="DocGathering">
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="PMProject__Usr401kStatus"></field>
+			<field name="AdditionalNotes"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="DocGatheringProperties_tab" active-tab-id="PayrollPreprocessTab" wg-container>
+
+		<qp-tab id="PayrollPreprocessTab" caption="Payroll Preprocess">
+			<qp-template id="PayrollPreprocessForm" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="PayrollDocsFieldset" view.bind="DocGatheringProperties" caption="Documents">
+						<field name="MPRRow" caption="MPR" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.MPR" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.MPRLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.MPRLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.MPRAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="PayrollVerificationRow" caption="Payroll Verification" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.PayrollVerification" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PayrollVerLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PayrollVerLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PayrollAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="FinchRow" caption="Finch Connection" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.Finch" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.FinchLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.FinchLastModUserName" class="col-2"></qp-field>
+						</field>
+						<field name="RKAccess"></field>
+						<field name="RKAccessAutire"></field>
+						<field name="RecordKeeperName"></field>
+						<field name="PayrollProvider"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="PayrollFooterFieldset" view.bind="DocGatheringProperties" caption="First Contact + Notes">
+						<field name="FirstContactDatePayroll"></field>
+						<field name="NotesPayroll"></field>
+						<field name="PayrollComplete"></field>
+						<field name="PayrollPreparer"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="PlanDocumentsTab" caption="Plan Documents">
+			<qp-template id="PlanDocumentsForm" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="PlanDocumentsDocsFieldset" view.bind="DocGatheringProperties" caption="Documents">
+						<field name="SPDRow" caption="SPD" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.SPD" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SPDLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SPDLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SPDAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="AARow" caption="AA + (Cycle 3 Amedment)" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.AA" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.AALastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.AALastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.AAAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="BPDRow" caption="BPD" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.BPD" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.BPDLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.BPDLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.BPDAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="IRSRow" caption="IRS Opinion Letter" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.IRS" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.IRSLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.IRSLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.IRSAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="SATrustreeRow" caption="SA - Trustree/Custodian" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.SATrustree" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SATrustreeLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SATrustreeLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SATrustreeAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="SATPARow" caption="SA - TPA" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.SATPA" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SATPALastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SATPALastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SATPAAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="SAInvestmentRow" caption="SA - Investment Advisor" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.SAInvestment" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SAInvestmentLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SAInvestmentLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.SAInvestmentAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="LoanPolicyRow" caption="Loan Policy" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.LoanPolicy" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.LoanPolicyLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.LoanPolicyLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.LoanPolicyAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="QDIARow" caption="QDIA" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.QDIA" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.QDIALastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.QDIALastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.QDIAAshAutire" class="col-2"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="PlanDocumentsFooterFieldset" view.bind="DocGatheringProperties" caption="First Contact + Notes">
+						<field name="FirstContactDatePlanDocuments"></field>
+						<field name="NotesPlanDocuments"></field>
+						<field name="PlanDocumentsComplete"></field>
+						<field name="PlanDocPreparer"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="PlanDocPreprocessTab" caption="PlanDoc Preprocess">
+			<qp-template id="PlanDocPreprocessForm" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="PlanDocPreprocessDocsFieldset" view.bind="DocGatheringProperties" caption="Documents">
+						<field name="ECRow" caption="EC" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.EC" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ECLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ECLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ECAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="PASRow" caption="PAS" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.PAS" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PASLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PASLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PASAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="ContRow" caption="Cont" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.Cont" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ContLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ContLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ContAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="DistRow" caption="Dist" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.Dist" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.DistLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.DistLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.DistAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="LoansRow" caption="Loans" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.Loans" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.LoansLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.LoansLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.LoansAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="DefElectionRow" caption="Def Elections and Changes" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.DefElection" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.DefElectionLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.DefElectionLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.DefElectionAshAutire" class="col-2"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="PlanDocPreprocessFooterFieldset" view.bind="DocGatheringProperties" caption="First Contact + Notes">
+						<field name="FirstContactDatePlanDocPreproc"></field>
+						<field name="NotesPlanDocPreproc"></field>
+						<field name="PlanDocPreprocComplete"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="PlanDesignTab" caption="Plan Design">
+			<qp-template id="PlanDesignForm" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="PlanDesignDocsFieldset" view.bind="DocGatheringProperties" caption="Documents">
+						<field name="PlanProvisionsRow" caption="Plan Provisions" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.PlanProvisions" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PlanProvisionsLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PlanProvisionsLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PlanProvisionsAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="PreProcessDateRow" caption="Submitted for PreProcess Date" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.PreProcessDate" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PreProcessDateLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PreProcessDateLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PreProcessDateAshAutire" class="col-2"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="PlanDesignFooterFieldset" view.bind="DocGatheringProperties" caption="First Contact + Notes">
+						<field name="FirstContactDatePlanDesign"></field>
+						<field name="NotesPlanDesign"></field>
+						<field name="PlanDesignComplete"></field>
+						<field name="PlanDesignPreparer"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="AnnualDocumentsTab" caption="Annual Documents">
+			<qp-template id="AnnualDocumentsForm" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="AnnualDocumentsDocsFieldset" view.bind="DocGatheringProperties" caption="Documents">
+						<field name="Form5500Row" caption="5500" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.Form5500" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.Form5500LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.Form5500LastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.Form5500AshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="TrustStateRow" caption="Trust Statement" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.TrustState" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.TrustStateLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.TrustStateLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.TrustStateAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="TrustCertRow" caption="Trust Certification" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.TrustCert" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.TrustCertLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.TrustCertLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.TrustCertAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="FidelityBondRow" caption="Fidelity Bond" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.FidelityBond" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.FidelityBondLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.FidelityBondLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.FidelityBondAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="ComplianceTestRow" caption="Compliance Testing" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.ComplianceTest" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ComplianceTestLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ComplianceTestLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ComplianceTestAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="RKFeeDiscRow" caption="RK Fee Disc" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.RKFeeDisc" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.RKFeeDiscLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.RKFeeDiscLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.RKFeeDiscAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="InvestAllocationRow" caption="Investment Allocation Report" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.InvestAllocation" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.InvestAllocationLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.InvestAllocationLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.InvestAllocationAshAutire" class="col-2"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="AnnualDocumentsFooterFieldset" view.bind="DocGatheringProperties" caption="First Contact + Notes">
+						<field name="FirstContactDateAnnualDocuments"></field>
+						<field name="NotesAnnualDocuments"></field>
+						<field name="AnnualDocumentsComplete"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="FirstYearPKTab" caption="First Year PK">
+			<qp-template id="FirstYearPKForm" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="FirstYearPKDocsFieldset" view.bind="DocGatheringProperties" caption="Documents">
+						<field name="ClientAuthRow" caption="Client Authorization Letter" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.ClientAuth" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ClientAuthLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ClientAuthLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.ClientAuthAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="CommunicationRow" caption="Communication with Predecessor Auditor" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.Communication" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.CommunicationLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.CommunicationLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.CommunicationAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="PY5500Row" caption="PY 5500" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.PY5500" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PY5500LastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PY5500LastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PY5500AshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="PYTrustStateRow" caption="PY Trust Statement" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.PYTrustState" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYTrustStateLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYTrustStateLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYTrustStateAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="PYTrustCertRow" caption="PY Trust Certification" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.PYTrustCert" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYTrustCertLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYTrustCertLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYTrustCertAshAutire" class="col-2"></qp-field>
+						</field>
+						<field name="PYComplianceRow" caption="PY Compliance Testing" unbound>
+							<qp-field control-state.bind="DocGatheringProperties.PYCompliance" class="col-4"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYComplianceLastModifiedDateTime" class="col-3"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYComplianceLastModUserName" class="col-2"></qp-field>
+							<qp-field control-state.bind="DocGatheringProperties.PYComplianceAshAutire" class="col-2"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="FirstYearPKFooterFieldset" view.bind="DocGatheringProperties" caption="First Contact + Notes">
+						<field name="FirstContactDateFirstYearPK"></field>
+						<field name="NotesFirstYearPK"></field>
+						<field name="FirstYearPKComplete"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+	</qp-tabbar>
+</template>

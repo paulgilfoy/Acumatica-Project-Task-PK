@@ -1,0 +1,20 @@
+<template>
+	<qp-fieldset id="PKProjectInfoFieldset" view.bind="ProjectProperties" caption="PK Project Info" before="#SummaryTabSlotA01">
+		<field name="UsrPGDepartment"></field>
+		<field name="UsrPGPriority"></field>
+		<field name="UsrPGIsFinal"></field>
+		<field name="UsrPGFinishDate"></field>
+		<field name="UsrPGYearEnd"></field>
+		<field name="UsrPGComplexity"></field>
+	</qp-fieldset>
+
+	<qp-fieldset id="PKDepartmentStatusFieldset" view.bind="ProjectProperties" caption="PK Department Status" after="#PKProjectInfoFieldset">
+		<field name="Usr401kStatus" if.bind="ProjectProperties.UsrPGDepartment.value.id == '401K'"></field>
+		<field name="UsrPGReleaseDeliverables" if.bind="ProjectProperties.UsrPGDepartment.value.id == '401K'"></field>
+		<field name="UsrPGAcctStatus" if.bind="ProjectProperties.UsrPGDepartment.value.id == 'ACCT'"></field>
+		<field name="UsrPGAuditStatus" if.bind="ProjectProperties.UsrPGDepartment.value.id == 'AUDIT'"></field>
+		<field name="UsrPGTaxStatus" if.bind="ProjectProperties.UsrPGDepartment.value.id == 'TAX'"></field>
+		<field name="UsrPGReleasedELF" if.bind="ProjectProperties.UsrPGDepartment.value.id == 'TAX'"></field>
+		<field name="UsrPGTechStatus" if.bind="ProjectProperties.UsrPGDepartment.value.id == 'TECH'"></field>
+	</qp-fieldset>
+</template>

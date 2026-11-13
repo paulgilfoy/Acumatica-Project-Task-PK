@@ -27,50 +27,50 @@
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
 	<px:PXTab DataMember="SampletestProperties" ID="tab" runat="server" Width="100%" Height="150px" DataSourceID="ds" AllowAutoHide="false">
 		<Items>
-			<px:PXTabItem Text="Sample Tracking">
+			<px:PXTabItem Text="Tracking">
 				<Template>
 					<px:PXLayoutRule ControlSize="XM" LabelsWidth="SM" ColumnSpan="1" runat="server" ID="CstPXLayoutRule5" StartRow="True" ></px:PXLayoutRule>
-					<px:PXLayoutRule GroupCaption="Sample Collecting" runat="server" ID="CstPXLayoutRule7" StartColumn="True" ></px:PXLayoutRule>
+					<px:PXLayoutRule GroupCaption="Samples" runat="server" ID="CstPXLayoutRule7" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXDropDown CommitChanges="True" runat="server" ID="CstPXDropDown10" DataField="CO01" ></px:PXDropDown>
 					<px:PXDropDown CommitChanges="True" runat="server" ID="CstPXDropDown12" DataField="CO02" ></px:PXDropDown>
 					<px:PXDropDown CommitChanges="True" runat="server" ID="CstPXDropDown13" DataField="CO03" ></px:PXDropDown>
-					<px:PXLabel runat="server" ID="CstLabel76" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel76" ></px:PXLabel>
 					<px:PXLayoutRule GroupCaption="Last Contact" SuppressLabel="True" runat="server" ID="CstPXLayoutRule8" StartColumn="True" ></px:PXLayoutRule>
-					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit23" DataField="CO01LastModifiedDateTime" ></px:PXDateTimeEdit>
-					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit24" DataField="CO02LastModifiedDateTime" ></px:PXDateTimeEdit>
+					<px:PXDateTimeEdit Height="" Style='height:;' runat="server" ID="CstPXDateTimeEdit23" DataField="CO01LastModifiedDateTime" ></px:PXDateTimeEdit>
+					<px:PXDateTimeEdit Height="" Style='height:;' runat="server" ID="CstPXDateTimeEdit24" DataField="CO02LastModifiedDateTime" ></px:PXDateTimeEdit>
 					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit25" DataField="CO03LastModifiedDateTime" ></px:PXDateTimeEdit>
-					<px:PXLabel runat="server" ID="CstLabel77" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel77" ></px:PXLabel>
 					<px:PXLayoutRule GroupCaption="Modified By" SuppressLabel="True" runat="server" ID="CstPXLayoutRule9" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit34" DataField="CO01LastModUserName" ></px:PXTextEdit>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit35" DataField="CO02LastModUserName" ></px:PXTextEdit>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit36" DataField="CO03LastModUserName" ></px:PXTextEdit>
-					<px:PXLabel runat="server" ID="CstLabel78" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel78" ></px:PXLabel>
 					<px:PXLayoutRule ColumnSpan="1" ControlSize="XM" LabelsWidth="SM" runat="server" ID="CstPXLayoutRule54" StartRow="True" ></px:PXLayoutRule>
 					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule55" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXDropDown CommitChanges="True" runat="server" ID="CstPXDropDown14" DataField="CO04" ></px:PXDropDown>
 					<px:PXDropDown CommitChanges="True" runat="server" ID="CstPXDropDown15" DataField="CO05" ></px:PXDropDown>
-					<px:PXLabel Height="4" runat="server" ID="CstLabel79" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel79" ></px:PXLabel>
 					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule56" StartColumn="True" SuppressLabel="True" ></px:PXLayoutRule>
 					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit26" DataField="CO04LastModifiedDateTime" ></px:PXDateTimeEdit>
 					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit27" DataField="CO05LastModifiedDateTime" ></px:PXDateTimeEdit>
-					<px:PXLabel Height="4" runat="server" ID="CstLabel80" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel80" ></px:PXLabel>
 					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule57" StartColumn="True" SuppressLabel="True" ></px:PXLayoutRule>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit37" DataField="CO04LastModUserName" ></px:PXTextEdit>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit38" DataField="CO05LastModUserName" ></px:PXTextEdit>
-					<px:PXLabel Height="4" runat="server" ID="CstLabel81" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel81" ></px:PXLabel>
 					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule58" StartRow="True" ColumnSpan="1" ControlSize="XM" LabelsWidth="SM" ></px:PXLayoutRule>
 					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule59" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXDropDown CommitChanges="True" runat="server" ID="CstPXDropDown16" DataField="CO06" ></px:PXDropDown>
 					<px:PXDropDown CommitChanges="True" runat="server" ID="CstPXDropDown17" DataField="CO07" ></px:PXDropDown>
-					<px:PXLabel runat="server" ID="CstLabel82" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel82" ></px:PXLabel>
 					<px:PXLayoutRule SuppressLabel="True" runat="server" ID="CstPXLayoutRule60" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit28" DataField="CO06LastModifiedDateTime" ></px:PXDateTimeEdit>
 					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit29" DataField="CO07LastModifiedDateTime" ></px:PXDateTimeEdit>
-					<px:PXLabel runat="server" ID="CstLabel83" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel83" ></px:PXLabel>
 					<px:PXLayoutRule SuppressLabel="True" runat="server" ID="CstPXLayoutRule61" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit39" DataField="CO06LastModUserName" ></px:PXTextEdit>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit40" DataField="CO07LastModUserName" ></px:PXTextEdit>
-					<px:PXLabel runat="server" ID="CstLabel84" ></px:PXLabel>
+					<px:PXLabel Height="" runat="server" ID="CstLabel84" ></px:PXLabel>
 					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule62" StartRow="True" ColumnSpan="1" ControlSize="XM" LabelsWidth="SM" ></px:PXLayoutRule>
 					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule63" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXDropDown CommitChanges="True" runat="server" ID="CstPXDropDown18" DataField="CO08" ></px:PXDropDown>
@@ -94,13 +94,16 @@
 					<px:PXLayoutRule SuppressLabel="True" runat="server" ID="CstPXLayoutRule69" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit33" DataField="BP01LastModUserName" ></px:PXTextEdit>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit43" DataField="LO01LastModUserName" ></px:PXTextEdit>
-					<px:PXLayoutRule ColumnSpan="2" ControlSize="XM" GroupCaption="First Contact + Notes" LabelsWidth="SM" runat="server" ID="CstPXLayoutRule6" StartRow="True" ></px:PXLayoutRule>
-					<px:PXDropDown runat="server" ID="CstPXDropDown48" DataField="RecordKeeperName" ></px:PXDropDown>
-					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit47" DataField="FirstContactDate" ></px:PXDateTimeEdit>
+					<px:PXLayoutRule ColumnSpan="1" GroupCaption="" ControlSize="XM" LabelsWidth="SM" runat="server" ID="CstPXLayoutRule96" StartRow="True" ></px:PXLayoutRule>
+					<px:PXLayoutRule GroupCaption="Notes" runat="server" ID="CstPXLayoutRule97" StartColumn="True" ></px:PXLayoutRule>
 					<px:PXTextEdit runat="server" ID="CstPXTextEdit45" DataField="AdditionalNotes" Height="120" TextAlign="Left" TextMode="MultiLine" Width="255" ></px:PXTextEdit>
-					<px:PXSegmentMask runat="server" ID="CstPXSegmentMask49" DataField="Tester" ></px:PXSegmentMask></Template>
+					<px:PXLayoutRule GroupCaption="Additional Details" runat="server" ID="CstPXLayoutRule98" StartColumn="True" ></px:PXLayoutRule>
+					<px:PXDropDown runat="server" ID="CstPXDropDown48" DataField="RecordKeeperName" ></px:PXDropDown>
+					<px:PXTextEdit runat="server" ID="CstPXTextEdit92" DataField="TPA" ></px:PXTextEdit>
+					<px:PXSegmentMask runat="server" ID="CstPXSegmentMask49" DataField="Tester" ></px:PXSegmentMask>
+					<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit47" DataField="FirstContactDate" ></px:PXDateTimeEdit></Template>
 			</px:PXTabItem>
-			<px:PXTabItem Text="Tab item 2">
+			<px:PXTabItem Visible="False" Text="Tab item 2">
 				<Template>
 					
 				</Template>

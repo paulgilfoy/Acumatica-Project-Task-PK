@@ -26,7 +26,7 @@ namespace PX.Objects.PM
   {
     #region UsrPGTaskStatus
     [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09}, new string[] {"In Preparation", "Initial Review", "Waiting on Client", "On Hold", "Stuck, need help", "Clearing Points", "In Final Review", "Bill Client", "Complete"})]
+    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09}, new string[] {"In Preparation", "Initial Review", "Clearing Points", "In Final Review", "Bill Client", "Complete", "Waiting on Client", "On Hold", "Stuck, need help"})]
     [PXUIField(DisplayName="Task Status")]
     public virtual int? UsrPGTaskStatus { get; set; }
     public abstract class usrPGTaskStatus : PX.Data.BQL.BqlInt.Field<usrPGTaskStatus> { }
@@ -82,8 +82,8 @@ namespace PX.Objects.PM
 
     #region UsrPGDepartment
     [PXDBString(10)]
-    [PXSelector(typeof(PX.Objects.EP.EPDepartment.departmentID))]
-    [PXUIField(DisplayName="Department")]
+    [PXDefault(typeof(Selector<PMTask.projectID, PX.Objects.CT.ContractExt.usrPGDepartment>), PersistingCheck = PXPersistingCheck.Nothing)]
+    [PXUIField(DisplayName="Department", Enabled=false)]
     public virtual string UsrPGDepartment { get; set; }
     public abstract class usrPGDepartment : PX.Data.BQL.BqlString.Field<usrPGDepartment> { }
     #endregion
