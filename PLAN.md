@@ -3,6 +3,13 @@
 Created 2026-11-20. **This file is the single source of truth for the effort.** The lead agent (PM/orchestrator) keeps the
 Status column current. Workers read this file, `CLAUDE.md`, `scratchpad.md` and `navigation.md` before starting.
 
+## NEEDS THE USER (lead keeps this current; newest state 2026-11-20)
+1. **Remove the filter `PMProject.usrPGTechStatus = 4` from GI641645 "PowerBI - Project Revenue"** (Conditions line 8, inside an inactive bracket group; PK9 now, and live in the UI). This is the last blocker for Bundle A.
+2. **PUBLISH Bundle A when #1 is done** (Contact merge T-10 + Tech removal T-11 + tooling): back up, import `build\ProjectTask.zip` into `ProjectTask`, in SM204505 tick `ProjectTask` and **untick `Contact`**, publish once. Checklists: `docs/contact-merge.md`, `docs/tech-removal.md`. Tell the lead the result; the lead then runs T-90 (re-sync `src/`).
+3. Later (lead will announce): Bundle B (status screen) after T-21/T-22 pass their checks; the user then sets SM201020 rights for PKPM2001.
+4. Open decision for later: template task due dates: copy as-is or offset (T-30 will present both).
+5. `CLAUDE.md` / `GUIDE.md` in this repo are uncommitted and the user's to decide on.
+
 ## Repos
 - `PriceKubecka-Acumatica-Contact` — merged into this repo (T-10), then archived by the user.
 - `Acumatica-PK-TimeClock` — built and passing; **paused ~1 month** (until at least 2026-12-20) pending manager/partner requirements. Gap review only (T-02).
@@ -59,7 +66,7 @@ Status column current. Workers read this file, `CLAUDE.md`, `scratchpad.md` and 
 ### Phase 2 — Status maintenance (P3)
 | ID | Task | Area | Depends | Acceptance | Model / effort | Status |
 |---|---|---|---|---|---|---|
-| T-20 | **Design.** Table `PKProjectStatus` (`DepartmentID`, `StatusID` int, `Description`, `SortOrder`, `Active`), preserving existing ints 1:1. Selector attribute filtered by the project's department. Decide: keep `CSAttributeDetail` in sync (GI000142 reads it) vs repoint the GI. Retired statuses go inactive, never deleted. → `docs/status-design.md`. | docs | T-01 | User signs off. **Result 2026-11-20:** design written; recommends a DB-backed `PKProjectStatusListAttribute : PXIntListAttribute` (not a `PXSelector`, so GIs keep showing text), one-way sync into `CSAttributeDetail` (hybrid GI option C), screen PKPM2001 under Projects → Preferences. **Waiting on user decisions D1–D8** (see the doc's last section) before T-21. | Opus 5.5 / high | READY (design: awaiting user sign-off) |
+| T-20 | **Design.** Table `PKProjectStatus` (`DepartmentID`, `StatusID` int, `Description`, `SortOrder`, `Active`), preserving existing ints 1:1. Selector attribute filtered by the project's department. Decide: keep `CSAttributeDetail` in sync (GI000142 reads it) vs repoint the GI. Retired statuses go inactive, never deleted. → `docs/status-design.md`. | docs | T-01 | User signs off. **Result 2026-11-20:** design written; recommends a DB-backed `PKProjectStatusListAttribute : PXIntListAttribute` (not a `PXSelector`, so GIs keep showing text), one-way sync into `CSAttributeDetail` (hybrid GI option C), screen PKPM2001 under Projects → Preferences. **User approved D1–D8 as recommended on 2026-11-20** (D5: task status stays as is; D8: deactivate only). | Opus 5.5 / high | DONE (design approved) |
 | T-21 | **Maintenance screen** `PKPM2001` (Department key + status grid): graph, DAC, site map, ASPX shell (follow PKPM3002), Modern UI. Seed SQL with today's lists — **written, not run**. | new screen | T-20 | Compile/TS OK; seed diffed against the current `PXIntList` values, identical. | Opus 5.5 / high | TODO |
 | T-22 | **Swap the four project fields** (`Usr401kStatus`, `UsrPGTaxStatus`, `UsrPGAcctStatus`, `UsrPGAuditStatus`) from `PXIntList` to the new selector, same columns/types. **Ask the user first** whether `UsrPGTaskStatus` (1–9, company-wide) is included. | `Contract.cs`, PM301000 UI | T-21 | Existing data shows the same text on PM301000; GI000142 unchanged. | Opus 5.5 / high | TODO |
 | T-23 | TimeClock `PKTaskStatusListAttribute` copy stays in sync (only if task status is touched). Cross-repo; do after TimeClock resumes. | TimeClock | T-22 | — | Opus 5.5 / high | TODO |

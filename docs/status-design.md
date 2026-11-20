@@ -181,7 +181,9 @@ Starts after T-11 is merged.
 5. The seed's company selection on hosted live is unverified. Check the tenant there after the bundle B publish.
 6. File overlap: T-11 (`Contract.cs`, PM301000 UI, Automation) and T-10 (`tools/`).
 
-## USER DECISIONS needed before T-21
+## USER DECISIONS: APPROVED 2026-11-20 (user accepted every recommendation below, D1-D8, including D8 deactivate-only)
+
+Plain-language note for D8: a project stores the status **number**; GIs and business events test the number. You can rename, reorder, retire and add statuses freely; the only thing blocked is deleting a saved status or reusing its number for a new meaning. To change what "01" means, rename it. A "delete only if no project uses it" variant was offered and **not** chosen.
 | # | Decision | Recommended |
 |---|---|---|
 | D1 | Text for ACCT 2, AUDIT 1, 401K 5 | PXIntList text (what PM301000 shows) |
