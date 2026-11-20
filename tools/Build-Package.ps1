@@ -36,6 +36,7 @@ param(
     [hashtable]$CodeFileType = @{
         PMDocGatheringMaint  = 'NewGraph'; PMSampleTestingMaint = 'NewGraph'
         PMDocumentGathering  = 'NewDac';   PMSampleTesting      = 'NewDac'
+        PKProjectStatusMaint = 'NewGraph'; PKProjectStatus      = 'NewDac'   # T-21 (PKProjectStatusListAttribute = NewFile)
     },
     [switch]$SkipModernUI
 )

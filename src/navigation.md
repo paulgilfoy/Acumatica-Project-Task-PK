@@ -6,11 +6,11 @@ Content was taken **from the PK9 database** (`CustObject` of project `ProjectTas
 | Folder | Is | Rules |
 |---|---|---|
 | `Code/*.cs` | `<Graph ClassName="<file name>" FileType="…">` items, compiled by Acumatica on publish | File name = item name; must be unique across ALL customization projects. |
-| `Sql/*.sql` | `<Sql>` custom scripts that create the two new tables | Must be idempotent (`IF NOT EXISTS`); runs on every publish. |
+| `Sql/*.sql` | `<Sql>` custom scripts that create the new tables (`PMDocumentGathering`, `PMSampleTesting`, `PKProjectStatus` + its 54-row seed, T-21) | Must be idempotent (`IF NOT EXISTS`, insert-only-missing); runs on publish. Checked by `../tools/Test-StatusSeed.ps1` (PKProjectStatus). |
 | `Tables/*.xml` | `<Table>` items adding `Usr*` columns to EXISTING tables (`Contract`, `PMTask`, `Contact`) | One file per table, verbatim XML. Each new column needs a DAC extension field. Exceptions on purpose: `Contract.UsrPGReleasedFinalDeliverables` and `Contract.UsrPGTechStatus` (retired fields; columns kept declared, never dropped). Removing a column line never drops the DB column. |
 | `Automation/*.xml` | `<Automation screen="…">` workflow items (PM301000, PKPM3001) | Verbatim live XML. |
 | `PageCustomizations/*.xml` | `<Page path="~/pages/…">` Classic screen-editor items (PKPM3002, PKPM3003, PM301000, PM302000, CR302000) | Verbatim live XML; Classic UI only. |
-| `SiteMap/*.xml` | `<SiteMapNode>` items (screen + Modern UI workspace entry), file named by ScreenID | Verbatim. Workspace *Projects*, subcategory *401(k) Audit*. |
+| `SiteMap/*.xml` | `<SiteMapNode>` items (screen + Modern UI workspace entry), file named by ScreenID | Verbatim. Workspace *Projects*: PKPM3001/3002 in subcategory *401(k) Audit*, PKPM2001 in *Preferences*. |
 | `Pages/PK/*.aspx(.cs)` | `<File AppRelativePath="Pages\PK\…"/>` Classic shells (never rendered) | Minimal; PXDataSource TypeName/PrimaryView only. |
 | `FrontendSources/screens/<MOD>/<SCREEN>/` | `<PerTenantFile AppRelativePath="screens\…" ScreenId="<SCREEN>"/>` — **Modern UI** | Path mirrors `PK9\FrontendSources\screen\src\screens\…`. Type-check with `../tools/Test-ModernUI.ps1`. |
 
@@ -25,11 +25,15 @@ Content was taken **from the PK9 database** (`CustObject` of project `ProjectTas
 | `Code/PMSampleTesting.cs` | DAC / table `PMSampleTesting` | same name |
 | `Code/ProjectTask_Constants.cs` | Status lists, `RecordKeeperList`, `PayrollProviderList`, `Department`, … (DB codes) | same name |
 | `Code/ProjectTask_Messages.cs` | Display strings for the constants | same name |
+| `Code/PKProjectStatus.cs` | **T-21, not published.** DAC `PKProjectStatus` (table of the same name: DepartmentID + StatusID key, Description, SortOrder, Active), filter DAC `PKProjectStatusFilter`, `PKProjectStatusMessages` (NewDac) | none yet |
+| `Code/PKProjectStatusMaint.cs` | **T-21.** Graph of **Department Statuses** (PKPM2001): rules + one-way sync into `CSAttributeDetail` (STATUS401K/TAX/ACCT/AUDI) on save. See `../docs/status-screen.md` (NewGraph) | none yet |
+| `Code/PKProjectStatusListAttribute.cs` | **T-21.** `PKProjectStatusListAttribute : PXIntListAttribute`, DB-backed status drop-down per department (`[PKProjectStatusList("401K")]`); not on any field until T-22 (NewFile) | none yet |
 | `Code/PKContactExt.cs` | **Merged from project `Contact` (T-10).** `PX.Objects.CR.ContactExt : PXCacheExtension<Contact>`, 8 bool fields on Contacts (CR302000): `UsrPGPortalAccess`, `UsrPG1040ES`, `UsrPG1040Check`, `UsrPGTaxPlan`, `UsrPGDoNotMarket`, `UsrPGAcuMarket`, `UsrPGRetire`, `UsrServiceProviderQ`. Byte copy of the code Acumatica generated from Contact's DAC item. Columns: `Tables/Contact.xml` | before cutover: `PX_Objects_CR_Contact_extensions.cs` (Contact project); after: `PKContactExt.cs`. See `../docs/contact-merge.md` |
 
 ## Screens
 | Screen | Modern UI | Classic shell | Notes |
 |---|---|---|---|
+| `PKPM2001` Department Statuses (T-21) | `screens/PK/PKPM2001/` (`PKPM2001.ts`, `.html`, `views.ts`): Department filter + status grid; graph `ProjectTask.PKProjectStatusMaint` | `Pages/PK/PKPM2001.aspx(.cs)` | Projects → Preferences. Table + seed: `Sql/PKProjectStatus.sql`. Rights set on SM201020 after publish (D7). |
 | `PKPM3001` Document Gathering | `screens/PK/PKPM3001/` (`PKPM3001.ts`, `.html`, `views.ts`) — graph `ProjectTask.PMDocGatheringMaint` | `Pages/PK/PKPM3003.aspx(.cs)` | Site map node ScreenID PKPM3001 points at **PKPM3003.aspx** (historical naming). |
 | `PKPM3002` Sample Testing | `screens/PK/PKPM3002/` — graph `ProjectTask.PMSampleTestingMaint` | `Pages/PK/PKPM3002.aspx(.cs)` | |
 | `PM301000` Projects (extension) | `screens/PM/PM301000/extensions/PM301000_PKProjectInfo.*` — Contract `UsrPG*` in *Project Properties*, task `UsrPG*` columns in *Tasks* grid | — | `PM301000_PKTimeClock.*` in the same folder belongs to **PKTimeClock**, not this repo. |

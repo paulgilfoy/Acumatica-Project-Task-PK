@@ -8,6 +8,7 @@ Acumatica customization project **`ProjectTask`** for PriceKubecka (Acumatica 20
 - **Project Task fields** (PMTask): Task Status, Due Date, Extended Due Date / Is Extended, Preparer, Reviewer, Tech Reviewer, Department.
 - **Project fields** (Contract): Department, Priority, Is Final, Finish Date, Year End, 401(k) status, Complexity, deliverables and department status fields (401k, Tax, Acct, Audit; Tech Status was removed in T-11, see `docs/tech-removal.md`).
 - **Document Gathering** (`PKPM3001`) and **Sample Testing** (`PKPM3002`) screens for 401(k) audits (workspace *Projects* → *401(k) Audit*).
+- **Department Statuses** (`PKPM2001`, workspace *Projects* → *Preferences*; T-21, not yet published): maintain the 401K/TAX/ACCT/AUDIT project status lists in table `PKProjectStatus` (seeded from today's lists); saving keeps the `CSAttributeDetail` STATUS* rows used by GIs in step. See `docs/status-screen.md`.
 - Modern UI extensions of *Projects* (PM301000) and *Project Tasks* (PM302000).
 - **Contact marketing fields** (*PK Marketing* tab on *Contacts*, CR302000): 8 check boxes. Merged from the former `Contact` project; see `docs/contact-merge.md`.
 
