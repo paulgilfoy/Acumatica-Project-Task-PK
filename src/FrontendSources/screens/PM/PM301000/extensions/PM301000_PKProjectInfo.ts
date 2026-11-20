@@ -35,8 +35,6 @@ export class PM301000_ProjectProperties_PKProjectInfo {
 	UsrPGTaxStatus: PXFieldState;
 
 	UsrPGReleasedELF: PXFieldState;
-
-	UsrPGTechStatus: PXFieldState;
 }
 
 export interface PM301000_Tasks_PKProjectInfo extends Tasks {}

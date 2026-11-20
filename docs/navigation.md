@@ -6,6 +6,7 @@ Living information (status, drift, decisions, learnings) belongs in `../scratchp
 |---|---|
 | `inventory.md` | T-01 read-only inventory (Tech status uses, template/common-task flow, open questions) |
 | `status-lists.md` | T-01: `CSAttributeDetail` status rows vs the `PXIntList`s |
+| `tech-removal.md` | T-11: Tech Status / TECH display removed (P2), column kept, GI-first publish order, re-check SQL, rollback, manual checklist |
 | `contact-merge.md` | T-10: what the live `Contact` project contained, where it went, cutover publish, data, rollback, manual checklist |
 
 Shared references live in the PK-TimeClock repo: `..\Acumatica-PK-TimeClock\docs\T290.md` (Modern UI cheat sheet),

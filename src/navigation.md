@@ -7,7 +7,7 @@ Content was taken **from the PK9 database** (`CustObject` of project `ProjectTas
 |---|---|---|
 | `Code/*.cs` | `<Graph ClassName="<file name>" FileType="…">` items, compiled by Acumatica on publish | File name = item name; must be unique across ALL customization projects. |
 | `Sql/*.sql` | `<Sql>` custom scripts that create the two new tables | Must be idempotent (`IF NOT EXISTS`); runs on every publish. |
-| `Tables/*.xml` | `<Table>` items adding `Usr*` columns to EXISTING tables (`Contract`, `PMTask`, `Contact`) | One file per table, verbatim XML. Each column must match a DAC extension field. |
+| `Tables/*.xml` | `<Table>` items adding `Usr*` columns to EXISTING tables (`Contract`, `PMTask`, `Contact`) | One file per table, verbatim XML. Each new column needs a DAC extension field. Exceptions on purpose: `Contract.UsrPGReleasedFinalDeliverables` and `Contract.UsrPGTechStatus` (retired fields; columns kept declared, never dropped). Removing a column line never drops the DB column. |
 | `Automation/*.xml` | `<Automation screen="…">` workflow items (PM301000, PKPM3001) | Verbatim live XML. |
 | `PageCustomizations/*.xml` | `<Page path="~/pages/…">` Classic screen-editor items (PKPM3002, PKPM3003, PM301000, PM302000, CR302000) | Verbatim live XML; Classic UI only. |
 | `SiteMap/*.xml` | `<SiteMapNode>` items (screen + Modern UI workspace entry), file named by ScreenID | Verbatim. Workspace *Projects*, subcategory *401(k) Audit*. |
@@ -18,7 +18,7 @@ Content was taken **from the PK9 database** (`CustObject` of project `ProjectTas
 | Repo file (= DB item) | Contents | Live runtime copy (`PK9\App_RuntimeCode\`) |
 |---|---|---|
 | `Code/PMTask.cs` | `PMTaskExt`: `UsrPGTaskStatus` (9 statuses), `UsrPGDueDate`, `UsrPGExtendedDueDate`, `UsrPGIsExtended`, `UsrPGPreparer`, `UsrPGReviewer`, `UsrPGTechReviewer`, `UsrPGDepartment` (defaults from the project's department, read-only) | `ProjectTask.PMTask.cs` *(not `PMTask.cs` — that one belongs to Velixo)* |
-| `Code/Contract.cs` | `ContractExt`: `UsrPGDepartment`, `UsrPGPriority`, `UsrPGIsFinal`, `UsrPGFinishDate`, `UsrPGYearEnd`, `Usr401kStatus`, `UsrPGComplexity`, `UsrPGReleaseDeliverables`, `UsrPGAcctStatus`, `UsrPGAuditStatus`, `UsrPGTaxStatus`, `UsrPGReleasedELF`, `UsrPGTechStatus` | `Contract.cs` |
+| `Code/Contract.cs` | `ContractExt`: `UsrPGDepartment`, `UsrPGPriority`, `UsrPGIsFinal`, `UsrPGFinishDate`, `UsrPGYearEnd`, `Usr401kStatus`, `UsrPGComplexity`, `UsrPGReleaseDeliverables`, `UsrPGAcctStatus`, `UsrPGAuditStatus`, `UsrPGTaxStatus`, `UsrPGReleasedELF`. (`UsrPGTechStatus` removed in T-11; its DB column stays and is still declared in `Tables/Contract.xml`, see `../docs/tech-removal.md`) | `Contract.cs` |
 | `Code/PMDocGatheringMaint.cs` | Graph of **Doc Gathering** (PKPM3001; Classic page PKPM3003.aspx), primary view `DocGathering` | same name |
 | `Code/PMDocumentGathering.cs` | DAC / table `PMDocumentGathering` (one row per project; payroll provider, record keeper, plan docs…) | same name |
 | `Code/PMSampleTestingMaint.cs` | Graph of **Sample Testing** (PKPM3002), primary view `Sampletest` | same name |

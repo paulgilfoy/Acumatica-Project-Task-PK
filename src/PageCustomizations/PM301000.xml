@@ -52,13 +52,6 @@
 			<AddItem>
 				<PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
 					<Prop Key="Virtual:ApplyStylesheetSkin" />
-					<Prop Key="ID" Value="CstPXDropDown7" />
-					<Prop Key="DataField" Value="UsrPGTechStatus" />
-				</PXDropDown>
-			</AddItem>
-			<AddItem>
-				<PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
-					<Prop Key="Virtual:ApplyStylesheetSkin" />
 					<Prop Key="ID" Value="CstPXDropDown6" />
 					<Prop Key="DataField" Value="UsrPGTaxStatus" />
 				</PXDropDown>

@@ -85,14 +85,6 @@ namespace PX.Objects.CT
     public abstract class usrPGAuditStatus : PX.Data.BQL.BqlInt.Field<usrPGAuditStatus> { }
     #endregion
 
-    #region UsrPGTechStatus
-    [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04}, new string[] {"Tech Status 1", "Tech Status 2", "Tech Status 3", "Tech Status 4"})]
-    [PXUIField(DisplayName="Tech Status")]
-    public virtual int? UsrPGTechStatus { get; set; }
-    public abstract class usrPGTechStatus : PX.Data.BQL.BqlInt.Field<usrPGTechStatus> { }
-    #endregion
-
     #region UsrPGReleasedELF
     [PXDBBool]
     [PXUIField(DisplayName="Released in ELF")]

@@ -4,7 +4,6 @@
 		<Field IsActive="True" DisplayName="Acct Status" FieldName="UsrPGAcctStatus" DisableCondition="35bb19f3-cb9a-4ee2-a9c9-95c3affebcad" HideCondition="35bb19f3-cb9a-4ee2-a9c9-95c3affebcad" ObjectName="PX.Objects.PM.PMProject" />
 		<Field IsActive="True" DisplayName="Audit Status" FieldName="UsrPGAuditStatus" DisableCondition="1d842668-a767-4815-b301-38520ddadd65" HideCondition="1d842668-a767-4815-b301-38520ddadd65" ObjectName="PX.Objects.PM.PMProject" />
 		<Field IsActive="True" DisplayName="Tax Status" FieldName="UsrPGTaxStatus" DisableCondition="e6743ed2-63d1-4d2b-bfc2-979c47d408ca" HideCondition="e6743ed2-63d1-4d2b-bfc2-979c47d408ca" ObjectName="PX.Objects.PM.PMProject" />
-		<Field IsActive="True" DisplayName="Tech Status" FieldName="UsrPGTechStatus" DisableCondition="66bc0c2c-56d6-4521-aab0-2dd2508d97a9" HideCondition="66bc0c2c-56d6-4521-aab0-2dd2508d97a9" ObjectName="PX.Objects.PM.PMProject" />
 		<Field IsActive="True" DisplayName="Tech Reviewer" FieldName="UsrPGTechReviewer" ObjectName="PX.Objects.PM.PMTask" />
 		<Field IsActive="True" DisplayName="Reviewer" FieldName="UsrPGReviewer" ObjectName="PX.Objects.PM.PMTask" />
 		<Field IsActive="True" DisplayName="Extended Due Date" FieldName="UsrPGExtendedDueDate" DisableCondition="e6743ed2-63d1-4d2b-bfc2-979c47d408ca" HideCondition="e6743ed2-63d1-4d2b-bfc2-979c47d408ca" ObjectName="PX.Objects.PM.PMTask" />
@@ -25,9 +24,6 @@
 		</AutomationScreenCondition>
 		<AutomationScreenCondition ConditionID="1d842668-a767-4815-b301-38520ddadd65" ScreenID="PM301000" ConditionName="Department &lt;&gt; Audit" Order="4" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
 			<FilterRow LineNbr="1" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPGDepartment" Condition="2" Operator="0" Value2="" Value="AUDIT" IsActive="True" IsFromScheme="True" />
-		</AutomationScreenCondition>
-		<AutomationScreenCondition ConditionID="66bc0c2c-56d6-4521-aab0-2dd2508d97a9" ScreenID="PM301000" ConditionName="Department &lt;&gt; Tech" Order="5" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
-			<FilterRow LineNbr="1" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPGDepartment" Condition="2" Operator="0" Value2="" Value="TECH" IsActive="True" IsFromScheme="True" />
 		</AutomationScreenCondition>
 		<AutomationScreenCondition ConditionID="2d9130e2-f089-4b1c-8906-d8935bcd7bd9" ScreenID="PM301000" ConditionName="Department &lt;&gt; Tax OR Acct" Order="6" AppendSystemCondition="False" JoinMethod="AND" InvertCondition="False">
 			<FilterRow LineNbr="2" CloseBrackets="0" OpenBrackets="0" FieldName="UsrPGDepartment" Condition="2" Operator="0" Value2="" Value="TAX" IsActive="True" IsFromScheme="True" />
