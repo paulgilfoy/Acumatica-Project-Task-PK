@@ -10,6 +10,7 @@ Acumatica customization project **`ProjectTask`** for PriceKubecka (Acumatica 20
 - **Document Gathering** (`PKPM3001`) and **Sample Testing** (`PKPM3002`) screens for 401(k) audits (workspace *Projects* → *401(k) Audit*).
 - **Department Statuses** (`PKPM2001`, workspace *Projects* → *Preferences*; T-21, not yet published): maintain the 401K/TAX/ACCT/AUDIT project status lists in table `PKProjectStatus` (seeded from today's lists); saving keeps the `CSAttributeDetail` STATUS* rows used by GIs in step. See `docs/status-screen.md`. The four project status drop-downs read this table (T-22, `docs/status-switch.md`).
 - Modern UI extensions of *Projects* (PM301000) and *Project Tasks* (PM302000).
+- **Template values** (T-31/T-32, not yet published): PK fields on project templates, template tasks and common tasks (PM208000/PM208010/PM208030); new projects and added common tasks get them when empty, due dates rolled to the next matching month/day. See `docs/template-copy.md`.
 - **Contact marketing fields** (*PK Marketing* tab on *Contacts*, CR302000): 8 check boxes. Merged from the former `Contact` project; see `docs/contact-merge.md`.
 
 ## Layout
