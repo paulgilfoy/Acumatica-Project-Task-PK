@@ -1,0 +1,98 @@
+<Page path="~/pages/pm/pm302000.aspx" ControlId="22" pageSource="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">
+	<PXFormView ID="form" ParentId="phF_form" TypeFullName="PX.Web.UI.PXFormView">
+		<Children Key="Template">
+			<PXSegmentMask DataField="TaskCD" OriginalIndex="2" />
+			<PXDropDown DataField="Type" OriginalIndex="7" />
+			<AddItem>
+				<PXSelector TypeFullName="PX.Web.UI.PXSelector">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXSelector10" />
+					<Prop Key="DataField" Value="PMProject__UsrPGDepartment" />
+				</PXSelector>
+			</AddItem>
+			<PXLayoutRule OriginalIndex="4" />
+			<PXLayoutRule OriginalIndex="6" />
+			<PXDropDown DataField="Status" OriginalIndex="3" />
+			<AddItem>
+				<PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXDropDown11" />
+					<Prop Key="DataField" Value="UsrPGTaskStatus" />
+				</PXDropDown>
+			</AddItem>
+			<AddItem>
+				<PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXDropDown1" />
+					<Prop Key="DataField" Value="PMProject__UsrPGPriority" />
+				</PXDropDown>
+			</AddItem>
+			<PXCheckBox DataField="IsDefault" OriginalIndex="8" Remove="True" />
+		</Children>
+	</PXFormView>
+	<PXTabItem Text="Summary" ParentId="phG_tab_Items#0" TypeFullName="PX.Web.UI.PXTabItem">
+		<Children Key="Template">
+			<AddItem>
+				<PXDropDown TypeFullName="PX.Web.UI.PXDropDown">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXDropDown21" />
+					<Prop Key="DataField" Value="UsrPGTaskStatus" />
+				</PXDropDown>
+			</AddItem>
+			<AddItem>
+				<PXSegmentMask TypeFullName="PX.Web.UI.PXSegmentMask">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXSegmentMask16" />
+					<Prop Key="DataField" Value="UsrPGPreparer" />
+				</PXSegmentMask>
+			</AddItem>
+			<AddItem>
+				<PXSegmentMask TypeFullName="PX.Web.UI.PXSegmentMask">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXSegmentMask17" />
+					<Prop Key="DataField" Value="UsrPGReviewer" />
+				</PXSegmentMask>
+			</AddItem>
+			<AddItem>
+				<PXSegmentMask TypeFullName="PX.Web.UI.PXSegmentMask">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXSegmentMask19" />
+					<Prop Key="DataField" Value="UsrPGTechReviewer" />
+				</PXSegmentMask>
+			</AddItem>
+			<AddItem>
+				<PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXDateTimeEdit13" />
+					<Prop Key="DataField" Value="UsrPGDueDate" />
+				</PXDateTimeEdit>
+			</AddItem>
+			<AddItem>
+				<PXCheckBox TypeFullName="PX.Web.UI.PXCheckBox">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXCheckBox15" />
+					<Prop Key="DataField" Value="UsrPGIsExtended" />
+				</PXCheckBox>
+			</AddItem>
+			<AddItem>
+				<PXDateTimeEdit TypeFullName="PX.Web.UI.PXDateTimeEdit">
+					<Prop Key="Virtual:ApplyStylesheetSkin" />
+					<Prop Key="ID" Value="CstPXDateTimeEdit14" />
+					<Prop Key="DataField" Value="UsrPGExtendedDueDate" />
+				</PXDateTimeEdit>
+			</AddItem>
+			<PXSelector DataField="ChangeRequestNbr" OriginalIndex="11" />
+			<PXLayoutRule OriginalIndex="13" />
+			<PXCheckBox DataField="BillSeparately" OriginalIndex="20" />
+			<PXSegmentMask DataField="LocationID" OriginalIndex="16" />
+			<PXSelector DataField="AllocationID" OriginalIndex="23" />
+			<PXSelector DataField="BillingID" OriginalIndex="18" />
+			<PXSelector DataField="DefaultBranchID" OriginalIndex="14" />
+			<PXSelector DataField="RateTableID" OriginalIndex="24" />
+			<PXDropDown DataField="BillingOption" OriginalIndex="21" />
+			<PXSegmentMask DataField="DefaultAccrualSubID" OriginalIndex="33" />
+			<PXDropDown DataField="ProgressBillingBase" OriginalIndex="19" />
+			<PXSelector DataField="TaxCategoryID" OriginalIndex="17" />
+		</Children>
+	</PXTabItem>
+</Page>

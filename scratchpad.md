@@ -47,6 +47,7 @@ Customization project **`ProjectTask`** (PK9 DB: `CustProject`, CompanyID 2):
 | 2 | Sync check on every change: the live DB is the source of truth for CustObject items; re-run the extract (see Learnings) after the user publishes from the Customization Editor to refresh `src/`. | agent |
 | 3 | `PKPM3003.aspx` is the Classic page behind site-map ScreenID PKPM3001 (historical naming) — leave as is. | — |
 | 4 | `.vs/` and `.DS_Store` are tracked in git although now listed in `.gitignore`; untrack with `git rm -r --cached .vs .DS_Store` when convenient. | user |
+| 5 | **Drift (T-00, 2026-11-20): live `ProjectTask` has 34 items, `src/` covers 28.** Missing from `src/`: `Automation#PKPM3001`, `Automation#PM301000` (department hide/disable conditions for the status fields on PM301000, incl. `UsrPGTechStatus` / "Department <> Tech" → T-11 must edit it) and 4 Classic `Page` items (`~/pages/pk/pkpm3002.aspx`, `pkpm3003.aspx`, `~/pages/pm/pm301000.aspx`, `pm302000.aspx`). A zip built from `src/` today would **delete** them on import. Fix (needs lead/user OK): copy `build\live\src\Automation\` and `build\live\src\PageCustomizations\` (from `tools\Get-LiveProject.ps1`) into `src\`; then `tools\Verify-Package.ps1` = PACKAGE MATCHES LIVE (proven on a temp copy). All 28 other items match live. | lead |
 
 ## Coordination rules
 1. Claim work below before editing; release when done. 2. Edit source only under `src/`.
@@ -63,9 +64,16 @@ Customization project **`ProjectTask`** (PK9 DB: `CustProject`, CompanyID 2):
 - Runtime copies in `App_RuntimeCode` carry other names than the item: PMTask item → `ProjectTask.PMTask.cs`; `PMTask.cs` there is Velixo's.
 - `PMTask` and `Contract` code items are `FileType="NewFile"` extensions (`PXCacheExtension`), not DACs; `PMDocumentGathering` / `PMSampleTesting` are `NewDac`; the two `*Maint` are `NewGraph`.
 - The Modern UI extensions on the site are named `…_PKProjectInfo` / `…_PKTaskInfo` and belong here; `…_PKTimeClock` ones on the same screens belong to other projects.
+- **Packaging (T-00):** `tools\Build-Package.ps1` → `build\ProjectTask.zip`; `tools\Verify-Package.ps1` compares it item by item with live (`CustObject` Type+Name, attributes, bodies with line endings normalized). Code `FileType` (NewFile/NewGraph/NewDac) is kept in the `$CodeFileType` table of Build-Package; new code files default to `NewFile`. Importing a zip **replaces** all items of the project, so anything missing from `src/` is deleted.
+- **Uploaded file bodies are not in the PK9 DB:** `UploadFileRevision.Data` is empty and `BlobHandler` points at Azure blob storage (`BlobStorageConfig` = `PXBlobStorageAzureProvider`, account `pricekubeckablobstorage`, same settings as the live tenant). Tools use the site copies instead (`PK9\Pages\PK\`, `…\customizationScreens\Company\screens\`); `UploadFileRevision.Size` is KB rounded up (sanity check).
+- Live `CustObject.Content` always has LF: Acumatica parses project.xml as XML, so CRLF inside CDATA becomes LF. Package line endings don't matter.
+- `Page` items (`<Page path="~/pages/…" pageSource="…">`) hold a deflate+base64 Classic page source; for PKPM3002/3003 it equals the ASPX shell. They don't affect Modern UI but are part of the project.
+- `..\Acumatica-PK-TimeClock\tools\Test-Compile.ps1` compiles **the TimeClock repo's** `src\Code` (it resolves the repo from its own folder) — it never sees this repo's edits. Use **`tools\Test-Compile.ps1 -IncludeRuntimeCode`** here (leaves out our published copies, incl. `ProjectTask.PMTask.cs`).
+- The project also exists in CompanyID -100020002 (same 34 items, same hashes) and -100020001 (23 items, older) — snapshot/system rows; tools use CompanyID 2.
 - Folder layout changed 2026-11-13 (old → new): `*.cs` + `Helper/` → `src/Code/`, `DBScripts/` → `scripts/`, `project.xml` + `ProjectTask*.zip` + `PKPM3001-PKPMD.xml` → `exports/`, `PKPM3002.aspx` → `src/Pages/PK/`.
 
 ## Session log
 | Date | Session | Summary |
 |---|---|---|
 | 2026-11-13 | 1 | Extracted the live project from the PK9 DB (read-only) into `src/`; added Modern UI (PKPM3001/3002 + PM301000/PM302000 extensions) and published Classic shells; found and fixed code drift (see above); restructured on the PK-TimeClock model; added CLAUDE.md, scratchpad.md, navigation.md files, `tools/Test-ModernUI.ps1`, `.gitignore`; updated README and the PK9 navigation. Not committed. |
+| 2026-11-20 | T-00 | Package tooling: `tools\Build-Package.ps1`, `Verify-Package.ps1`, `Get-LiveProject.ps1` (read-only live export), repo-local `Test-Compile.ps1`; `build/` git-ignored. Re-sync check: 28 of 34 live items equal `src/`; 2 Automation + 4 Page items missing (Open item 5). Checks: COMPILE OK (both compile scripts), TS CHECK OK. Not committed (lead commits). |

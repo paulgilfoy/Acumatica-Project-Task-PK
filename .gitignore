@@ -32,3 +32,5 @@ __pycache__/
 
 # Local build artifacts
 builds/
+# tools\Build-Package.ps1 output (ProjectTask.zip) and tools\Get-LiveProject.ps1 export (build\live)
+build/
