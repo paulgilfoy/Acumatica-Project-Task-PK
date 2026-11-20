@@ -21,13 +21,24 @@
   Exact SHA-256 of CustObject.Content cannot be predicted before import (Acumatica re-serializes the XML),
   so "matches" means: same item set, same significant attributes, same normalized bodies.
 
+  -ExtraProject (merges, e.g. T-10 "Contact"): the live side becomes the UNION of ProjectTask and the named projects,
+  i.e. "importing this zip and unpublishing those projects loses nothing". An item present in two live projects is a
+  problem (DUPLICATE LIVE). A live DAC item (Data Class editor, <DAC type="X"> with <Field> children) has no
+  package counterpart of the same type, because the merge carries it as a Code item; it counts as OK when a zip
+  Graph item declares PXCacheExtension<X> with exactly the DAC's fields (same type, same attribute lines), a zip
+  Table item has a column for every StorageName="AddColumn" field, and (WARN otherwise) the code body equals the
+  file Acumatica generated from the DAC item, App_RuntimeCode\<X with . -> _>_extensions.cs. That Graph item then
+  shows as OK "replaces DAC|X" instead of NOT LIVE.
+
 .EXAMPLE
   .\tools\Build-Package.ps1; .\tools\Verify-Package.ps1
   .\tools\Verify-Package.ps1 -Zip build\ProjectTask-live.zip
+  .\tools\Verify-Package.ps1 -ExtraProject Contact     # T-10: zip == live ProjectTask + live Contact
 #>
 param(
     [string]$Zip,
     [string]$ProjectName = 'ProjectTask',
+    [string[]]$ExtraProject = @(),
     [int]$CompanyID = 2,
     [string]$SitePath = 'C:\Program Files\Acumatica ERP\PK9'
 )
@@ -85,16 +96,62 @@ try {
 } finally { $z.Dispose() }
 
 # ---- Live side ----
-$live = @{}
-foreach ($i in & (Join-Path $PSScriptRoot 'Get-LiveProject.ps1') -ProjectName $ProjectName -CompanyID $CompanyID -SitePath $SitePath -NoWrite) {
-    $live[$i.Key] = $i
+$live = @{}; $rows = @(); $fail = 0; $warn = 0
+$projects = @($ProjectName) + @($ExtraProject | Where-Object { $_ -and $_ -ne $ProjectName })
+foreach ($liveProj in $projects) {
+    foreach ($i in & (Join-Path $PSScriptRoot 'Get-LiveProject.ps1') -ProjectName $liveProj -CompanyID $CompanyID -SitePath $SitePath -NoWrite) {
+        $i | Add-Member -NotePropertyName Project -NotePropertyValue $liveProj -Force
+        if ($live.ContainsKey($i.Key)) {
+            $fail++; $rows += [pscustomobject]@{ Status = 'DUPLICATE LIVE'; Item = $i.Key; Note = "in live $($live[$i.Key].Project) and $liveProj" }
+            continue
+        }
+        $live[$i.Key] = $i
+    }
+}
+$rt = Join-Path $SitePath 'App_RuntimeCode'
+
+# ---- Live DAC items (Data Class editor) carried as Code items ----
+$dacResult = @{}   # live DAC key -> row
+$replaces  = @{}   # zip Graph key -> live DAC key
+foreach ($l in @($live.Values | Where-Object { $_.Type -eq 'DAC' -and -not $pkg.ContainsKey($_.Key) })) {
+    [xml]$d = $l.Xml
+    $type = $d.DocumentElement.type; $short = $type.Split('.')[-1]
+    $extRe = "PXCacheExtension<\s*(global::)?($([regex]::Escape($type))|$([regex]::Escape($short)))\s*>"
+    $cands = @($pkg.Values | Where-Object { $_.Type -eq 'Graph' -and $_.Body -match $extRe })
+    if ($cands.Count -ne 1) {
+        $dacResult[$l.Key] = [pscustomobject]@{ Status = 'MISSING IN ZIP'; Item = $l.Key; Note = "$($l.Project): $($cands.Count) zip code items extend $type (need exactly 1)" }
+        continue
+    }
+    $c = $cands[0]; $body = Norm $c.Body; $problems = @(); $names = @()
+    foreach ($f in $d.DocumentElement.SelectNodes('Field')) {
+        $fn = $f.FieldName; $names += $fn
+        $want = @((($f.SelectSingleNode("CDATA[@name='TextAttributes']")).InnerText -split "`n") | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+        $m = [regex]::Match($body, "(?s)#region\s+$fn\s*\n(.*?)#endregion")
+        if (-not $m.Success) { $problems += "$fn not declared"; continue }
+        $region = $m.Groups[1].Value
+        $have = @(($region -split "`n" | ForEach-Object { $_.Trim() }) | Where-Object { $_ -like '`[*' })
+        if (($have -join '|') -cne ($want -join '|')) { $problems += "$fn attributes differ" }
+        if ($region -notmatch "public\s+virtual\s+$([regex]::Escape($f.TypeName))\??\s+$fn\s*\{") { $problems += "$fn not '$($f.TypeName)'" }
+        if ($f.StorageName -eq 'AddColumn') {
+            $tbl = $pkg["Table|$($f.MapDbTable)"]
+            if (-not $tbl -or -not ([xml]$tbl.Xml).SelectSingleNode("Table/Column[@ColumnName='$fn']")) { $problems += "no zip Table column $($f.MapDbTable).$fn" }
+        }
+    }
+    $extra = @([regex]::Matches($body, 'public\s+virtual\s+[\w.?<>]+\s+(\w+)\s*\{') | ForEach-Object { $_.Groups[1].Value } | Where-Object { $names -notcontains $_ })
+    if ($extra.Count) { $problems += "extra fields in code: $($extra -join ', ')" }
+    $gen = Join-Path $rt (($type -replace '\.', '_') + '_extensions.cs')
+    if ($problems.Count) { $st = 'DIFF'; $nt = "vs $($c.Key): $($problems -join '; ')" }
+    else { $st = 'OK'; $nt = "$($l.Project) DAC item carried as $($c.Key): $($names.Count) fields, same types and attributes, Table columns present" }
+    $dacResult[$l.Key] = [pscustomobject]@{ Status = $st; Item = $l.Key; Note = $nt }
+    $replaces[$c.Key] = [pscustomobject]@{ DacKey = $l.Key; Generated = $gen; Project = $l.Project }
 }
 
 # ---- Compare ----
-$rows = @(); $fail = 0; $warn = 0
 foreach ($k in (@($pkg.Keys) + @($live.Keys) | Sort-Object -Unique)) {
     $p = $pkg[$k]; $l = $live[$k]; $status = 'OK'; $note = ''
+    if ($dacResult.ContainsKey($k)) { $r = $dacResult[$k]; if ($r.Status -ne 'OK') { $fail++ }; $rows += $r; continue }
     if (-not $p) { $status = 'MISSING IN ZIP'; $note = "live item ($($l.SrcRel)) not in the package" }
+    elseif (-not $l -and $replaces.ContainsKey($k)) { $note = "replaces live $($replaces[$k].DacKey) ($($replaces[$k].Project))" }
     elseif (-not $l) { $status = 'NOT LIVE'; $note = 'in the package, not in the live project' }
     else {
         $diffAttr = @($l.Attr.Keys | Where-Object { "$($l.Attr[$_])" -cne "$($p.Attr[$_])" } | ForEach-Object { "$_ live='$($l.Attr[$_])' zip='$($p.Attr[$_])'" })
@@ -114,14 +171,16 @@ foreach ($k in (@($pkg.Keys) + @($live.Keys) | Sort-Object -Unique)) {
         }
     }
     if ($status -ne 'OK') { $fail++ }
-    $rows += [pscustomobject]@{ Status = $status; Item = $k; Note = $note.Trim('; ') }
+    $from = if ($l -and $l.Project -ne $ProjectName) { "[$($l.Project)] " } else { '' }
+    $rows += [pscustomobject]@{ Status = $status; Item = $k; Note = $from + $note.Trim('; ') }
 }
 
-# Runtime copies of code items
-$rt = Join-Path $SitePath 'App_RuntimeCode'
+# Runtime copies of code items (a Code item that replaces a live DAC item: the file generated from that DAC item)
 foreach ($p in $pkg.Values | Where-Object Type -eq 'Graph') {
     $cls = $p.Attr.ClassName
-    $file = @("$rt\$ProjectName.$cls.cs", "$rt\$cls.cs") | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+    $cand = @("$rt\$ProjectName.$cls.cs", "$rt\$cls.cs")
+    if ($replaces.ContainsKey($p.Key)) { $cand += $replaces[$p.Key].Generated }
+    $file = $cand | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
     if (-not $file) { $warn++; $rows += [pscustomobject]@{ Status = 'WARN'; Item = "App_RuntimeCode|$cls"; Note = 'no runtime copy (not published?)' }; continue }
     if ((Norm ([IO.File]::ReadAllText($file))) -cne (Norm $p.Body)) {
         $warn++; $rows += [pscustomobject]@{ Status = 'WARN'; Item = "App_RuntimeCode|$cls"; Note = "differs from $(Split-Path $file -Leaf) (published code is different)" }
@@ -130,6 +189,6 @@ foreach ($p in $pkg.Values | Where-Object Type -eq 'Graph') {
 
 $rows | Sort-Object @{ e = { $_.Status -eq 'OK' } }, Item | Format-Table -AutoSize -Wrap | Out-String -Width 220 | Write-Host
 Write-Host ("Zip: {0} items; live {1}: {2} items (CompanyID {3}). Problems: {4}; runtime-copy warnings: {5}." -f `
-    $pkg.Count, $ProjectName, $live.Count, $CompanyID, $fail, $warn)
+    $pkg.Count, ($projects -join ' + '), $live.Count, $CompanyID, $fail, $warn)
 if ($fail -eq 0) { Write-Host 'PACKAGE MATCHES LIVE' -ForegroundColor Green; exit 0 }
 else { Write-Host 'PACKAGE DIFFERS FROM LIVE' -ForegroundColor Red; exit 1 }

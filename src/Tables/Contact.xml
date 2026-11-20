@@ -1,0 +1,10 @@
+<Table TableName="Contact">
+	<Column TableName="Contact" ColumnName="UsrPGPortalAccess" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contact" ColumnName="UsrPG1040ES" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contact" ColumnName="UsrPG1040Check" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contact" ColumnName="UsrPGTaxPlan" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contact" ColumnName="UsrPGDoNotMarket" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contact" ColumnName="UsrPGAcuMarket" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contact" ColumnName="UsrPGRetire" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contact" ColumnName="UsrServiceProviderQ" ColumnType="bool" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+</Table>

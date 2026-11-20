@@ -1,6 +1,7 @@
 # Repo navigation — Acumatica-Project-Task-PK
 
-Customization project **`ProjectTask`** (live): PMTask / Contract `UsrPG*` fields, Doc Gathering (`PKPM3001`), Sample Testing (`PKPM3002`).
+Customization project **`ProjectTask`** (live): PMTask / Contract `UsrPG*` fields, Doc Gathering (`PKPM3001`), Sample Testing (`PKPM3002`),
+and (merged from project `Contact`, T-10, cutover pending) the PK Marketing fields on Contacts (CR302000).
 Start with **`scratchpad.md`** (what is live, drift, rules, work claims); this file is just the map.
 
 | Path | What's there | Agent actions |
@@ -27,11 +28,12 @@ Start with **`scratchpad.md`** (what is live, drift, rules, work claims); this f
 |---|---|
 | Add/change a field on PMTask (Preparer, Reviewer, status…) | `src/Code/PMTask.cs` + `src/Tables/PMTask.xml` (column) + Modern UI `PM301000_PKProjectInfo.*` (grid) / `PM302000_PKTaskInfo.*` (task form) |
 | Add/change a field on Projects (Department, statuses…) | `src/Code/Contract.cs` + `src/Tables/Contract.xml` + `PM301000_PKProjectInfo.*` |
+| Add/change a PK Marketing field on Contacts (CR302000) | `src/Code/PKContactExt.cs` + `src/Tables/Contact.xml` + `src/FrontendSources/screens/CR/CR302000/extensions/CR302000_PKMarketing.*` (merged from project `Contact`, T-10; cutover in `docs/contact-merge.md`) |
 | Change Doc Gathering | `src/Code/PMDocGatheringMaint.cs` (graph), `PMDocumentGathering.cs` (DAC), `src/FrontendSources/screens/PK/PKPM3001/`, `src/Sql/PMDocumentGathering.sql` |
 | Change Sample Testing | `src/Code/PMSampleTestingMaint.cs`, `PMSampleTesting.cs`, `src/FrontendSources/screens/PK/PKPM3002/`, `src/Sql/PMSampleTesting.sql` |
 | Add a dropdown value (record keeper, payroll provider, status) | `src/Code/ProjectTask_Constants.cs` **and** `ProjectTask_Messages.cs` (+ the DAC list attribute) |
 | Type-check Modern UI TypeScript | `tools/Test-ModernUI.ps1`; syntax in `..\Acumatica-PK-TimeClock\docs\T290.md` |
 | Compile-check C# | `tools/Test-Compile.ps1 -IncludeRuntimeCode` (the TimeClock copy compiles the TimeClock repo, not this one) |
 | Build / verify the package | `tools/Build-Package.ps1` → `build/ProjectTask.zip`; `tools/Verify-Package.ps1` (zip vs live `ProjectTask`) |
-| Check `src/` against live PK9 | `tools/Verify-Package.ps1`, or `tools/Get-LiveProject.ps1` → `build/live/src` to diff |
+| Check `src/` against live PK9 | `tools/Verify-Package.ps1` (`-ExtraProject Contact` until the T-10 cutover is published), or `tools/Get-LiveProject.ps1` → `build/live/src` to diff |
 | Query data (read-only) | `..\Acumatica-PK-TimeClock\tools\Query-PK9.ps1` |

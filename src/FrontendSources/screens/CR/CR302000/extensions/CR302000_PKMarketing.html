@@ -1,0 +1,21 @@
+<template>
+	<qp-tab id="tabPKMarketing" after="#tabGeneral" caption="PK Marketing">
+		<qp-template id="tabPKMarketing_div" name="1">
+			<qp-fieldset
+				id="ContactDetail_PKMarketing_fs"
+				slot="A"
+				view.bind="ContactCurrent"
+				caption="Marketing Attributes"
+				wg-container="ContactCurrent_tab">
+				<field name="UsrPG1040Check"></field>
+				<field name="UsrPG1040ES"></field>
+				<field name="UsrPGAcuMarket"></field>
+				<field name="UsrPGDoNotMarket"></field>
+				<field name="UsrPGPortalAccess"></field>
+				<field name="UsrPGRetire"></field>
+				<field name="UsrPGTaxPlan"></field>
+				<field name="UsrServiceProviderQ"></field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-tab>
+</template>

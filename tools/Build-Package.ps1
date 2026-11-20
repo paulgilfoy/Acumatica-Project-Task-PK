@@ -42,7 +42,8 @@ param(
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
 $repo = Split-Path $PSScriptRoot -Parent
-$src  = if ($SrcDir) { (Resolve-Path $SrcDir).Path } else { Join-Path $repo 'src' }
+# Get-Item expands 8.3 short names (e.g. %TEMP% = C:\Users\ADMINI~1\...) so relative paths below line up with Get-ChildItem's.
+$src  = if ($SrcDir) { (Get-Item -LiteralPath (Resolve-Path $SrcDir).Path).FullName } else { Join-Path $repo 'src' }
 if (-not $OutFile) { $OutFile = Join-Path $repo "build\$ProjectName.zip" }
 $OutFile = [IO.Path]::GetFullPath($(if ([IO.Path]::IsPathRooted($OutFile)) { $OutFile } else { Join-Path (Get-Location) $OutFile }))
 New-Item -ItemType Directory -Force (Split-Path $OutFile -Parent) | Out-Null

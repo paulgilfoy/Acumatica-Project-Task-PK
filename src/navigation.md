@@ -7,7 +7,9 @@ Content was taken **from the PK9 database** (`CustObject` of project `ProjectTas
 |---|---|---|
 | `Code/*.cs` | `<Graph ClassName="<file name>" FileType="…">` items, compiled by Acumatica on publish | File name = item name; must be unique across ALL customization projects. |
 | `Sql/*.sql` | `<Sql>` custom scripts that create the two new tables | Must be idempotent (`IF NOT EXISTS`); runs on every publish. |
-| `Tables/*.xml` | `<Table>` items adding `Usr*` columns to EXISTING tables (`Contract`, `PMTask`) | One file per table, verbatim XML. Each column must match a DAC extension field. |
+| `Tables/*.xml` | `<Table>` items adding `Usr*` columns to EXISTING tables (`Contract`, `PMTask`, `Contact`) | One file per table, verbatim XML. Each column must match a DAC extension field. |
+| `Automation/*.xml` | `<Automation screen="…">` workflow items (PM301000, PKPM3001) | Verbatim live XML. |
+| `PageCustomizations/*.xml` | `<Page path="~/pages/…">` Classic screen-editor items (PKPM3002, PKPM3003, PM301000, PM302000, CR302000) | Verbatim live XML; Classic UI only. |
 | `SiteMap/*.xml` | `<SiteMapNode>` items (screen + Modern UI workspace entry), file named by ScreenID | Verbatim. Workspace *Projects*, subcategory *401(k) Audit*. |
 | `Pages/PK/*.aspx(.cs)` | `<File AppRelativePath="Pages\PK\…"/>` Classic shells (never rendered) | Minimal; PXDataSource TypeName/PrimaryView only. |
 | `FrontendSources/screens/<MOD>/<SCREEN>/` | `<PerTenantFile AppRelativePath="screens\…" ScreenId="<SCREEN>"/>` — **Modern UI** | Path mirrors `PK9\FrontendSources\screen\src\screens\…`. Type-check with `../tools/Test-ModernUI.ps1`. |
@@ -23,6 +25,7 @@ Content was taken **from the PK9 database** (`CustObject` of project `ProjectTas
 | `Code/PMSampleTesting.cs` | DAC / table `PMSampleTesting` | same name |
 | `Code/ProjectTask_Constants.cs` | Status lists, `RecordKeeperList`, `PayrollProviderList`, `Department`, … (DB codes) | same name |
 | `Code/ProjectTask_Messages.cs` | Display strings for the constants | same name |
+| `Code/PKContactExt.cs` | **Merged from project `Contact` (T-10).** `PX.Objects.CR.ContactExt : PXCacheExtension<Contact>`, 8 bool fields on Contacts (CR302000): `UsrPGPortalAccess`, `UsrPG1040ES`, `UsrPG1040Check`, `UsrPGTaxPlan`, `UsrPGDoNotMarket`, `UsrPGAcuMarket`, `UsrPGRetire`, `UsrServiceProviderQ`. Byte copy of the code Acumatica generated from Contact's DAC item. Columns: `Tables/Contact.xml` | before cutover: `PX_Objects_CR_Contact_extensions.cs` (Contact project); after: `PKContactExt.cs`. See `../docs/contact-merge.md` |
 
 ## Screens
 | Screen | Modern UI | Classic shell | Notes |
@@ -31,6 +34,7 @@ Content was taken **from the PK9 database** (`CustObject` of project `ProjectTas
 | `PKPM3002` Sample Testing | `screens/PK/PKPM3002/` — graph `ProjectTask.PMSampleTestingMaint` | `Pages/PK/PKPM3002.aspx(.cs)` | |
 | `PM301000` Projects (extension) | `screens/PM/PM301000/extensions/PM301000_PKProjectInfo.*` — Contract `UsrPG*` in *Project Properties*, task `UsrPG*` columns in *Tasks* grid | — | `PM301000_PKTimeClock.*` in the same folder belongs to **PKTimeClock**, not this repo. |
 | `PM302000` Project Tasks (extension) | `screens/PM/PM302000/extensions/PM302000_PKTaskInfo.*` — task `UsrPG*` fields | — | |
+| `CR302000` Contacts (extension, from `Contact`, T-10) | `screens/CR/CR302000/extensions/CR302000_PKMarketing.*`: *PK Marketing* tab after `#tabGeneral`, view `ContactCurrent` (class `ContactDetail`), 8 `ContactExt` fields | `PageCustomizations/CR302000.xml` (Classic tab, same fields) | Verbatim live copies; the view/class pairing is correct (see `../docs/contact-merge.md`). |
 
-> `CR302000_PKMarketing.*` and `EP307000_PKTimeClock.*` on the site belong to other projects (`Contact`, `ProjectTime`).
+> `EP307000_PKTimeClock.*` on the site belongs to another project (`ProjectTime`). `CR302000_PKMarketing.*` still belongs to `Contact` on the site until the T-10 cutover publish.
 > `src/` has **no** Modern UI for the Classic shell pages beyond the screens above.
