@@ -24,9 +24,10 @@ namespace ProjectTask
     /// - FieldSelecting for a row offers the active statuses plus the row's current value (CROpportunityStagesAttribute pattern).
     /// - FieldVerifying rejects an unknown or inactive value that differs from the current one (API, import).
     ///   If the department has no rows at all (table not seeded yet), nothing is rejected, as with the old PXIntList.
+    ///   Copies of an existing record (Copy Project, clipboard Paste) are not checked: they keep the source's value (T-22).
     /// - The list is cached in a PXDatabase slot (Box1099NumberAttribute pattern). It resets when PKProjectStatus changes
     ///   through Acumatica and on every PKPM2001 save (<see cref="ResetCache"/>). Rows changed by raw SQL show after a restart.
-    /// T-21 adds the attribute; T-22 puts it on the four Contract fields.
+    /// T-21 added the attribute; T-22 put it on the four Contract fields (Usr401kStatus, UsrPGTaxStatus, UsrPGAcctStatus, UsrPGAuditStatus).
     /// </summary>
     public class PKProjectStatusListAttribute : PXIntListAttribute, IPXFieldVerifyingSubscriber
     {
@@ -142,6 +143,8 @@ namespace ProjectTask
             int? current = sender.GetValue(e.Row, _FieldName) as int?;
             if (current == newValue)
                 return;   // unchanged (also an inactive one): no error
+            if (IsCopyOfExistingRecord(sender.Graph))
+                return;   // T-22: a copy keeps the source's value, retired or not (see below)
 
             IReadOnlyList<PKProjectStatusInfo> all = GetStatuses(DepartmentID);
             if (all.Count == 0)
@@ -152,6 +155,19 @@ namespace ProjectTask
                 throw new PXSetPropertyException(PKProjectStatusMessages.UnknownStatus, newValue, DepartmentID);
             if (!status.Active)
                 throw new PXSetPropertyException(PKProjectStatusMessages.InactiveStatus, status.Description, DepartmentID);
+        }
+
+        /// <summary>
+        /// True while the graph inserts a copy of an existing record: Copy Project (ProjectEntry.Copy sets IsCopyPaste on the
+        /// new ProjectEntry before Project.Insert(CreateCopy(source))) and the clipboard Paste (PXGraph.IsCopyPasteContext).
+        /// PXCache.Insert raises FieldVerifying on a fresh row (value null), so without this a project holding a retired
+        /// status could not be copied at all (Insert rethrows the pending field exception). The copy keeps the value, as
+        /// the old PXIntList did; the user picks an active status afterwards.
+        /// </summary>
+        protected virtual bool IsCopyOfExistingRecord(PXGraph graph)
+        {
+            return graph != null
+                && (graph.IsCopyPasteContext || (graph is PX.Objects.PM.ProjectEntry projectEntry && projectEntry.IsCopyPaste));
         }
         #endregion
     }

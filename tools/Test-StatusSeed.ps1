@@ -4,9 +4,12 @@
 
 .DESCRIPTION
   Parses the seed VALUES rows (N'DEPT', ID, N'Text') and compares them with:
+    0. (T-22) src\Code\Contract.cs: each of the 4 fields carries [PKProjectStatusList("<dept>")] with the department
+       the seed uses (or, before T-22, still its PXIntList).
     1. the four PXIntList arrays of ContractExt (Usr401kStatus=401K, UsrPGTaxStatus=TAX, UsrPGAcctStatus=ACCT,
-       UsrPGAuditStatus=AUDIT) parsed from src\Code\Contract.cs. After T-22 replaces the PXIntLists in src, the
-       published copy PK9\App_RuntimeCode\Contract.cs is used instead (or pass -ContractFile). Expected: IDENTICAL
+       UsrPGAuditStatus=AUDIT): the frozen pre-T-22 lists. Source: -ContractFile, else src\Code\Contract.cs while it
+       still has them, else the published copy PK9\App_RuntimeCode\Contract.cs (until the bundle B publish), else the
+       git history of src\Code\Contract.cs (last commit with the lists). Expected: IDENTICAL
        (same ints, same text byte for byte, incl. the 401K 17 double space, D3).
     2. the live CSAttributeDetail rows of STATUS401K/STATUSTAX/STATUSACCT/STATUSAUDI (PK9, -CompanyID, read-only SQL via
        ..\Acumatica-PK-TimeClock\tools\Query-PK9.ps1). Expected: equal except the APPROVED deviations
@@ -76,8 +79,8 @@ foreach ($d in $Departments.Keys) {   # case-insensitive uniqueness (the screen 
 }
 
 # ---- 2. Seed vs PXIntList (Contract.cs) ----
-function Get-IntLists([string]$path) {
-    $text = [IO.File]::ReadAllText($path)
+function Get-IntLists([string]$path, [string]$text) {
+    if ([string]::IsNullOrEmpty($text)) { $text = [IO.File]::ReadAllText($path) }   # [string] turns $null into ''
     $lists = @{}
     foreach ($d in $Departments.Keys) {
         $f = $Departments[$d]
@@ -90,16 +93,45 @@ function Get-IntLists([string]$path) {
     }
     $lists
 }
-if (-not $ContractFile) {
-    $ContractFile = Join-Path $repo 'src\Code\Contract.cs'
-    if (-not (Get-IntLists $ContractFile)) {
-        Write-Host "src\Code\Contract.cs has no PXIntList for the 4 fields (T-22 swapped them); using the published copy." -ForegroundColor Yellow
-        $ContractFile = Join-Path $SitePath 'App_RuntimeCode\Contract.cs'
+# [0] (T-22) src\Code\Contract.cs must carry [PKProjectStatusList("<dept>")] on each field, with a department the seed uses
+#     (a misspelt department would load an empty list: numbers on PM301000, no validation).
+$srcContract = Join-Path $repo 'src\Code\Contract.cs'
+$srcText = [IO.File]::ReadAllText($srcContract)
+$srcHasLists = [bool](Get-IntLists $srcContract $srcText)
+Write-Host "`n[0] List attribute on the 4 fields in src\Code\Contract.cs"
+foreach ($d in $Departments.Keys) {
+    $f = $Departments[$d]
+    $a =[regex]::Match($srcText, "(?s)\[PKProjectStatusList\(\s*""(?<d>[^""]*)""\s*\)\][^\r\n]*\s*(?:\[[^\]]*\]\s*(?://[^\r\n]*)?\s*)*public\s+virtual\s+int\?\s+$f\b")
+    if ($a.Success) {
+        if ($a.Groups['d'].Value -cne $d) { Fail "$f has PKProjectStatusList(`"$($a.Groups['d'].Value)`"), expected `"$d`"" }
+        elseif (-not @($seed.Keys | Where-Object { $_ -like "$d|*" }).Count) { Fail "$f department `"$d`" has no seed rows" }
+        else { Ok "$f -> PKProjectStatusList(`"$d`") ($(@($seed.Keys | Where-Object { $_ -like "$d|*" }).Count) seed rows)" }
+    }
+    elseif ($srcHasLists) { Write-Host "  info  $f still uses the PXIntList (before T-22)" }
+    else { Fail "$f has neither PKProjectStatusList(`"$d`") nor a PXIntList" }
+}
+
+# [1] baseline = the old PXIntLists. Sources in order: -ContractFile; src (before T-22); the published PK9 copy (until the
+#     bundle B publish); git history of src\Code\Contract.cs (last commit that still had the lists; always available).
+$baseText = $null
+if (-not $ContractFile -and -not $srcHasLists) {
+    Write-Host "`nsrc\Code\Contract.cs has no PXIntList for the 4 fields (T-22 swapped them); looking for the frozen pre-T-22 lists." -ForegroundColor Yellow
+    $rt = Join-Path $SitePath 'App_RuntimeCode\Contract.cs'
+    if ((Test-Path $rt) -and (Get-IntLists $rt)) { $ContractFile = $rt }
+    else {
+        $git = @(Get-Command git -ErrorAction SilentlyContinue | ForEach-Object Source) + @(Get-ChildItem "$env:LOCALAPPDATA\GitHubDesktop\app-*\resources\app\git\cmd\git.exe" -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | ForEach-Object FullName) | Select-Object -First 1
+        if ($git) {
+            foreach ($h in @(& $git -C $repo log --format=%H -- src/Code/Contract.cs)) {
+                $t = (& $git -C $repo show "${h}:src/Code/Contract.cs") -join "`n"
+                if ($t -and (Get-IntLists "git $h" $t)) { $ContractFile = "git $($h.Substring(0,7)):src/Code/Contract.cs"; $baseText = $t; break }
+            }
+        }
     }
 }
-Write-Host "`n[1] Seed vs PXIntList in $ContractFile (expected: identical)"
-$lists = Get-IntLists $ContractFile
-if (-not $lists) { Fail "no PXIntList for all 4 fields in $ContractFile" }
+elseif (-not $ContractFile) { $ContractFile = $srcContract }
+Write-Host "`n[1] Seed vs PXIntList in $(if ($ContractFile) { $ContractFile } else { '<no source found>' }) (expected: identical)"
+$lists = if ($baseText) { Get-IntLists $ContractFile $baseText } elseif ($ContractFile) { Get-IntLists $ContractFile } else { $null }
+if (-not $lists) { Fail "no PXIntList for all 4 fields in $(if ($ContractFile) { $ContractFile } else { 'src, the PK9 runtime copy or git history' })" }
 else {
     $exact = 0
     foreach ($d in $Departments.Keys) {

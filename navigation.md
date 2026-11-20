@@ -28,10 +28,11 @@ Start with **`scratchpad.md`** (what is live, drift, rules, work claims); this f
 |---|---|
 | Add/change a field on PMTask (Preparer, Reviewer, status…) | `src/Code/PMTask.cs` + `src/Tables/PMTask.xml` (column) + Modern UI `PM301000_PKProjectInfo.*` (grid) / `PM302000_PKTaskInfo.*` (task form) |
 | Add/change a field on Projects (Department, statuses…) | `src/Code/Contract.cs` + `src/Tables/Contract.xml` + `PM301000_PKProjectInfo.*` |
+| Show a `UsrPG*` field on project templates / template tasks / common tasks | `PM208000_PKProjectInfo.*`, `PM208010_PKTaskInfo.*`, `PM208030_PKTaskInfo.*` under `src/FrontendSources/screens/PM/` (T-31, `docs/template-screens.md`); copying to new projects is T-32 |
 | Add/change a PK Marketing field on Contacts (CR302000) | `src/Code/PKContactExt.cs` + `src/Tables/Contact.xml` + `src/FrontendSources/screens/CR/CR302000/extensions/CR302000_PKMarketing.*` (merged from project `Contact`, T-10; cutover in `docs/contact-merge.md`) |
 | Change Doc Gathering | `src/Code/PMDocGatheringMaint.cs` (graph), `PMDocumentGathering.cs` (DAC), `src/FrontendSources/screens/PK/PKPM3001/`, `src/Sql/PMDocumentGathering.sql` |
 | Change Sample Testing | `src/Code/PMSampleTestingMaint.cs`, `PMSampleTesting.cs`, `src/FrontendSources/screens/PK/PKPM3002/`, `src/Sql/PMSampleTesting.sql` |
-| Maintain department project statuses (401K/TAX/ACCT/AUDIT lists) | Screen `PKPM2001` (T-21): `src/Code/PKProjectStatus*.cs`, `src/Sql/PKProjectStatus.sql` (table + seed), `src/FrontendSources/screens/PK/PKPM2001/`; `docs/status-screen.md`. Until T-22 the project fields still use the `PXIntList` in `Contract.cs` |
+| Maintain department project statuses (401K/TAX/ACCT/AUDIT lists) | Screen `PKPM2001` (T-21): `src/Code/PKProjectStatus*.cs`, `src/Sql/PKProjectStatus.sql` (table + seed), `src/FrontendSources/screens/PK/PKPM2001/`; `docs/status-screen.md`. The 4 project fields read it through `[PKProjectStatusList("<dept>")]` in `Contract.cs` (T-22, `docs/status-switch.md`) |
 | Add a dropdown value (record keeper, payroll provider, status) | `src/Code/ProjectTask_Constants.cs` **and** `ProjectTask_Messages.cs` (+ the DAC list attribute) |
 | Type-check Modern UI TypeScript | `tools/Test-ModernUI.ps1`; syntax in `..\Acumatica-PK-TimeClock\docs\T290.md` |
 | Compile-check C# | `tools/Test-Compile.ps1 -IncludeRuntimeCode` (the TimeClock copy compiles the TimeClock repo, not this one) |

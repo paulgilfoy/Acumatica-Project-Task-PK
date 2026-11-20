@@ -16,6 +16,7 @@ using PX.TM;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using ProjectTask;   // PKProjectStatusListAttribute (T-21/T-22)
 
 namespace PX.Objects.CT
 {
@@ -24,7 +25,7 @@ namespace PX.Objects.CT
   {
     #region Usr401kStatus
     [PXDBInt]
-    [PXIntList(new int[] { 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 }, new string[] { "Setup/Engagement Letter/Invoice", "Kickoff", "Preprocessing Doc Gather & Plan Design", "Data Preprocessing and Validation", "Initial RECS and Dis", "Remaining Doc Gather", "Audit Results", "Waiting on 5500", "Risk Assessment & Sample Selection", "Sample Testing", "Remaining Audit Steps", "Finalize Audit Results", "Initial Review", "Clearing Points", "Preparation of Final Deliverables", "Technical Review", "Waiting  on Management Rep Letter", "Final Bill", "Wrap Up", "Complete" })]
+    [PKProjectStatusList("401K")]   // list maintained on PKPM2001 (table PKProjectStatus); was a fixed PXIntList 1-20 until T-22
     [PXUIField(DisplayName="401k Status")]
     public virtual int? Usr401kStatus { get; set; }
     public abstract class usr401kStatus : PX.Data.BQL.BqlInt.Field<usr401kStatus> { }
@@ -56,7 +57,7 @@ namespace PX.Objects.CT
 
     #region UsrPGTaxStatus
     [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15}, new string[] {"Ready to Assign", "Ready to Autoflow", "Information Requested (from Client)", "Information Requested (In-House)", "Ready to Prep", "In Preparation", "In Initial Review", "Clearing Points", "In Final Review", "Technical Review", "Ready to Deliver", "Bill Client", "Invoice", "Complete", "Waiting on 8879 Form"})]
+    [PKProjectStatusList("TAX")]    // list maintained on PKPM2001; was a fixed PXIntList 1-15 until T-22
     [PXUIField(DisplayName="Tax Status")]
     public virtual int? UsrPGTaxStatus { get; set; }
     public abstract class usrPGTaxStatus : PX.Data.BQL.BqlInt.Field<usrPGTaxStatus> { }
@@ -71,7 +72,7 @@ namespace PX.Objects.CT
 
     #region UsrPGAcctStatus
     [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08}, new string[] {"In Preparation", "Initial Review (Acctg)", "Clearing Points", "In Final Review", "Bill Client", "Invoice", "Complete", "Meet with Client"})]
+    [PKProjectStatusList("ACCT")]   // list maintained on PKPM2001; was a fixed PXIntList 1-8 until T-22
     [PXUIField(DisplayName="Acct Status")]
     public virtual int? UsrPGAcctStatus { get; set; }
     public abstract class usrPGAcctStatus : PX.Data.BQL.BqlInt.Field<usrPGAcctStatus> { }
@@ -79,7 +80,7 @@ namespace PX.Objects.CT
 
     #region UsrPGAuditStatus
     [PXDBInt]
-    [PXIntList(new int[] {01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11}, new string[] {"Ready To Prep", "In Preparation", "Fieldwork in Process", "In Initial Review", "Clearing Points", "In Final Review", "Financial Statements", "Technical Review", "Ready to Deliver", "Bill Client", "Complete"})]
+    [PKProjectStatusList("AUDIT")]  // list maintained on PKPM2001; was a fixed PXIntList 1-11 until T-22
     [PXUIField(DisplayName="Audit Status")]
     public virtual int? UsrPGAuditStatus { get; set; }
     public abstract class usrPGAuditStatus : PX.Data.BQL.BqlInt.Field<usrPGAuditStatus> { }
