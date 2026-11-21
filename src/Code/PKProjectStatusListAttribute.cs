@@ -31,7 +31,10 @@ namespace ProjectTask
     /// </summary>
     public class PKProjectStatusListAttribute : PXIntListAttribute, IPXFieldVerifyingSubscriber
     {
-        private const string SlotKey = "ProjectTask.PKProjectStatusListAttribute.Definition";
+        // T-21c: the key includes the compiled assembly's name. Each publish loads a new RuntimeCode_<hash> assembly into the
+        // same AppDomain; with a constant key the new code found the OLD assembly's Definition in the slot cache and threw
+        // InvalidCastException "[A]Definition cannot be cast to [B]Definition" (first-chance, recovered by Acumatica; seen 2026-11-21).
+        private static readonly string SlotKey = "ProjectTask.PKProjectStatusListAttribute.Definition@" + typeof(Definition).Assembly.FullName;
 
         public string DepartmentID { get; }
 
