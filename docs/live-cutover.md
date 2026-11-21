@@ -37,7 +37,7 @@ template screens. Note: PK9 now has **55** statuses (your ACCT 11 test row); **l
 ## 1. Gate: PK9 must be fully done first
 All of these must be ticked by the user (with the lead's confirmation). Do not go live on a partial pass.
 - [ ] **NEW (2026-11-21 21:45): the zip now also contains T-24 (PKPM2001 Previous/Next Department arrows), which PK9 has NOT run yet.**
-      Republish `build\ProjectTask.zip` on PK9 (SHA-256 `A9D3020D…C836`, 88,576 bytes, 21:42:31), then run the T-24 list in
+      Republish **`build\ProjectTask-T24.zip`** on PK9 (SHA-256 `A9D3020D…C836`, 88,576 bytes; a saved copy, because `build\ProjectTask.zip` is being rebuilt for T-25), then run the T-24 list in
       `docs/status-screen.md`. The lead then re-runs `Verify-Package` (must say `PACKAGE MATCHES LIVE`) and confirms the hash in section 3.
       Live gets **only** a zip that PK9 has run and passed. (Previous verified zip, without T-24: `AF9171C9…06A1` @ `15ee9d4`; it was overwritten by the rebuild.)
 - [x] Before T-24: the zip from `main` @ `15ee9d4` matched PK9 (`PACKAGE MATCHES LIVE`, lead, 2026-11-21 ~21:00; republished 11:43).
@@ -98,7 +98,7 @@ The UI has no "search by field" for GIs, so use one of these ways:
 ## 3. Publish steps
 **Never publish `Contact` together with the new `ProjectTask`** (both define `ContactExt`: CS0101 compile error).
 - [ ] SM204505 Customization Projects: open **`ProjectTask`** > **Import** the zip built by the lead (the lead gives you the file and commit id; do not use an older zip). Choose replace.
-      The zip to use is `build\ProjectTask.zip`, 88,576 bytes, written 2026-11-21 21:42:31, SHA-256
+      The zip to use is `build\ProjectTask-T24.zip` (copy of the T-24 build), 88,576 bytes, written 2026-11-21 21:42:31, SHA-256
       `A9D3020D28D1487D846C7655E9CFB8BACAA453BB676CF23F3FC3CD0FBA60C836` (PowerShell: `Get-FileHash <zip>`) — **only after PK9 ran it and the
       lead confirmed `PACKAGE MATCHES LIVE` against PK9** (gate, section 1). If the lead rebuilds it later, use the new hash the lead gives you.
       Alternatively export `ProjectTask` from PK9 and import that: same content.
