@@ -128,3 +128,25 @@ Importing the zip **replaces** the whole `ProjectTask` project with `src/`, whic
 - Whether Modern UI's Save is enabled with no pending changes (the "select department + Save" first-sync step relies on it;
   if not, toggle any field and toggle it back, or edit a row, then Save).
 - The list attribute (only used after T-22): GI/OData labels from the dynamic list (design section 2 "Not verified").
+
+
+## Bug fixed 2026-11-21 (T-21b): saving/renaming statuses failed
+
+**Symptom (user, PK9):** renaming an existing ACCT status gave "Status ID 2 already exists for department ACCT"; adding a status gave
+"description cannot be blank" although the description was filled in. Nothing reached the database.
+
+**Root cause:** the Modern UI grid saves a row with `PXCache.Update(keys, values)`, which fills a COPY of the row field by field and
+raises `FieldVerifying` for each value, including the key `StatusID`, while the copy's own key fields are still empty. The old
+`FieldVerifying<statusID>` scanned the department, found the saved row itself and rejected it as a duplicate (so EVERY edit of a saved
+row failed). The resulting session rollback also discarded a pending new row's typed description, which is why the add attempt reported a
+blank description.
+
+**Fix:** no cross-row checks in the key-field `FieldVerifying` handlers. Duplicate description is flagged inline in `RowInserted` /
+`RowUpdated` (field error, cleared when fixed) and enforced in `RowPersisting`; a duplicate Status ID on a new row is enforced in
+`RowPersisting` (friendly message instead of a SQL key violation). `FieldVerifying<statusID>` only rejects values <= 0.
+
+**Retest on PK9 after republishing:** (1) rename a status and save; (2) toggle Active and save; (3) add a status (ID defaults to max+1) with a
+description and save; (4) add a status with an existing description (inline error, save blocked); (5) deactivate/reactivate; (6) a saved
+row's Status ID is read-only and a saved row cannot be deleted; (7) after the first successful save of a department, check that
+`CSAttributeDetail.SortOrder` is no longer NULL for it (the sync ran) and GI000142 shows the renamed text. Not verifiable before a publish:
+the behavior of the real grid, and whether Save is enabled when nothing changed (the "first sync" step relies on it).

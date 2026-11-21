@@ -75,26 +75,39 @@ namespace ProjectTask
                 throw new PXSetPropertyException(PKProjectStatusMessages.DepartmentReadOnly);
         }
 
+        // IMPORTANT (bug fixed 2026-11-21, T-21b): do NOT look at other rows in the FieldVerifying handlers of key fields.
+        // In the grid update path (PXCache.Update(keys, values) -> FillWithValues) Acumatica fills a COPY of the row field by field
+        // and raises FieldVerifying while the copy's own key fields are still empty. A department scan then finds the saved row
+        // itself ("Status ID 2 already exists for department ACCT" on every rename) and the automatic session rollback also
+        // throws away a pending new row's description ("description cannot be blank"). Uniqueness is therefore checked where the
+        // whole row is known: RowInserted / RowUpdated (inline field error) and RowPersisting (hard stop).
         protected virtual void _(Events.FieldVerifying<PKProjectStatus, PKProjectStatus.statusID> e)
         {
             if (e.Row == null || !(e.NewValue is int newID)) return;
-            if (e.Row.StatusID == newID) return;   // unchanged
             if (newID <= 0)
                 throw new PXSetPropertyException(PKProjectStatusMessages.StatusIDMustBePositive);
-            if (e.Row.StatusID != null && IsSaved(e.Cache, e.Row))
-                throw new PXSetPropertyException(PKProjectStatusMessages.StatusIDReadOnly);
-            string dept = e.Row.DepartmentID ?? Filter.Current?.DepartmentID;
-            foreach (PKProjectStatus s in StatusesOf(dept))
-                if (s.StatusID == newID)
-                    throw new PXSetPropertyException(PKProjectStatusMessages.StatusIDExists, newID, dept);
         }
 
-        protected virtual void _(Events.FieldVerifying<PKProjectStatus, PKProjectStatus.description> e)
+        protected virtual void _(Events.RowInserted<PKProjectStatus> e) => FlagDuplicateDescription(e.Cache, e.Row);
+
+        protected virtual void _(Events.RowUpdated<PKProjectStatus> e) => FlagDuplicateDescription(e.Cache, e.Row);
+
+        /// <summary>Inline field error when another status of the department already has this description; cleared when fixed.</summary>
+        private void FlagDuplicateDescription(PXCache cache, PKProjectStatus row)
         {
-            if (e.Row == null) return;
-            PKProjectStatus dup = FindDuplicateDescription(e.Row, e.NewValue as string);
+            if (row == null) return;
+            PKProjectStatus dup = FindDuplicateDescription(row, row.Description);
             if (dup != null)
-                throw new PXSetPropertyException(PKProjectStatusMessages.DescriptionExists, ((string)e.NewValue).Trim(), dup.StatusID, dup.DepartmentID);
+            {
+                cache.RaiseExceptionHandling<PKProjectStatus.description>(row, row.Description,
+                    new PXSetPropertyException(PKProjectStatusMessages.DescriptionExists, row.Description.Trim(), dup.StatusID, dup.DepartmentID));
+            }
+            else
+            {
+                string current = PXUIFieldAttribute.GetError<PKProjectStatus.description>(cache, row);
+                if (current != null && current.Contains("is already used by status"))
+                    cache.RaiseExceptionHandling<PKProjectStatus.description>(row, row.Description, null);
+            }
         }
 
         protected virtual void _(Events.RowDeleting<PKProjectStatus> e)
@@ -115,6 +128,20 @@ namespace ProjectTask
                 if (e.Cache.RaiseExceptionHandling<PKProjectStatus.statusID>(e.Row, e.Row.StatusID,
                         new PXSetPropertyException(PKProjectStatusMessages.StatusIDMustBePositive)))
                     throw new PXRowPersistingException(typeof(PKProjectStatus.statusID).Name, e.Row.StatusID, PKProjectStatusMessages.StatusIDMustBePositive);
+            }
+
+            // A new row may not reuse the ID of a saved status of the same department (friendlier than the SQL key violation).
+            if (command == PXDBOperation.Insert)
+            {
+                foreach (PKProjectStatus s in StatusesOf(e.Row.DepartmentID))
+                {
+                    if (s.StatusID == e.Row.StatusID && !ReferenceEquals(s, e.Row) && e.Cache.GetStatus(s) != PXEntryStatus.Inserted)
+                    {
+                        var idEx = new PXSetPropertyException(PKProjectStatusMessages.StatusIDExists, e.Row.StatusID, e.Row.DepartmentID);
+                        if (e.Cache.RaiseExceptionHandling<PKProjectStatus.statusID>(e.Row, e.Row.StatusID, idEx))
+                            throw new PXRowPersistingException(typeof(PKProjectStatus.statusID).Name, e.Row.StatusID, idEx.Message);
+                    }
+                }
             }
 
             // Final uniqueness check across all rows being saved (e.g. two descriptions swapped in one save).

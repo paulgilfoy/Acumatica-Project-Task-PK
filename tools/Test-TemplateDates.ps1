@@ -21,7 +21,7 @@
 #>
 param(
     [string]$SitePath = 'C:\Program Files\Acumatica ERP\PK9',
-    [ValidateSet('RollForward', 'AsIs')][string]$ExpectRule = 'RollForward'
+    [ValidateSet('RollForward', 'AsIs')][string]$ExpectRule = 'AsIs'
 )
 $ErrorActionPreference = 'Stop'
 $repo    = Split-Path $PSScriptRoot -Parent

@@ -27,7 +27,7 @@ namespace ProjectTask
         }
 
         /// <summary>The rule PKProjectTemplateExt uses.</summary>
-        public const DueDateRule ActiveRule = DueDateRule.RollForward;
+        public const DueDateRule ActiveRule = DueDateRule.AsIs;   // D9 (user, 2026-11-21): static dates, copied unchanged; RollForward (option C) kept for reference
 
         /// <summary>Due date for a new task, using <see cref="ActiveRule"/>.</summary>
         /// <param name="templateDate">UsrPGDueDate of the template task / common task.</param>

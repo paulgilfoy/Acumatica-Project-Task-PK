@@ -176,3 +176,12 @@ BASE  Void OnCopyPasteTaskInserted(PX.Objects.PM.PMProject, PX.Objects.PM.PMTask
     `SELECT UsrPGDepartment, UsrPGPriority, UsrPGComplexity FROM Contract WHERE CompanyID=2 AND ContractID=<new id>`.
 
 Rollback: re-import the previous package (removes the two code items); the copy logic only ever wrote to the new rows.
+
+
+## Update 2026-11-21 (D9): due dates are now copied AS-IS
+
+The user decided that due dates are static dates that are bulk-updated (e.g. all 2026 tax projects to 4/15/2027) and that a project created
+after 4/15 keeps the back-dated 4/15/2027 and is then marked Extended for the IRS extension filing. `PKTemplateDueDate.ActiveRule` is now
+`AsIs` (the template or common-task date is copied unchanged, whatever the creation date); the RollForward rule (option C) is kept in the
+file for reference. `tools\Test-TemplateDates.ps1` now expects `AsIs` by default (36 of 36 cases pass). Manual test: a template task dated
+4/15/2027 gives 4/15/2027 on a new project and on Add Common Task, regardless of today's date; a blank template date leaves the field empty.
