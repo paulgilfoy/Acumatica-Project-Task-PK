@@ -56,7 +56,7 @@ the old `Contact` project's runtime file is gone and `PKContactExt.cs` is live; 
 | `PKProjectStatus` table | Exists; CompanyID 2: 401K 20, TAX 15, ACCT 8, AUDIT 11 (= 54, the approved seed) |
 | Site map | `PKPM2001 Department Statuses` present |
 | Contact merge | Old runtime file `PX_Objects_CR_Contact_extensions.cs` gone (project unpublished); `PKContactExt.cs` live; 667 contacts with any marketing flag (data intact). The `Contact` project still exists in the DB (5 items): the user may delete it after PK9 passes (never publish both) |
-| Tech removal | `AUScreenFieldState` rows for `TechStatus` = 0 (Automation applied). GIResult refs = 0. **GIWhere refs = 1 (GI641645)** |
+| Tech removal | `AUScreenFieldState` rows for `TechStatus` = 0 (Automation applied). GIResult refs = 0, GIWhere refs = 0 (the user removed the GI641645 filter; verified 2026-11-21) |
 | ProjectTask project in DB | 57 items; PKTimeClock 46 items (unchanged) |
 | **PKPM2001 save (bug)** | A new ACCT status could not be saved ("description cannot be blank" with a filled description). DB after the attempt: `PKProjectStatus` unchanged (401K 20, TAX 15, ACCT 8, AUDIT 11, 0 blank descriptions); `CSAttributeDetail.SortOrder` still NULL on all 55 rows, so the one-way sync has never run (GI000142/time clock still show the old texts for ACCT 2, AUDIT 1, 401K 5). Access rights for PKPM2001 are set. GI641645 filter removed (0 TechStatus refs in `GIWhere`/`GIResult`) |
 | Not verified by the lead | Anything needing a UI: the new screen's behavior, GI/OData labels, PM301000 dropdown rendering, template screens, template copy runtime, Copy Project with a retired status |
@@ -143,7 +143,7 @@ cannot be queried): the lead cannot run `Verify-Package` against live; use a dif
 | ID | Task | Result / acceptance | Model / effort | Status |
 |---|---|---|---|---|
 | T-10 | Merge the Contact customization | Live `Contact` project (5 items: DAC item, Table, Classic page, 2 Modern UI files) now in `src/` (`PKContactExt.cs`, `Tables/Contact.xml`, `PageCustomizations/CR302000.xml`, CR302000 `.ts/.html` unchanged from live: the repo's "binding mismatch" only existed in a stale variant). Fields: **8** bool, not ~6. Cutover: `docs/contact-merge.md`. Commit `60d537c` | Opus 5.5 / high | PUBLISHED-ON-PK9 (awaiting user checklist; user archives the Contact repo after) |
-| T-11 | Remove Tech Status + TECH display | Removed from `Contract.cs`, `Automation/PM301000.xml`, `PageCustomizations/PM301000.xml`, PM301000 UI. Table column declaration kept (does not drop the column). Doc `docs/tech-removal.md`. Commit `9307996`. **Open: GI641645 filter (§1.4)**; live GIs | Opus 5.5 / high | PUBLISHED-ON-PK9 (blocked from DONE by the GI641645 filter) |
+| T-11 | Remove Tech Status + TECH display | Removed from `Contract.cs`, `Automation/PM301000.xml`, `PageCustomizations/PM301000.xml`, PM301000 UI. Table column declaration kept (does not drop the column). Doc `docs/tech-removal.md`. Commit `9307996`. GI641645 filter removed by the user 2026-11-21 (verified); the same GI cleanup is still needed on live | Opus 5.5 / high | PUBLISHED-ON-PK9 (GI641645 filter removed 2026-11-21; awaiting user checklist; live GIs still to clean) |
 
 ### Phase 2 — Status maintenance (P3)
 | ID | Task | Result / acceptance | Model / effort | Status |
@@ -214,7 +214,7 @@ cannot be queried): the lead cannot run `Verify-Package` against live; use a dif
 ## 11. Risks and watch-outs
 - A field declared in two published projects fails the publish (CS0101): unpublish the superseded project in the same publish; never re-tick `Contact`.
 - Status integers are frozen: never renumber or reuse an ID (renaming is fine). Anything that changes a list must keep the seed diff test (`Test-StatusSeed.ps1`) green.
-- Tech Status is gone from the DAC while GI641645 still filters on it (until the user removes the line): possible GI error / Power BI refresh failure.
+- Tech Status is gone from the DAC on PK9 and the PK9 GIs are clean; **live GIs must be cleaned in the UI before the live publish** (GI641645 filter etc.), otherwise GI errors / Power BI refresh failures.
 - The new list attribute has **no fallback** if `PKProjectStatus` has no rows for a department (empty drop-down, numbers in GIs): check the seed on live (tenant ID unverified).
 - Importing a NEW project with a retired status is now rejected (behavior change); updating with the unchanged value works.
 - Due-date option C: 589 of 8,338 real dates fall before their project's start → roll to next year; Add Common Task on an old project gives a date in the project's start year.
