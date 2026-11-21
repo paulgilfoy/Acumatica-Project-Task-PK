@@ -1,9 +1,10 @@
 # T-21: Department Statuses screen (PKPM2001), table PKProjectStatus, seed, CSAttributeDetail sync
 
-Source change only (2026-11-20). **Nothing is published and nothing was written to the database.** Ships in publish
-bundle B (`PLAN.md`). Design: `docs/status-design.md` (approved; D1-D8 as recommended). Seed values: `docs/status-lists.md`.
-**Not in T-21:** the four project fields (`Usr401kStatus`, `UsrPGTaxStatus`, `UsrPGAcctStatus`, `UsrPGAuditStatus`) still
-use their `PXIntList`. T-22 switches them to `PKProjectStatusList("<dept>")`. Task status (`UsrPGTaskStatus`) is out of scope (D5).
+Built 2026-11-20 (source only then). **Status 2026-11-21:** published on PK9 at ~02:51 (the merged 57-item package) and republished
+with the T-21b/T-32b fixes; first PK9 retest results are at the end of this file. Live is untouched. (The "bundle B" wording below is
+historical: PLAN §5 merged bundles A+B+C into one zip.) Design: `docs/status-design.md` (approved; D1-D8 as recommended). Seed values: `docs/status-lists.md`.
+**Not in T-21:** the four project fields (`Usr401kStatus`, `UsrPGTaxStatus`, `UsrPGAcctStatus`, `UsrPGAuditStatus`) were switched
+from their `PXIntList` to `PKProjectStatusList("<dept>")` by T-22 (`docs/status-switch.md`). Task status (`UsrPGTaskStatus`) is out of scope (D5).
 
 ## What was built
 | Package item | File | What |
@@ -11,7 +12,7 @@ use their `PXIntList`. T-22 switches them to `PKProjectStatusList("<dept>")`. Ta
 | `Sql#PKProjectStatus` | `src/Sql/PKProjectStatus.sql` | Creates table `PKProjectStatus` if missing, then inserts the 54 seed rows **only where missing** (never updates or deletes). |
 | `Code#PKProjectStatus` (NewDac) | `src/Code/PKProjectStatus.cs` | DAC `PKProjectStatus`, filter DAC `PKProjectStatusFilter`, messages `PKProjectStatusMessages`. |
 | `Code#PKProjectStatusMaint` (NewGraph) | `src/Code/PKProjectStatusMaint.cs` | Graph of PKPM2001: rules + the one-way sync into `CSAttributeDetail`. |
-| `Code#PKProjectStatusListAttribute` (NewFile) | `src/Code/PKProjectStatusListAttribute.cs` | DB-backed drop-down attribute for T-22 (not used by any field yet). |
+| `Code#PKProjectStatusListAttribute` (NewFile) | `src/Code/PKProjectStatusListAttribute.cs` | DB-backed drop-down attribute (used by the four project status fields since T-22). |
 | `SiteMapNode#d96a84c2-1aaa-4d5c-bd30-8a377926e04a` | `src/SiteMap/PKPM2001.xml` | Menu: workspace **Projects**, subcategory **Preferences** (next to Account Groups PM201000), title "Department Statuses", pinned (like PKPM3001/3002). |
 | `File Pages\PK\PKPM2001.aspx(.cs)` | `src/Pages/PK/` | Classic shell (never rendered; it tells Acumatica the graph): `FormDetail.master`, `PXDataSource TypeName="ProjectTask.PKProjectStatusMaint" PrimaryView="Filter"`. |
 | `PerTenantFile screens\PK\PKPM2001\*` | `src/FrontendSources/screens/PK/PKPM2001/` | Modern UI: `PKPM2001.ts`, `views.ts`, `PKPM2001.html`. Department filter + grid Status ID / Description / Sort Order / Active. |
@@ -34,10 +35,11 @@ use their `PXIntList`. T-22 switches them to `PKProjectStatusList("<dept>")`. Ta
 |---|---|
 | Insert is possible only when a Department is selected | `RowSelected<PKProjectStatusFilter>` |
 | New row: Status ID = highest ID of the department (saved + unsaved) + 1; Sort Order = Status ID | `FieldDefaulting` |
-| Status ID > 0, unique per department | `FieldVerifying<statusID>` + `RowPersisting` (> 0) |
-| Status ID read-only once saved (UI disabled; API/import rejected) | `RowSelected<PKProjectStatus>`, `FieldVerifying<statusID>` |
+| Status ID > 0 | `FieldVerifying<statusID>` (rejects IDs <= 0 only) + `RowPersisting` |
+| Status ID unique per department (T-21b: no cross-row check in `FieldVerifying`) | `RowPersisting` (duplicate ID on a new row) |
+| Status ID read-only once saved (UI cell disabled; since T-21b the API/import is no longer rejected by `FieldVerifying`, which only checks > 0) | `RowSelected<PKProjectStatus>` |
 | Department of a saved row cannot change (API) | `FieldVerifying<departmentID>` |
-| Description required; unique per department (trimmed, case-insensitive) | `PXDefault(NullOrBlank)`, `FieldVerifying<description>`, re-checked in `RowPersisting` |
+| Description required; unique per department (trimmed, case-insensitive) | `PXDefault(NullOrBlank)`; duplicate flagged inline in `RowInserted`/`RowUpdated`, enforced in `RowPersisting` (T-21b) |
 | Saved rows cannot be deleted ("Clear the Active check box instead"); new unsaved rows can | `RowDeleting`, plus a `RowPersisting` guard on Delete |
 | Sort Order 0..32767 (it is copied to `CSAttributeDetail.SortOrder`, a smallint) | DAC `PXDBInt(MinValue = 0, MaxValue = 32767)` |
 
@@ -62,20 +64,21 @@ What the first save of each department changes in `CSAttributeDetail` (from `doc
 - ACCT 02 "Initial Review" → "Initial Review (Acctg)", AUDIT 01 "Ready to Prep" → "Ready To Prep",
   401K 05 "Initial RECs and DIs" → "Initial RECS and Dis" (D1: GI000142 then shows the same text as PM301000).
 
-## List attribute (for T-22) `PKProjectStatusListAttribute : PXIntListAttribute`
+## List attribute (used by the four fields since T-22) `PKProjectStatusListAttribute : PXIntListAttribute`
 `[PXDBInt] [PKProjectStatusList("401K")] [PXUIField(DisplayName = "401k Status")]`. `CacheAttached` loads the full list (active +
 inactive) from a `PXDatabase` slot keyed on `PKProjectStatus` (Box1099NumberAttribute pattern); `FieldSelecting` for a row offers
 active statuses + the row's current value (CROpportunityStagesAttribute pattern); `FieldVerifying` rejects an unknown or inactive
 value that differs from the current one, **except** when the department has no rows at all (table not seeded), so it never blocks
 saving before the seed exists. If the table cannot be read, the list is empty (numbers show) and a trace error is written.
 
-## Publish (user; bundle B)
+## Publish (user; the merged package, see PLAN §5)
 Importing the zip **replaces** the whole `ProjectTask` project with `src/`, which also contains T-10 (Contact merge) and T-11
-(Tech Status removal). So bundle A's prerequisites apply to this zip too: `Contact` unticked when publishing, and GI641645's
-`usrPGTechStatus = 4` condition removed first (`docs/contact-merge.md`, `docs/tech-removal.md`).
+(Tech Status removal). So their prerequisites apply to this zip too: `Contact` unticked when publishing, and GI641645's
+`usrPGTechStatus = 4` condition removed first (`docs/contact-merge.md`, `docs/tech-removal.md`; done on PK9, still to do on live).
 1. Back up the PK9 database.
-2. Run the checks (lead): `tools\Test-Compile.ps1 -IncludeRuntimeCode -ExcludeRuntimeFile PX_Objects_CR_Contact_extensions`,
-   `tools\Test-ModernUI.ps1`, `tools\Build-Package.ps1`, `tools\Verify-Package.ps1 -ExtraProject Contact`, `tools\Test-StatusSeed.ps1`.
+2. Run the checks (lead): `tools\Test-Compile.ps1 -IncludeRuntimeCode`, `tools\Test-ModernUI.ps1`, `tools\Build-Package.ps1`,
+   `tools\Verify-Package.ps1`, `tools\Test-StatusSeed.ps1`. (The old `-ExcludeRuntimeFile PX_Objects_CR_Contact_extensions` and
+   `-ExtraProject Contact` options are no longer needed: the Contact project is merged and its runtime file is gone from PK9, PLAN §9.)
 3. SM204505 Customization Projects: open `ProjectTask`, import `build\ProjectTask.zip` (replace), **Publish** with `Contact` unticked
    (until the T-10 cutover is done).
 4. **The seed runs as part of the publish:** the `Sql#PKProjectStatus` item executes during publish (DB scripts are part of
@@ -150,3 +153,15 @@ description and save; (4) add a status with an existing description (inline erro
 row's Status ID is read-only and a saved row cannot be deleted; (7) after the first successful save of a department, check that
 `CSAttributeDetail.SortOrder` is no longer NULL for it (the sync ran) and GI000142 shows the renamed text. Not verifiable before a publish:
 the behavior of the real grid, and whether Save is enabled when nothing changed (the "first sync" step relies on it).
+
+**First PK9 retest result (user, 2026-11-21 03:27 UTC, republished build):** changing ACCT 8's sort order to 9 **saved**, and the first
+`CSAttributeDetail` sync ran (lead verified read-only: `PKProjectStatus` ACCT 8 SortOrder 9; STATUSACCT rows 01-08 have a SortOrder,
+ACCT 02 = "Initial Review (Acctg)"). **Still pending from the retest list above:** (1) rename, (2) toggle Active, (3) add with a description,
+(4) add with a duplicate description, (5) deactivate/reactivate, (6) read-only Status ID / undeletable saved row, and the sync for TAX, 401K and
+AUDIT (and the GI000142 text check).
+
+## Note T-21c (2026-11-21): slot-cache cast error after a republish
+The same retest showed first-chance `InvalidCastException "[A]Definition cannot be cast to [B]Definition"` (two different `RuntimeCode_*`
+assemblies) in `PKProjectStatusListAttribute.GetStatuses` -> `PXDatabase.GetSlot`: the slot key was constant, so the new build found the
+OLD build's cached `Definition` object. Acumatica recovered and the save succeeded. Fix (in `src/`, ships with the next republish): the
+slot key now includes `typeof(Definition).Assembly.FullName`, i.e. one slot per compiled assembly. Harmless until the next republish.

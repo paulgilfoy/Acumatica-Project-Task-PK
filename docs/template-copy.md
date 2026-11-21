@@ -1,8 +1,9 @@
 # T-32 — Copy template / common-task values into new projects and tasks
 
-Date 2026-11-20. Acumatica 26.200.0334 (PK9). Source only: **nothing published, no DB writes.**
+Date 2026-11-20, updated 2026-11-21. Acumatica 26.200.0334 (PK9). **Status:** published on PK9 2026-11-21 in the merged package; the
+due-date rule was then switched to **as-is (D9, T-32b)**, which ships with the republish; the manual test (§7) is still unanswered. Live untouched. No DB writes by agents.
 Design and hook evidence: `docs/template-flow.md` (T-30). Screens that store the values: `docs/template-screens.md` (T-31).
-Ships in **bundle C** together with T-31 (without T-31 nobody can enter the values; without T-32 they are only stored).
+T-31 (entry screens) and T-32 (copy logic) belong together (without T-31 nobody can enter the values; without T-32 they are only stored).
 
 Files:
 - `src/Code/PKProjectTemplateExt.cs` — `ProjectTask.PKProjectTemplateExt : PXGraphExtension<ProjectEntry>` with two `[PXOverride]`s
@@ -24,7 +25,7 @@ no Extended Due Date / Is Extended, no task Department (it keeps defaulting from
 | `UsrPGPreparer` | template task (PM208000 grid / PM208010) or common task (PM208030 / template non-auto task) | new task | yes, if empty (tasks with *Automatically Include in Project*) | yes, if empty | yes, if empty | not affected |
 | `UsrPGReviewer` | idem | new task | yes, if empty | yes, if empty | yes, if empty | not affected |
 | `UsrPGTechReviewer` | idem | new task | yes, if empty | yes, if empty | yes, if empty | not affected |
-| `UsrPGDueDate` (Due Date) | idem | new task | **month/day rolled forward** (section 2) | idem | idem, anchored on the project's start date | not affected |
+| `UsrPGDueDate` (Due Date) | idem | new task | **copied as-is** (D9, section 2) | idem | idem | not affected |
 
 Hooks (both verified again for this task, section 6):
 - project fields: `[PXOverride] DefaultFromTemplateProjectSettings(PMProject prj, PMProject templ)` (public virtual; runs before any
@@ -34,8 +35,19 @@ Hooks (both verified again for this task, section 6):
   row in this graph's `Tasks` cache (Copy Project, Create Template: the row lives in another graph) the hook does nothing, so those
   two actions behave exactly as before.
 
-## 2. Due-date rule (option C, recommended in `template-flow.md` §6; user decision pending, lead chose C)
-**Keep the template date's month and day, ignore its year, and use the first such date ON OR AFTER the project's start date.**
+## 2. Due-date rule: AS-IS (D9, decided by the user 2026-11-21; active)
+**The template or common-task due date is copied unchanged, whatever the creation date or the project's start date.** Due dates are
+usually static dates the user can modify; projects are created in bulk and the user bulk-updates dates (e.g. all "2026" tax projects to
+4/15/2027). A tax project created after 4/15 is back-dated to 4/15/2027 and then the "Extended" checkbox is checked for the IRS extension
+filing. A blank template date leaves the field empty. Implemented by `PKTemplateDueDate.ActiveRule = AsIs` (T-32b); the
+`tools\Test-TemplateDates.ps1` default is `-ExpectRule AsIs` (36 of 36 cases). The hook still passes the project start date and business
+date to `PKTemplateDueDate.GetDueDate`, but `AsIs` ignores them.
+
+### Option C (roll forward): the documented alternative, NOT active
+The rule the agent first chose (not confirmed by the user, superseded by D9). Switch back by setting `ActiveRule = DueDateRule.RollForward`
+(section 4). Everything below up to the "Known limitation" paragraph describes this alternative only.
+
+**Option C rule: keep the template date's month and day, ignore its year, and use the first such date ON OR AFTER the project's start date.**
 Reason: PK due dates are statutory calendar dates per task code (011065 always 3/15, 011040 4/15, 02TXFRA 5/15).
 
 | Template task | Project start | Due date on the new task |
@@ -56,7 +68,7 @@ Reason: PK due dates are statutory calendar dates per task code (011065 always 3
 
 All rows are cases in `tools/Test-TemplateDates.ps1` (36 cases, output in section 6).
 
-**Which start date (decided, with evidence):**
+**Which start date (option C only; evidence kept for reference):**
 - *Create project from a template* (also Load from Template and quote → project): `ProjectEntry.DefaultFromTemplate` sets
   `prj.StartDate = Accessinfo.BusinessDate` **unconditionally** (IL_00d6–IL_00e2) before it copies the tasks (IL_01c2), so the anchor is
   the **business date of the day the template is chosen**. Changing the project's Start Date afterwards does **not** recalculate the
@@ -73,7 +85,7 @@ All rows are cases in `tools/Test-TemplateDates.ps1` (36 cases, output in sectio
 - *29 Feb*: 29 Feb in a leap year, otherwise **28 Feb** (last day of February, never 1 Mar). PK9 has exactly 1 such task due date today.
 - Time of day is dropped (the field is a date).
 
-**Known limitation of option C (data):** read-only SQL on PK9: of 8,784 project tasks with a due date, 1,035 have a due date
+**Known limitation of option C (data; one reason it is not the active rule):** read-only SQL on PK9: of 8,784 project tasks with a due date, 1,035 have a due date
 before their project's start date: 446 are 1/1/1900-era placeholders, **589** are real (66 within 31 days, 387 within 32–183 days,
 136 later). Those are projects opened after the deadline (late or prior-year work); under option C such a task would get next
 year's date and must be corrected by hand. A grace window (e.g. "if the date passed less than N days ago, keep this year") could
@@ -104,12 +116,13 @@ be added inside `PKTemplateDueDate.RollForward` if the user wants it; not implem
 ## 4. Switching the due-date rule
 All due-date logic is in `src/Code/PKTemplateDueDate.cs`; `PKProjectTemplateExt.GetDueDate` only passes
 `(template due date, project StartDate, business date)` to `PKTemplateDueDate.GetDueDate`.
-- **Option A (copy as is):** change `public const DueDateRule ActiveRule = DueDateRule.RollForward;` to `DueDateRule.AsIs`, run
-  `tools\Test-TemplateDates.ps1 -ExpectRule AsIs` (and change the script's `-ExpectRule` default), rebuild the package.
+- **Option A (copy as is): ACTIVE since T-32b (D9).** `ActiveRule = DueDateRule.AsIs`; `tools\Test-TemplateDates.ps1` defaults to `-ExpectRule AsIs`.
+- **Option C (roll forward): the alternative.** Change `public const DueDateRule ActiveRule = DueDateRule.AsIs;` to `DueDateRule.RollForward`, run
+  `tools\Test-TemplateDates.ps1 -ExpectRule RollForward` (and change the script's `-ExpectRule` default), rebuild the package.
 - **Option B (N days after project start):** needs a new int field on template/common tasks (e.g. `UsrPGDueDays`: DAC field in
   `PMTask.cs`, column in `Tables/PMTask.xml`, T-31 UI); add a rule `OffsetDays` to `PKTemplateDueDate` taking the offset, pass it from
   `PKProjectTemplateExt.GetDueDate`, add cases to the test.
-- **Grace window / other tweaks to C:** change `RollForward`; add cases to the test table.
+- **Grace window / other tweaks to C (only if C is ever activated):** change `RollForward`; add cases to the test table.
 - **Option D (offset from Year End):** larger change (2 fields + recalculation when Year End is entered later), see `template-flow.md` §6.
 
 ## 5. Not verifiable before a publish
@@ -120,11 +133,11 @@ All due-date logic is in `src/Code/PKTemplateDueDate.cs`; `PKProjectTemplateExt.
 - Add Common Task dialog behaviour in the Modern UI.
 - Whether the business date / start date seen by the hook is what section 2 says (IL-derived).
 
-## 6. Checks (2026-11-20, main checkout)
+## 6. Checks (2026-11-20, main checkout; historical, run when option C was the default; re-run 2026-11-21 with AsIs: DATE TEST PASS 36/36, COMPILE OK without the Contact exclusion)
 ```
 tools\Test-TemplateDates.ps1          36 cases, passed 36, failed 0  -> DATE TEST PASS (exit 0)
                                       (negative control: a deliberately wrong expectation -> FAIL, exit 1)
-tools\Test-Compile.ps1 -IncludeRuntimeCode -ExcludeRuntimeFile PX_Objects_CR_Contact_extensions
+tools\Test-Compile.ps1 -IncludeRuntimeCode -ExcludeRuntimeFile PX_Objects_CR_Contact_extensions   (no longer needed, PLAN §9)
                                       Compiling 51 file(s) ... COMPILE OK   (includes App_RuntimeCode\PKProjectEntryExt.cs of PKTimeClock)
 tools\Test-ModernUI.ps1               Type-checking 12 file(s) with Version 5.5.2 ... TS CHECK OK
 tools\Build-Package.ps1               57 items: Code 14, Sql 3, Table 3, SiteMapNode 3, Automation 2, Page 5, File 6, PerTenantFile 21
@@ -150,22 +163,23 @@ BASE  Void OnCopyPasteTaskInserted(PX.Objects.PM.PMProject, PX.Objects.PM.PMTask
    <- [PXOverride] ProjectTask.PKProjectTemplateExt.OnCopyPasteTaskInserted (params: 4)
 ```
 
-## 7. Manual test on PK9 (after the user publishes bundle C; adapted from `template-flow.md` §8)
-1. Backup; import `build\ProjectTask.zip`; publish with the usual projects (ProjectTask, PKTimeClock, …; `Contact` unticked per bundle A).
+## 7. Manual test on PK9 (after the user republishes the T-32b build; adapted from `template-flow.md` §8). Expected due dates follow the AS-IS rule (D9)
+1. Backup; import `build\ProjectTask.zip`; publish with the usual projects (ProjectTask, PKTimeClock, …; `Contact` unticked).
 2. **PM208000**: copy a template to `T32TEST`. *PK Project Info*: Department = TAX, Priority = High, Complexity = Level 2; TimeClock's
    Default Labor Item set. Tasks grid: Task A (*Automatically Include in Project* = on): Preparer, Reviewer, Tech Reviewer,
    Due Date **04/15/2025**; Task B (*Automatically Include* = off → a common task of the template): Preparer, Due Date **03/15/2025**. Save.
 3. **PM208030**: global common task `03AL`: Preparer + Due Date **05/15/2025**. Save.
 4. **PM301000** → new project, Template = `T32TEST`. Before saving: Department / Priority / Complexity = TAX / High / Level 2; Default
-   Labor Item copied (TimeClock still works); Task A: Preparer, Reviewer, Tech Reviewer copied, **Due Date = next 4/15 on/after
-   today's business date** (business date 11/20/2026 → 04/15/2027); Task A Department = TAX; no task status set. Save, reopen: persisted.
-5. Tasks tab → **Add Common Task** → tick Task B and `03AL` → OK. Both new tasks get the Preparer; due dates = first 3/15 and 5/15
-   on/after the **project's Start Date** (Start 11/20/2026 → 03/15/2027 and 05/15/2027). Save, reopen.
+   Labor Item copied (TimeClock still works); Task A: Preparer, Reviewer, Tech Reviewer copied, **Due Date = 04/15/2025, exactly the template
+   date, whatever today's date is** (as-is rule); Task A Department = TAX; no task status set. Save, reopen: persisted.
+5. Tasks tab → **Add Common Task** → tick Task B and `03AL` → OK. Both new tasks get the Preparer; due dates = the template dates unchanged
+   (03/15/2025 and 05/15/2025), regardless of the project's Start Date. Save, reopen.
 6. Copy-if-empty: new project, set Department = ACCT first, then choose `T32TEST` → Department stays ACCT, Priority/Complexity filled.
-   Start-date anchor: on an existing test project with Start Date 01/05/2026, Add Common Task `03AL` → Due Date 05/15/2026.
+   As-is check on an existing test project with Start Date 01/05/2026: Add Common Task `03AL` → Due Date 05/15/2025 (unchanged, even though it
+   is before the start date). Optional: set a template task to 04/15/2027 and confirm 04/15/2027 on a new project.
 7. **Copy Project** (PM301000 action) on the project from step 4, and **Create Template** from it: no error; `UsrPG*` values on the
    copy / new template are the same as they would have been before T-32 (the hook skips both; no template values are re-applied,
-   no due date is rolled).
+   no due date is changed).
 8. **Inactive employee does not block:** set the Preparer of Task A to an employee, then deactivate that employee (EP203000, Status =
    Inactive); create a project from `T32TEST` → project created and saved; Preparer is copied (the selector has no status filter).
    Optional (only on a throwaway test template): a value that cannot be validated → project still saves; field shows a warning;

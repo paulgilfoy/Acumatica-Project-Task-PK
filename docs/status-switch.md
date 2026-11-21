@@ -1,7 +1,7 @@
 # T-22: the four project status fields use the Department Statuses table
 
-Source change only (2026-11-20). **Nothing is published and nothing was written to the database.** It ships in publish
-bundle B, in the same zip as T-21 (`docs/status-screen.md`). Design: `docs/status-design.md` (approved, D1-D8).
+Built 2026-11-20 (source only then). **Status 2026-11-21:** published on PK9 in the merged package (same zip as T-21,
+`docs/status-screen.md`; PLAN §5 merged the old bundles); the checklist below is still unanswered; live is untouched. Design: `docs/status-design.md` (approved, D1-D8).
 Task status (`PMTask.UsrPGTaskStatus`, 1-9) is **out of scope** (D5). It keeps its `PXIntList`.
 
 ## What changed
@@ -92,11 +92,12 @@ GI conditions and business events compare the ints, which did not change. PK9 ha
 After the publish, check that both show the same **text** as before (not numbers), on screen and in OData (Power BI refresh). This is
 the design's "Not verified" item. The label code path is the same as for a static `PXIntList`, but it cannot be run before the publish.
 
-## Publish (user; bundle B, same zip as T-21)
+## Publish (user; merged package, same zip as T-21)
 1. Prerequisites as in `docs/status-screen.md` "Publish" (the zip also carries T-10 and T-11: `Contact` unticked, GI641645's
    `usrPGTechStatus = 4` condition removed first). Back up the PK9 database.
-2. Checks (lead): `tools\Test-Compile.ps1 -IncludeRuntimeCode -ExcludeRuntimeFile PX_Objects_CR_Contact_extensions`, `tools\Test-ModernUI.ps1`,
-   `tools\Build-Package.ps1`, `tools\Verify-Package.ps1 -ExtraProject Contact`, `tools\Test-StatusSeed.ps1`.
+2. Checks (lead): `tools\Test-Compile.ps1 -IncludeRuntimeCode`, `tools\Test-ModernUI.ps1`,
+   `tools\Build-Package.ps1`, `tools\Verify-Package.ps1`, `tools\Test-StatusSeed.ps1`. (`-ExcludeRuntimeFile PX_Objects_CR_Contact_extensions`
+   and `-ExtraProject Contact` are no longer needed, PLAN §9.)
 3. Import `build\ProjectTask.zip` into `ProjectTask` and publish once. **The `Sql#PKProjectStatus` item creates and seeds the table during
    the publish**, before the site restarts on the new code. So when users open PM301000 the lists are there. T-21 and T-22 must
    be in the **same** publish (they are, since it is one zip). Never ship T-22 without T-21's Sql item.
