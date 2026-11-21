@@ -165,3 +165,41 @@ The same retest showed first-chance `InvalidCastException "[A]Definition cannot 
 assemblies) in `PKProjectStatusListAttribute.GetStatuses` -> `PXDatabase.GetSlot`: the slot key was constant, so the new build found the
 OLD build's cached `Definition` object. Acumatica recovered and the save succeeded. Fix (in `src/`, ships with the next republish): the
 slot key now includes `typeof(Definition).Assembly.FullName`, i.e. one slot per compiled assembly. Harmless until the next republish.
+
+## T-24 (2026-11-21): Previous / Next Department arrows
+User request: "add left and right arrows to scroll through the different departments". Source only (not published).
+
+**What:** two toolbar buttons on PKPM2001, `PreviousDepartment` and `NextDepartment` (graph `PKProjectStatusMaint`; captions and
+tooltips "Previous Department" / "Next Department" in `PKProjectStatusMessages`). They set the filter's Department to the previous/next
+department **that has at least one status** (saved rows read from the DB for the current company, plus a department that so far only has
+new, unsaved rows), ordered by DepartmentID (ordinal, case-insensitive: today 401K, ACCT, AUDIT, TAX), **wrapping around** at both ends.
+No department selected: Next goes to the first, Previous to the last. A selected department without statuses (e.g. ADMIN) moves to its
+neighbor by position (ADMIN → Next AUDIT, Previous ACCT). With only one department with statuses, the arrows do nothing.
+
+**Same as the drop-down:** the move is `Filter.Update(copy)` with the new DepartmentID, which raises the same field/row events as picking
+the department (incl. the selector check). Pending grid edits are committed to the cache first (button `CommitChanges`, the default) and
+**stay pending**, exactly as when the drop-down is used; the arrows never save and never ask. Validation, persist and the CSAttributeDetail
+sync are unchanged (the next Save syncs every department with changes plus the selected one, as before).
+
+**Look (verified against PK9\Bin, 26.200):** Acumatica's record navigation buttons are `PXPreviousButton` / `PXNextButton`
+(`ImageKey` `PagePrev` / `PageNext`, `DisplayOnMainToolbar`, `IsLockedOnToolbar`, `[PXUIField(MapEnableRights = Select)]`). The arrows use
+the same image keys and flags on a plain `PXButton`, because `PXPreviousButton` also carries the confirmation "Any unsaved changes will be
+discarded." (the drop-down asks nothing). The Modern UI main toolbar is built on the server (`QPToolBarDataProvider.CreateToolbarActionItem`
+→ `ToolbarActionItem`, image set defaults to `main`), and the client draws an item with an image as an icon with the tooltip. No `.ts` /
+`.html` change: declaring the actions as `PXActionState` would take them off the toolbar (T290). The action names deliberately avoid
+`Previous`/`Next` (those names are treated as system actions by the toolbar builder).
+
+**Not verifiable before a publish:** the exact rendering and position of the two icons on the PKPM2001 toolbar (expected: icon-only arrows
+after Save/Cancel, always visible), the hover text, and the runtime behavior with pending changes.
+
+**Manual test list (PK9, after the next republish):**
+- [ ] Toolbar shows a left and a right arrow icon (same icons as the record navigation arrows on e.g. Projects PM301000); hover shows
+      "Previous Department" / "Next Department".
+- [ ] Open PKPM2001 with no department: **Next** → 401K; reopen, **Previous** → TAX.
+- [ ] From 401K press **Next** repeatedly: ACCT → AUDIT → TAX → 401K (wraps). **Previous** from 401K → TAX, then AUDIT → ACCT → 401K.
+- [ ] The grid shows the selected department's statuses each time (same rows as when picking it from the drop-down).
+- [ ] Pick ADMIN (no statuses) in the drop-down: **Next** → AUDIT, **Previous** → ACCT. TECH: **Next** → 401K.
+- [ ] Unsaved change: edit a description in ACCT (do not save), press **Next**: no question, no save; go back to ACCT with **Previous**:
+      the edit is still there (pending). Compare with doing the same via the drop-down: identical. Then Cancel (or Save) as usual.
+- [ ] Save after moving with an arrow: Save works as before (the edited department is saved and synced).
+- [ ] A user with view-only rights on PKPM2001 can still use the arrows.

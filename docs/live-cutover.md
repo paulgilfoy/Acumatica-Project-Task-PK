@@ -36,32 +36,36 @@ template screens. Note: PK9 now has **55** statuses (your ACCT 11 test row); **l
 ---------------------------------------------------------------------------------------------------------------------
 ## 1. Gate: PK9 must be fully done first
 All of these must be ticked by the user (with the lead's confirmation). Do not go live on a partial pass.
-- [x] The lead rebuilt `build\ProjectTask.zip` **from `main`** (T-21b save fix, T-21c cache fix, T-32b as-is due dates) and
-      `tools\Verify-Package.ps1` against PK9 says `PACKAGE MATCHES LIVE` (lead, 2026-11-21 ~21:00, zip from `main` @ `15ee9d4`).
-- [x] That exact zip is the one currently published on PK9 (republished 11:43; verified by the same `Verify-Package` run).
-- [ ] **YOU:** `docs/status-screen.md` "Retest on PK9": rename (e.g. TAX 13 "Invoice" → "Invoice Sent" → back), toggle Active, add with a
+- [ ] **NEW (2026-11-21 21:45): the zip now also contains T-24 (PKPM2001 Previous/Next Department arrows), which PK9 has NOT run yet.**
+      Republish `build\ProjectTask.zip` on PK9 (SHA-256 `A9D3020D…C836`, 88,576 bytes, 21:42:31), then run the T-24 list in
+      `docs/status-screen.md`. The lead then re-runs `Verify-Package` (must say `PACKAGE MATCHES LIVE`) and confirms the hash in section 3.
+      Live gets **only** a zip that PK9 has run and passed. (Previous verified zip, without T-24: `AF9171C9…06A1` @ `15ee9d4`; it was overwritten by the rebuild.)
+- [x] Before T-24: the zip from `main` @ `15ee9d4` matched PK9 (`PACKAGE MATCHES LIVE`, lead, 2026-11-21 ~21:00; republished 11:43).
+- [x] Lead confirmed read-only (21:41): the first sync ran for all four departments (`CSAttributeDetail` SortOrder filled for 401K, TAX, ACCT, AUDIT); test renames reverted.
+      Your extra **ACCT 11 "Ready for Review"** exists only on PK9: if you want it on live, add it on live's PKPM2001 after the publish (live will start with the 54 seed rows).
+- [1] **YOU:** `docs/status-screen.md` "Retest on PK9": rename (e.g. TAX 13 "Invoice" → "Invoice Sent" → back), toggle Active, add with a
       duplicate description (must be refused) and without, deactivate. Sort order and add: **already passed** (ACCT).
-- [ ] **YOU:** save once on PKPM2001 for **401K, TAX and AUDIT** (ACCT done). The lead can then confirm the sync read-only.
-- [ ] **YOU:** GI000142 / the time clock show the new texts (ACCT 02 "Initial Review (Acctg)", and after the saves AUDIT 01 "Ready To Prep", 401K 05 "Initial RECS and Dis").
-- [ ] `docs/status-switch.md` checklist (PM301000 dropdowns, retired status, Copy Project with a retired status, GI000140 / GI641708 show text).
-- [ ] `docs/contact-merge.md` checklist (PK Marketing tab on CR302000, 8 check boxes, old values intact).
-- [ ] `docs/tech-removal.md` checklist (no Tech Status on PM301000, other departments fine, GI641645 / Power BI refresh works).
+- [1] **YOU:** save once on PKPM2001 for **401K, TAX and AUDIT** (ACCT done). The lead can then confirm the sync read-only.
+- [1] **YOU:** GI000142 / the time clock show the new texts (ACCT 02 "Initial Review (Acctg)", and after the saves AUDIT 01 "Ready To Prep", 401K 05 "Initial RECS and Dis").
+- [1 ] `docs/status-switch.md` checklist (PM301000 dropdowns, retired status, Copy Project with a retired status, GI000140 / GI641708 show text).
+- [1] `docs/contact-merge.md` checklist (PK Marketing tab on CR302000, 8 check boxes, old values intact).
+- [1] `docs/tech-removal.md` checklist (no Tech Status on PM301000, other departments fine, GI641645 / Power BI refresh works).
 - [ ] `docs/template-screens.md` section 5 checklist (PM208000 / PM208010 / PM208030 fields).
 - [ ] `docs/template-copy.md` section 7 manual test, using the as-is due-date rule (D9): a template date of 4/15/2027 gives 4/15/2027 on a new
       project and on Add Common Task, whatever today's date is.
-- [ ] No open bug reports on PK9 for any of the above.
+- [1] No open bug reports on PK9 for any of the above.
 
 ---------------------------------------------------------------------------------------------------------------------
 ## 2. Pre-flight on live (UI only)
 ### 2.1 Backup and safety copies
-- [ ] Ask Acumatica (hosting) for a **database backup/snapshot** taken right before the publish. Write down the date/time and the reference.
-- [ ] Note the live Acumatica version/build (Help > About). PK9 runs 26.200.0334. If live differs, tell the lead before continuing.
-- [ ] Customization Projects (SM204505): write down which projects are **ticked (published)** today, for example `Contact`, `PKTimeClock`,
+- [1] Ask Acumatica (hosting) for a **database backup/snapshot** taken right before the publish. Write down the date/time and the reference.
+- [1] Note the live Acumatica version/build (Help > About). PK9 runs 26.200.0334. If live differs, tell the lead before continuing.
+- [1] Customization Projects (SM204505): write down which projects are **ticked (published)** today, for example `Contact`, `PKTimeClock`,
       `ProjectTask`, `ProjectTime`, `Velixo...`. This is what the PK9 list looked like on 2026-11-20; **live may differ**. You will need this list in section 3.
-- [ ] **Export the live `ProjectTask` project** (open it, Export/"Download package"). Save the zip as `live-ProjectTask-BEFORE-<date>.zip`.
-- [ ] **Export the live `Contact` project** the same way: `live-Contact-BEFORE-<date>.zip`.
-- [ ] Export any other published project you are not sure about (at least `PKTimeClock`). Not needed for rollback of this change, but cheap.
-- [ ] Keep all zips outside the Acumatica server (e.g. your own drive) and give the two `BEFORE` zips to the lead for a diff
+- [1] **Export the live `ProjectTask` project** (open it, Export/"Download package"). Save the zip as `live-ProjectTask-BEFORE-<date>.zip`.
+- [1] **Export the live `Contact` project** the same way: `live-Contact-BEFORE-<date>.zip`.
+- 1 ] Export any other published project you are not sure about (at least `PKTimeClock`). Not needed for rollback of this change, but cheap.
+- [1] Keep all zips outside the Acumatica server (e.g. your own drive) and give the two `BEFORE` zips to the lead for a diff
       (live `ProjectTask` is expected to match PK9's pre-publish 34 items; **importing the new zip replaces every item of `ProjectTask`, so any extra item that exists only on live would be deleted**). Wait for the lead's "no surprises" before publishing.
 
 ### 2.2 Remove Tech Status from live Generic Inquiries (blocking)
@@ -94,8 +98,9 @@ The UI has no "search by field" for GIs, so use one of these ways:
 ## 3. Publish steps
 **Never publish `Contact` together with the new `ProjectTask`** (both define `ContactExt`: CS0101 compile error).
 - [ ] SM204505 Customization Projects: open **`ProjectTask`** > **Import** the zip built by the lead (the lead gives you the file and commit id; do not use an older zip). Choose replace.
-      The verified zip (= what PK9 runs) is `build\ProjectTask.zip`, 87,291 bytes, written 2026-11-21 03:33:53, SHA-256
-      `AF9171C9908833E8764A43EA60518FF3C67D1376466F61CBBCA9203DA90A06A1` (PowerShell: `Get-FileHash <zip>`). If the lead rebuilds it later, use the new hash the lead gives you.
+      The zip to use is `build\ProjectTask.zip`, 88,576 bytes, written 2026-11-21 21:42:31, SHA-256
+      `A9D3020D28D1487D846C7655E9CFB8BACAA453BB676CF23F3FC3CD0FBA60C836` (PowerShell: `Get-FileHash <zip>`) — **only after PK9 ran it and the
+      lead confirmed `PACKAGE MATCHES LIVE` against PK9** (gate, section 1). If the lead rebuilds it later, use the new hash the lead gives you.
       Alternatively export `ProjectTask` from PK9 and import that: same content.
 - [ ] Back in the project list, **tick `ProjectTask`**, **UNTICK `Contact`**, and **keep every other project ticked** that you noted in 2.1 (including **`PKTimeClock`**, `ProjectTime`, Velixo/others). Do not tick anything that was not ticked before.
 - [ ] **Publish** the selected projects once (one operation). Wait for the site restart and the Modern UI build to finish. If it fails with a compile error mentioning `ContactExt` / CS0101, `Contact` is still ticked: untick it and publish again.

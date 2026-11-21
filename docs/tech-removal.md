@@ -74,12 +74,13 @@ The DB column and its value are never touched, so rollback is code only:
 3. Re-adding Tech Status to GIs is a manual GI edit (the removed GI columns are not restored by the package).
 
 ## Manual test checklist (user, after publish on PK9)
-- [ ] Before publishing: the first SQL above returns no rows on PK9; live GIs cleaned in the UI.
-- [ ] Publish completes without errors (bundle A).
-- [ ] PM301000, project `2022ACUMATICA / LGORGANICS.001` (department TECH, had Tech status 4): no "Tech Status" field anywhere (Summary tab, *PK Department Status* group). The group shows no status field, like an ADMIN project. Save works.
-- [ ] PM301000, project `2022ACUMATICA / MCMAHONC.001` (TECH, no value): same; saves.
-- [ ] Other departments still show only their own fields: a **TAX** project shows Tax Status + Released in ELF (and its Tasks grid still shows Extended Due Date / Extended); a **401K** project shows 401k Status + Release of Final Deliverables; an **ACCT** project shows Acct Status; an **AUDIT** project shows Audit Status. Switch a test project's department between two values and check the fields swap (do not save if it is a real project).
-- [ ] Tasks tab of any project: Preparer, Reviewer, **Tech Reviewer**, Due Date, Task Status still show and save; PM302000 Project Tasks shows Tech Reviewer.
-- [ ] Time clock / Preparer Dashboard (GI000142) still open and list tasks with Tech Reviewer (TimeClock reads `UsrPGTechReviewer`).
-- [ ] GI641645 / Power BI Project Revenue refresh works (no field error).
-- [ ] Post-publish SQL above: only `Table Contract` mentions TechStatus; no automation state rows; data row still 4.
+***ALL PASS***
+- [1] Before publishing: the first SQL above returns no rows on PK9; live GIs cleaned in the UI.
+- [ 1] Publish completes without errors (bundle A).
+- [1 ] PM301000, project `2022ACUMATICA / LGORGANICS.001` (department TECH, had Tech status 4): no "Tech Status" field anywhere (Summary tab, *PK Department Status* group). The group shows no status field, like an ADMIN project. Save works.
+- [ 1] PM301000, project `2022ACUMATICA / MCMAHONC.001` (TECH, no value): same; saves.
+- [1 ] Other departments still show only their own fields: a **TAX** project shows Tax Status + Released in ELF (and its Tasks grid still shows Extended Due Date / Extended); a **401K** project shows 401k Status + Release of Final Deliverables; an **ACCT** project shows Acct Status; an **AUDIT** project shows Audit Status. Switch a test project's department between two values and check the fields swap (do not save if it is a real project).
+- [1 ] Tasks tab of any project: Preparer, Reviewer, **Tech Reviewer**, Due Date, Task Status still show and save; PM302000 Project Tasks shows Tech Reviewer.
+- [1 ] Time clock / Preparer Dashboard (GI000142) still open and list tasks with Tech Reviewer (TimeClock reads `UsrPGTechReviewer`).
+- [1 ] GI641645 / Power BI Project Revenue refresh works (no field error).
+- [1 ] Post-publish SQL above: only `Table Contract` mentions TechStatus; no automation state rows; data row still 4.

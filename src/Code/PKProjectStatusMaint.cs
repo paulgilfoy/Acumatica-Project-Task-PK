@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using PX.Data;
@@ -16,6 +17,7 @@ namespace ProjectTask
     /// one way into CSAttributeDetail (STATUS401K / STATUSTAX / STATUSACCT / STATUSAUDI; ValueID = 2-digit ID,
     /// Disabled = !Active) through CSAttributeMaint, so GI000142 & co. and PKTimeClock keep working (design option C).
     /// The sync never deletes CSAttributeDetail rows.
+    /// T-24: toolbar arrows PreviousDepartment / NextDepartment step through the departments that have statuses (wrapping).
     /// </summary>
     public class PKProjectStatusMaint : PXGraph<PKProjectStatusMaint>
     {
@@ -31,6 +33,29 @@ namespace ProjectTask
 
         public PXSave<PKProjectStatusFilter> Save;
         public PXCancel<PKProjectStatusFilter> Cancel;
+
+        // T-24: previous/next department arrows. Same toolbar look as Acumatica's record navigation (PXPreviousButton /
+        // PXNextButton: ImageKey PagePrev/PageNext, on the main toolbar, locked there, MapEnableRights = Select), but a plain
+        // PXButton: PXPreviousButton also carries the confirmation "Any unsaved changes will be discarded.", and picking a
+        // department from the drop-down asks nothing. Do not declare these as PXActionState in the .ts (that takes them off
+        // the toolbar); the Modern UI main toolbar is built from the graph's actions.
+        public PXAction<PKProjectStatusFilter> PreviousDepartment;
+        [PXUIField(DisplayName = PKProjectStatusMessages.PreviousDepartment, MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton(ImageKey = "PagePrev", Tooltip = PKProjectStatusMessages.PreviousDepartment, DisplayOnMainToolbar = true, IsLockedOnToolbar = true)]
+        protected virtual IEnumerable previousDepartment(PXAdapter adapter)
+        {
+            MoveToDepartment(forward: false);
+            return adapter.Get();
+        }
+
+        public PXAction<PKProjectStatusFilter> NextDepartment;
+        [PXUIField(DisplayName = PKProjectStatusMessages.NextDepartment, MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton(ImageKey = "PageNext", Tooltip = PKProjectStatusMessages.NextDepartment, DisplayOnMainToolbar = true, IsLockedOnToolbar = true)]
+        protected virtual IEnumerable nextDepartment(PXAdapter adapter)
+        {
+            MoveToDepartment(forward: true);
+            return adapter.Get();
+        }
 
         public PXFilter<PKProjectStatusFilter> Filter;
 
@@ -234,6 +259,59 @@ namespace ProjectTask
 
             if (attrGraph.IsDirty)
                 attrGraph.Persist();
+        }
+        #endregion
+
+        #region Department navigation (T-24)
+        /// <summary>
+        /// Sets the filter's department to the previous/next department that has statuses, exactly as if it had been picked
+        /// in the drop-down (Filter.Update raises the same field and row events). Pending grid changes stay pending, as they do
+        /// when the drop-down is used; nothing is saved and nothing is asked.
+        /// </summary>
+        protected virtual void MoveToDepartment(bool forward)
+        {
+            PKProjectStatusFilter filter = Filter.Current;
+            if (filter == null) return;
+            string target = NeighborDepartment(DepartmentsWithStatuses(), filter.DepartmentID, forward);
+            if (target == null || string.Equals(target, filter.DepartmentID?.Trim(), StringComparison.OrdinalIgnoreCase)) return;
+            var copy = (PKProjectStatusFilter)Filter.Cache.CreateCopy(filter);
+            copy.DepartmentID = target;
+            Filter.Update(copy);
+        }
+
+        /// <summary>
+        /// Departments with at least one status: saved rows (read from the database, current company) plus departments that
+        /// only have new, unsaved rows in this session. Sorted by DepartmentID (ordinal, case-insensitive).
+        /// </summary>
+        protected virtual List<string> DepartmentsWithStatuses()
+        {
+            var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (string dept in PKProjectStatusListAttribute.ReadFromDatabase().Keys) AddDepartment(set, dept);
+            foreach (PKProjectStatus row in Statuses.Cache.Inserted) AddDepartment(set, row.DepartmentID);
+            var list = new List<string>(set);
+            list.Sort(StringComparer.OrdinalIgnoreCase);
+            return list;
+        }
+
+        /// <summary>
+        /// The department after (forward) or before <paramref name="current"/> in <paramref name="sorted"/>, wrapping around at
+        /// the ends. No current department: the first (forward) or the last. A current department that is not in the list
+        /// (e.g. ADMIN, no statuses) moves to its neighbor by position. Null if the list is empty.
+        /// </summary>
+        public static string NeighborDepartment(IList<string> sorted, string current, bool forward)
+        {
+            if (sorted == null || sorted.Count == 0) return null;
+            string cur = current?.Trim();
+            if (string.IsNullOrEmpty(cur)) return forward ? sorted[0] : sorted[sorted.Count - 1];
+            if (forward)
+            {
+                foreach (string dept in sorted)
+                    if (StringComparer.OrdinalIgnoreCase.Compare(dept, cur) > 0) return dept;
+                return sorted[0];
+            }
+            for (int i = sorted.Count - 1; i >= 0; i--)
+                if (StringComparer.OrdinalIgnoreCase.Compare(sorted[i], cur) < 0) return sorted[i];
+            return sorted[sorted.Count - 1];
         }
         #endregion
 

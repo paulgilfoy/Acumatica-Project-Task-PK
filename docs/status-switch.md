@@ -129,24 +129,24 @@ There is no fallback to the old hard-coded texts: they are gone from the code.
   The table and the `CSAttributeDetail` rows stay (see `docs/status-screen.md` "Rollback").
 
 ## Manual test checklist (user, on PK9 after the bundle B publish)
-- [ ] Publish succeeds; `PKProjectStatus` has 401K 20, TAX 15, ACCT 8, AUDIT 11 rows (step 4).
-- [ ] PM301000, one project per department shows the **same status text as before** in *PK Department Status*. Use the counts from
+- [1] Publish succeeds; `PKProjectStatus` has 401K 20, TAX 15, ACCT 8, AUDIT 11 rows (step 4).
+- [1] PM301000, one project per department shows the **same status text as before** in *PK Department Status*. Use the counts from
       `docs/status-lists.md`, at least: an **ACCT** project with status 2 → "Initial Review (Acctg)", a **401K** project with 5 → "Initial RECS and Dis"
       and one with 17 (double space), a **TAX** project with 14 → "Complete", an **AUDIT** project (any value).
-- [ ] Open each drop-down: the same entries in the same order as before (401K 20, TAX 15, ACCT 8, AUDIT 11).
-- [ ] Change a status on a test project and Save; reopen it: the new value shows. Change it back.
-- [ ] Retire a status on PKPM2001 (clear Active, Save), e.g. TAX 13 "Invoice" (2 projects on 2026-11-20):
+- [1] Open each drop-down: the same entries in the same order as before (401K 20, TAX 15, ACCT 8, AUDIT 11).
+- [1] Change a status on a test project and Save; reopen it: the new value shows. Change it back.
+- [1] Retire a status on PKPM2001 (clear Active, Save), e.g. TAX 13 "Invoice" (2 projects on 2026-11-20):
       a project holding 13 still shows "Invoice" and saves without error (also after editing another field); another TAX project's drop-down does
       not offer "Invoice"; trying to set it by import or API gives the "inactive" error. **Re-activate it afterwards.**
-- [ ] With TAX 13 still retired: **Copy Project** on a project holding 13 → the copy is created, holds "Invoice", and its drop-down offers it.
+- [1] With TAX 13 still retired: **Copy Project** on a project holding 13 → the copy is created, holds "Invoice", and its drop-down offers it.
       Delete the test copy. Copy Project on any other project still works.
-- [ ] Rename a status on PKPM2001 (e.g. TAX 13 → "Invoice Sent"), Save: PM301000 shows the new text at once (new screen load), and GI000142 shows it through the sync. Rename it back.
-- [ ] Add a status (e.g. ACCT 9 "Test"), Save: it appears in the ACCT drop-down. Retire it afterwards (it cannot be deleted; D8).
-- [ ] **GI000140** "PK - Project Status" and **GI641708** "Audit - Project Information": the 4 status columns show **text**, the same as before
+- [1] Rename a status on PKPM2001 (e.g. TAX 13 → "Invoice Sent"), Save: PM301000 shows the new text at once (new screen load), and GI000142 shows it through the sync. Rename it back.
+- [1] Add a status (e.g. ACCT 9 "Test"), Save: it appears in the ACCT drop-down. Retire it afterwards (it cannot be deleted; D8).
+- [1] **GI000140** "PK - Project Status" and **GI641708** "Audit - Project Information": the 4 status columns show **text**, the same as before
       the publish (GI000140 "Raw401kStatus" stays a number); refresh the Power BI / OData consumers of both.
-- [ ] GI000142 / TimeClock Preparer Dashboard: department status text shows; after the first save per department, ACCT 2 reads "Initial Review (Acctg)".
-- [ ] PKPM3001 / PKPM3002: the 401k Status column/field shows text.
-- [ ] Automation still hides and shows the 4 fields by department (switch a test project's department without saving).
+- [1] GI000142 / TimeClock Preparer Dashboard: department status text shows; after the first save per department, ACCT 2 reads "Initial Review (Acctg)".
+- [1] PKPM3001 / PKPM3002: the 401k Status column/field shows text.
+- [1] Automation still hides and shows the 4 fields by department (switch a test project's department without saving).
 
 ## Not verifiable before a publish
 - The runtime rendering of the dynamic list in Modern UI (per-row list without retired values; how a value with no label shows).

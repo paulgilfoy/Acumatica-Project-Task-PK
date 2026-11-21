@@ -128,5 +128,7 @@ namespace ProjectTask
         public const string InactiveStatus = "The status '{0}' of department {1} is inactive and cannot be selected.";
         public const string AttributeMissing = "Department Statuses: attribute {0} was not found, so the statuses of department {1} were not copied to it.";
         public const string StatusListReadFailed = "Department Statuses: the PKProjectStatus table could not be read: {0}";
+        public const string PreviousDepartment = "Previous Department";   // T-24 toolbar arrow (caption + tooltip)
+        public const string NextDepartment = "Next Department";           // T-24 toolbar arrow (caption + tooltip)
     }
 }
