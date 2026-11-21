@@ -1,110 +1,236 @@
 # PK Consolidation & Expansion — Master Plan (lead agent + worker swarm)
 
-Created 2026-11-20. **This file is the single source of truth for the effort.** The lead agent (PM/orchestrator) keeps the
-Status column current. Workers read this file, `CLAUDE.md`, `scratchpad.md` and `navigation.md` before starting.
+Created 2026-11-20. **Fully rewritten 2026-11-21 as a session handoff** (the lead session was reset; this file is all a new
+lead needs). **This file is the single source of truth for the effort.** The lead agent (PM/orchestrator) keeps it current.
+Workers read this file, `CLAUDE.md`, `scratchpad.md` and `navigation.md` before starting.
 
-## NEEDS THE USER (lead keeps this current; newest state 2026-11-20)
-1. **Remove the filter `PMProject.usrPGTechStatus = 4` from GI641645 "PowerBI - Project Revenue"** (Conditions line 8, inside an inactive bracket group; PK9 now, and live in the UI). This is the last blocker for Bundle A.
-2. **PUBLISH TO PK9 when #1 is done. One zip now carries everything verified so far: Bundle A (Contact merge T-10, Tech removal T-11) + Bundle B (status screen T-21, field switch T-22) + template screens (T-31).** **It now also includes the template copy logic (T-32), so the single zip is 57 items.** The lead rebuilds `build\ProjectTask.zip` from `main`; steps: back up, import the zip into `ProjectTask`, in SM204505 tick `ProjectTask` and **untick `Contact`**, publish once. Then: (a) set SM201020 rights for PKPM2001 (Delete for Administrator, PK - Admin, PK - Partner; `*` revoked); (b) open PKPM2001 and **Save once per department** (401K, TAX, ACCT, AUDIT) so GIs/time clock text match; (c) run the checklists: `docs/contact-merge.md`, `docs/tech-removal.md`, `docs/status-screen.md`, `docs/status-switch.md`, `docs/template-screens.md`. HTML of the new/changed screens is only validated by the publish build: if it fails, read `App_Data\logs\npm-*` and tell the lead. Tell the lead the result; the lead then runs T-90 (re-sync `src/`). **Do the same on live only after PK9 passes.**
-3. Template due dates (#4): option C is implemented as the agent's default and ships in the zip. **Known limitation from data: 589 of 8,338 real task due dates fall BEFORE their project's start date (projects opened late); under option C those roll to the NEXT year and would need a manual fix.** A grace window is possible, or choose as-is. Tell the lead which rule you want; switching is a one-line change.
-3b. After PK9 passes: T-23 (optional TimeClock cleanup), T-40 common-task design (needs a design session with the user), T-90 re-sync, T-91 navigation update, live cutover.
-4. **Decision needed (T-30, `docs/template-flow.md` §6): template task due dates.** Data: due dates are fixed calendar dates per task code (e.g. `011065` always 3/15, `011040` 4/15, `02TXFRA` 5/15), not offsets. A) copy as-is; B) N days after project start (new field); **C) recommended: keep the template date's month/day, use its first occurrence on or after the project start (no new field)**; D) offset from Year End (2 new fields; Year End is set on only 1,252 projects). Also: which project/task fields to carry (Department? an initial status?), and whether Copy Project / Create Template should also carry `UsrPG*` (prototype: no).
-5. `CLAUDE.md` / `GUIDE.md` in this repo are uncommitted and the user's to decide on.
+---------------------------------------------------------------------------------------------------------------------
 
-## Repos
-- `PriceKubecka-Acumatica-Contact` — merged into this repo (T-10), then archived by the user.
-- `Acumatica-PK-TimeClock` — built and passing; **paused ~1 month** (until at least 2026-12-20) pending manager/partner requirements. Gap review only (T-02).
-- `Acumatica-Project-Task-PK` (this repo, customization `ProjectTask`) — home for all new work.
+## 0. READ THIS FIRST (new lead session)
 
-## Locked decisions
+**Who you are:** the lead/PM agent. You dispatch worker subagents (Agent tool), re-verify their work yourself, commit,
+and keep this file current. **You never publish, never write to the PK9 database, never touch live.** The user publishes.
+
+**First 10 minutes:**
+1. Read this file, then `CLAUDE.md` and `scratchpad.md` in this repo, and `C:\Program Files\Acumatica ERP\PK9\navigation.md`.
+2. `git log --oneline -15` and `git status --short` here (git path in §9). Expect `main` at or after `de8bb8c`; only
+   `CLAUDE.md` (modified) and `GUIDE.md` (untracked) uncommitted: those are the user's.
+3. Re-check live state with the read-only queries in §9 (is the GI641645 filter gone? did the user report test results?).
+4. Ask the user for the results of the PK9 checklists (§2) before changing any Status to DONE.
+
+**Where things stand in one paragraph:** All planned build work through T-32 is finished, verified and committed. The user
+**published the 57-item `ProjectTask` package to PK9 on 2026-11-21 at ~02:51** (I verified read-only: npm build exit code 0;
+`PKProjectStatus` table created and seeded with 54 rows; menu entry `PKPM2001` exists; new runtime code files present;
+the old `Contact` project's runtime file is gone and `PKContactExt.cs` is live; Tech Status screen rules are gone;
+667 contacts still carry marketing flags). **Not yet confirmed by the user:** the manual checklists, PKPM2001 access rights,
+the "save once per department" step, and the GI641645 filter (still present on PK9 at 2026-11-21 — see §2). **Live has
+not been touched.** What is left: the user's test results → T-90 re-sync → live cutover → T-91 → the common-task design
+session (T-40) and its build, plus optional TimeClock cleanup (T-23).
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 1. NEEDS THE USER (lead keeps this current; state 2026-11-21)
+1. **Report the PK9 test results.** Run the checklists and tell the lead pass/fail per item:
+   `docs/contact-merge.md`, `docs/tech-removal.md`, `docs/status-screen.md`, `docs/status-switch.md`,
+   `docs/template-screens.md`, `docs/template-copy.md` §7.
+2. **PKPM2001 access rights (SM201020):** `*` revoked, Delete for Administrator, PK - Admin, PK - Partner (+ any managers).
+   Not part of the package.
+3. **Open PKPM2001 and Save once per department** (401K, TAX, ACCT, AUDIT). This syncs the new table into the
+   `CSAttributeDetail` rows so GI000142 and the time clock dashboard show the approved text (3 rows change: ACCT 2, AUDIT 1,
+   401K 5). If Modern UI will not enable Save without a change, see the workaround in `docs/status-screen.md`.
+4. **GI641645 "PowerBI - Project Revenue" still has the filter `PMProject.usrPGTechStatus = 4`** (Conditions line 8, inside an
+   inactive bracket group; deleting the one line keeps the brackets balanced). Tech Status is now gone from the DAC on PK9,
+   so this GI may error or return blanks (Power BI refresh!). Remove it on PK9 **and** on live (UI only on live).
+5. **Due-date rule for template tasks** (agent default = option C, shipped, not yet confirmed): keep the template date's
+   month/day and use its first occurrence on or after the anchor date. **Data caveat: 589 of 8,338 real task due dates fall
+   before their project's start date (late-opened projects); under C those roll to NEXT year.** Choose: keep C / add a grace
+   window / copy as-is (one-line switch, `PKTemplateDueDate.ActiveRule`). Also confirm: no initial statuses on new projects
+   (current behavior), Copy Project / Create Template do NOT carry `UsrPG*` (current behavior).
+6. **Do NOT go to live until PK9 passes.** The live cutover is the same zip with the same steps (§5, T-92).
+7. **T-40 common-task design session** (a conversation, §7 Phase 4) whenever the user is ready.
+8. Housekeeping the user owns: `CLAUDE.md` (modified, rule 3 still names the TimeClock `Test-Compile`; the repo-local
+   `tools\Test-Compile.ps1` is the right one) and `GUIDE.md` (untracked) are uncommitted; archive the old Contact repo
+   after PK9 passes; optionally confirm whether PK9 shares live's Azure blob file storage (T-00 saw writing enabled with the
+   same settings in every company; I did not touch it).
+9. Employee profile moving from Tech to Admin (user's own data change): no plan impact; may matter later for the
+   time clock "My department" view.
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 2. Current state (2026-11-21), verified by the lead read-only
+
+| Item | State |
+|---|---|
+| Package | `build\ProjectTask.zip`, 57 items (Code 14, Sql 3, Table 3, SiteMapNode 3, Automation 2, Page 5, File 6, PerTenantFile 21), built from `main` @ `de8bb8c` |
+| PK9 publish | Done by the user ~2026-11-21 02:51. npm compile exit code `0`; build covered CR302000, PKPM2001, PM208000/PM208010/PM208030, PM301000, PM302000, PKPM3001/3002, PKEP3001/3002, EP307000, PM101000. The only warnings are base-screen "element has no id" lines (not ours) |
+| `PKProjectStatus` table | Exists; CompanyID 2: 401K 20, TAX 15, ACCT 8, AUDIT 11 (= 54, the approved seed) |
+| Site map | `PKPM2001 Department Statuses` present |
+| Contact merge | Old runtime file `PX_Objects_CR_Contact_extensions.cs` gone (project unpublished); `PKContactExt.cs` live; 667 contacts with any marketing flag (data intact). The `Contact` project still exists in the DB (5 items): the user may delete it after PK9 passes (never publish both) |
+| Tech removal | `AUScreenFieldState` rows for `TechStatus` = 0 (Automation applied). GIResult refs = 0. **GIWhere refs = 1 (GI641645)** |
+| ProjectTask project in DB | 57 items; PKTimeClock 46 items (unchanged) |
+| Not verified by the lead | Anything needing a UI: the new screen's behavior, GI/OData labels, PM301000 dropdown rendering, template screens, template copy runtime, Copy Project with a retired status |
+| Live | Untouched. Hosted by Acumatica; no SQL access; GIs only editable in the UI |
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 3. Repos and git state
+- `Acumatica-Project-Task-PK` (this repo, customization `ProjectTask`, branch `main`, remote `origin`; local commits are not pushed by agents):
+  `4bbde0f` T-00 · `485bb5f` T-01 · `7979bb1` T-20 · `60d537c` T-10 · `9307996` T-11 · `5a3eed8` T-30 doc · `f035077`/`e448fd9` plan updates ·
+  `60dd8ac` T-21 · `1945dd9` T-31 · `dd9a58b` T-22 · `de8bb8c` T-32. Uncommitted: `CLAUDE.md` (M), `GUIDE.md` (??) — the user's.
+- Branch `agent/T-30` + worktree `..\Acumatica-Project-Task-PK-T30` (@ `00a1385`): the spike prototype, **superseded by T-32 in
+  main**. Safe to remove (`git worktree remove`, `git branch -D agent/T-30`) once the user is comfortable; nothing else uses it.
+- `Acumatica-PK-TimeClock` (branch `main` @ `e1025d9`; **paused until at least 2026-12-20**): T-02 added `docs/status-overview.md`,
+  a PAUSED banner and a re-entry checklist to its `scratchpad.md`. Its commit subject has a stray invisible BOM (cosmetic).
+  `CLAUDE.md` (M) and `GUIDE.md` (??) uncommitted there too (the user's).
+- `PriceKubecka-Acumatica-Contact`: merged into this repo; to be archived by the user. Not modified by agents.
+- `Acumatica-Employee-Project-Time`: legacy; used read-only for base source in `reference\base-code\`.
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 4. Locked decisions
 | # | Decision |
 |---|---|
-| P1 | **Done = "Checks + user gate".** Worker sets `READY-FOR-PK9` when COMPILE OK, TS CHECK OK, package builds, read-only SQL checks pass. Lead sets `DONE` only after the user publishes on PK9 and ticks the task's manual checklist. Work ships in publish bundles. |
-| P2 | **Tech cleanup = status + department only.** Remove `UsrPGTechStatus` and the TECH-department display. **Keep `UsrPGTechReviewer`** (the time clock uses it). Never drop DB columns. |
-| P3 | **Status maintenance = one generic screen** (Department key + status grid), one table, one selector attribute, replacing the inline `PXIntList`s (Tax 15, 401k 20, Acct 8, Audit 11). |
+| P1 | **Done = "Checks + user gate".** A worker's task is `READY-FOR-PK9` when COMPILE OK, TS CHECK OK, package builds, read-only SQL checks pass. The lead sets `DONE` only after the user publishes AND ticks the manual checklist. |
+| P2 | **Tech cleanup = status + department display only.** `UsrPGTechStatus` removed; **`UsrPGTechReviewer` stays** (time clock uses it); DB columns are never dropped (the `Tables/Contract.xml` declaration for the Tech Status column is deliberately kept). |
+| P3 | **Status maintenance = one generic screen** (PKPM2001, Department key + status grid) replacing the inline `PXIntList`s. |
 | P4 | Plan lives here as `PLAN.md`. |
-| P5 | **Model / effort per task** (column below), set by the user 2026-11-20: coding and design tasks run on Opus 5.5 at high effort; read-only investigation and doc tasks on cheaper models. The lead passes the column's values as `model` / `effort` when dispatching. |
-| Hard rules | Never publish. Never edit PK9 site files (except nav `.md`). Never write to the DB without approval in the current conversation. Edit source only under `src/` in the GitHub repos. One owner per area; claim in `scratchpad.md`. Modern UI only. |
+| P5 | Model/effort per task: coding/design on **Opus 5.5 at high effort**; read-only investigation/doc work on Sonnet; trivial doc edits on Haiku. Pass as `model` / `effort` on the Agent call (effort only because the user asked for it). |
+| D1–D8 (user approved 2026-11-20, all recommendations) | D1 text for ACCT 2 / AUDIT 1 / 401K 5 = the in-code (`PXIntList`) text. D2 ACCT 0 "Not Started" not seeded. D3 keep the 401K 17 double space. D4 GIs: keep `CSAttributeDetail` in sync one-way on every PKPM2001 save (hybrid), repoint GIs at the user's pace; also fix the GI000144 join (it looks up Acct text using the *task* status). D5 task status (`UsrPGTaskStatus`) stays as is. D6 menu = Projects → Preferences → "Department Statuses". D7 access rights set by the user on SM201020. D8 saved statuses are never deleted, only deactivated; IDs read-only after save. Plain meaning: a project stores the status **number**; GIs and business events test the number; to change what "01" means, rename it. A "delete only if unused" variant was offered and not chosen |
+| Hard rules | Never publish. Never edit PK9 site files (except nav `.md`). Never write to the PK9 DB without explicit user approval in the *current* conversation (the user chose UI deletion for GIs). Edit source only under `src/` in the GitHub repos. One owner per area; claims in `scratchpad.md`. Modern UI only. Never run `-AllowWrite`/`-Execute` on `Query-PK9.ps1`. |
 
-## Key findings (2026-11-20 exploration)
-- **Contact repo is not a buildable project:** only TS/HTML (`CR302000_PKMarketing.ts/.html`, stale `Contact_converted.*`, saved pages). No C#, no `project.xml`. The DAC extension exists only in live `App_RuntimeCode\PX_Objects_CR_Contact_extensions.cs`: `ContactExt : PXCacheExtension<Contact>`, **8 bool fields** (`UsrPGPortalAccess`, `UsrPG1040ES`, `UsrPG1040Check`, `UsrPGTaxPlan`, `UsrPGDoNotMarket`, `UsrPGAcuMarket`, `UsrPGRetire`, `UsrServiceProviderQ`). The repo's two HTML variants disagree (`#tabGeneral`/`ContactCurrent` vs `#tabDetails`/`ContactDetail`) and the `.ts` declares fields on `ContactDetail`. **Live PK9 copy under `FrontendSources\screen\src\customizationScreens\Company\screens\CR\CR302000` is the source of truth.**
-- **ProjectTask:** `src/` extracted from PK9 on 2026-11-13; no package-build script; no automated tests; `exports/` stale. Status lists are inline `PXIntList` in `PMTask.cs` / `Contract.cs`; GI000142 reads matching `CSAttributeDetail` rows (STATUSTAX/401K/ACCT/AUDI, `ValueID` "01" = the int). TimeClock keeps a copy of the task-status list (`PKTimeClockConstants.cs:124`).
-- **Template flow:** no template code here. Pattern to copy: `Acumatica-PK-TimeClock\src\Code\PKProjectEntryExt.cs` (`[PXOverride] DefaultFromTemplateProjectSettings`). Base source: `Acumatica-Employee-Project-Time\reference\base-code\PX.Objects.PM.ProjectEntry.cs` — `DefaultFromTemplate` (l.5566), `DefaultFromTemplateProjectSettings` (l.5923), `CopyTask` (l.5396), **`OnDefaultFromTemplateTasksInserted(project, template, taskMap)` (l.5264, a designed extension point — likely the answer to the 2021 blocker)**. No ProjectTask extension exists on PM208000, so `UsrPG*` fields are not visible on templates today.
-- **Tech:** `UsrPGTechStatus` (Contract.cs:88-94, Tables/Contract.xml:9, PM301000_PKProjectInfo.ts:39 / .html:18). `UsrPGTechReviewer` is used by TimeClock (`PKClockTask`, `PKPreparerTask`, PKEP3002) — stays.
+---------------------------------------------------------------------------------------------------------------------
 
-## T-01 findings that change the plan (2026-11-20, `docs/inventory.md`)
-- **T-11 is bigger than scoped** (see T-11 row): Automation + page customization + 7 GIs reference `UsrPGTechStatus`. Removing only the DAC field is not safe yet.
-- **Add Common Task does NOT call `OnDefaultFromTemplateTasksInserted`.** It runs `AddTasks` → `ProjectEntry.CopyTask(...)` (26R2: `CopyTaskBase<ProjectEntry>.CopyTask`), which copies standard task props, attributes, cost/revenue budget lines, notes, files, but **not `Usr*` fields**. Candidates to cover both flows: `CopyTask` (public virtual) or `CopyTaskBase.OnCopyPasteTaskInsertedEx` — overridability from `PXGraphExtension<ProjectEntry>` is unverified; **T-30 must settle it.**
-- **Common tasks = ordinary `PMTask` rows** flagged by `AutoIncludeInPrj`; global ones on PM208030 (`TemplateGlobalTaskMaint`, 1 test task `03AL` live), template tasks on PM208010/PM208000. Today all 51 templates' tasks have `AutoIncludeInPrj = 1`, so no template task is a "common" task yet. Budget lines on a common task are already copied by `AddTasks`; T-40 can choose between pre-built budget lines on the common task vs creating them in code. Existing templates use account groups 41 (Revenue) and 42 (Employee Time).
-- **Correction:** TimeClock's `PM208000_PKTimeClock` already adds `UsrPKLaborItemID` to PM208000; only ProjectTask has no extension there. Templates are `BaseType='R'` (51), all `UsrPG*` blank.
-- **Status lists:** 54 of 55 `CSAttributeDetail` rows match the `PXIntList`s. Differences: ACCT 02 text ("Initial Review (Acctg)" vs "Initial Review"), DB-only ACCT 00 "Not Started", case-only differences (AUDIT 01, 401K 05). No `STATUSTECH` attribute. `SortOrder` NULL everywhere. T-20 must decide which text wins.
-- **Orphan DB columns without a DAC field in `src/`:** `Contract.UsrPGReleasedFinalDeliverables`, `PMTask.UsrPGAccountingStatus`, `PMTask.UsrPGTaxStatus`.
-- Not verifiable by T-01: custom `.rpx` report contents; Power BI consumers outside the DB.
+## 5. Publish procedure (user-owned) and bundle history
+**PK9 (done 2026-11-21 02:51):** one zip carried everything verified at that time (former bundles A+B+C merged, because an import
+replaces all items of the project, so partial bundles would require rebuilding from older commits): T-00 tooling, T-10 Contact
+merge, T-11 Tech removal, T-21 status screen, T-22 field switch, T-31 template screens, T-32 copy logic.
 
-## Orchestration protocol
-1. Task statuses: `TODO` → `CLAIMED` → `READY-FOR-PK9` → `DONE` (or `BLOCKED`).
-2. Lead dispatches only tasks whose dependencies are met. Max ~3 workers at once; no two workers share a file or area. Worker branch: `agent/<task-id>`; lead merges to `main`.
-3. **Worker contract:** read CLAUDE.md / scratchpad / navigation → claim the area in `scratchpad.md` → implement under `src/` only → run checks → record learnings in the scratchpad → commit (message ends with the Co-Authored-By trailer) → release claim → report: files changed, check output, manual checklist for the user.
-4. **Lead re-runs the checks itself** before changing a status; never trusts a worker's "OK". Lead maintains the Publish bundles list below.
-5. **Checks (this repo's own tools; the TimeClock `Test-Compile.ps1` only compiles the TimeClock repo's code):** `tools\Test-Compile.ps1 -IncludeRuntimeCode` → `COMPILE OK`; `tools\Test-ModernUI.ps1` → `TS CHECK OK` (UI changes); `tools\Build-Package.ps1` then `tools\Verify-Package.ps1` (live match check; expect `PACKAGE MATCHES LIVE` only before any change, after a change expect only the intended differences); read-only SQL via `..\Acumatica-PK-TimeClock\tools\Query-PK9.ps1`. `tools\Get-LiveProject.ps1` refreshes `build\live\`.
-6. A worker never edits another repo; cross-repo needs become a new task or a note.
+**Standard steps (also for live):** back up → import `build\ProjectTask.zip` into `ProjectTask` (replaces its items) → in SM204505 tick
+`ProjectTask`, **untick `Contact`** (and keep everything else that was published ticked, e.g. PKTimeClock) → publish once → set rights
+for new screens on SM201020 → run the checklists → tell the lead. If the HTML build fails, read the newest
+`App_Data\logs\npm-*` (exit-code file `0` = OK) and send it to the lead.
 
-## Tasks
+**Live cutover (T-92, user, after PK9 passes):** same zip (rebuilt from `main` by the lead; verify with `Verify-Package`). Before it,
+remove the Tech GI references in the live UI (GI641645 filter etc., §1.4); remember live's tenant ID is unverified, so check
+PKPM2001 shows 54 rows right after publishing; Contact must be unticked. **The live project fingerprint may differ from PK9** (live
+cannot be queried): the lead cannot run `Verify-Package` against live; use a diff of exported project items if the user provides one.
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 6. Orchestration protocol (how the swarm works)
+1. Task statuses: `TODO` → `CLAIMED` → `READY-FOR-PK9` → `PUBLISHED-ON-PK9` → `DONE` (or `BLOCKED`). Docs/design tasks use `READY (docs: user to review)`.
+2. Lead dispatches only tasks whose dependencies are met. Max ~3 workers at once; **no two workers share a file or area** (tell each worker
+   which files the others own; `scratchpad.md` and `navigation.md` are shared: workers re-read right before a small append-only edit).
+3. **Worker contract (put in every prompt):** read PLAN/CLAUDE/scratchpad/navigation → claim the area in `scratchpad.md` → implement under `src/`
+   only → run the checks → record learnings + session-log row → **do NOT run git add/commit/checkout/reset** (the lead commits) → release the
+   claim → final report: files changed, exact check output, what is unverifiable before a publish, manual checklist. Hard rules as in §4.
+4. **Lead re-runs every check itself** before changing a status; never trust a worker's "OK" or its description of the user's wishes (a T-32 worker
+   wrote "as you chose" about option C, which the user had not chosen). Check at least: the Compile/TS/Build/Verify/seed/date tests, the key
+   claims (e.g. a method signature via `Inspect-Acumatica.ps1`), and read the generated HTML.
+5. **Commit as the lead, by path** while workers are running (`git add -- <paths>` then `git commit -F msg -- <paths>`), so unfinished
+   work of a running worker is not swept in. Commit message ends with `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>` and
+   `Claude-Session: <session url>`; write the message to a file with `[IO.File]::WriteAllText(..., UTF8Encoding($false))` (PS 5.1 `Set-Content -Encoding utf8` adds a BOM).
+6. Isolation: Agent `isolation: "worktree"` does NOT work in this session (the working directory, the PK9 site, is not a git repo).
+   Create a worktree yourself (`git worktree add <path> -b agent/<id>`) and point the worker at that path (done for T-30). Parallel compile
+   checks should use a private `$env:TEMP`.
+7. Cross-repo rule: a worker never edits another repo; needs become a note or a task. TimeClock is paused.
+8. Keep this file current: after every worker, update the task row (result + lead's verification), §1, §2 and the lead log (§12).
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 7. Tasks
 
 ### Phase 0 — Foundations
-| ID | Task | Area | Depends | Acceptance | Model / effort | Status |
-|---|---|---|---|---|---|---|
-| T-00 | **Package tooling.** `tools/Build-Package.ps1` (model on TimeClock's) → `build/ProjectTask.zip` from `src/`. Re-sync `src/` from live PK9 (read-only), confirm no drift. Untrack `.vs` / `.DS_Store`. Ask the user before committing the stray `CLAUDE.md` / `GUIDE.md` changes. | tools, docs | — | Zip items == `CustObject` fingerprint of live `ProjectTask`. **Result 2026-11-20:** tools built; `src/` was missing 6 live items (Automation#PM301000, Automation#PKPM3001, 4 Classic Page items), now imported from `build/live/src` into `src/Automation` and `src/PageCustomizations`; lead re-ran Test-Compile, Test-ModernUI, Build-Package, Verify-Package: COMPILE OK, TS CHECK OK, 34/34 items, `PACKAGE MATCHES LIVE`. | Opus 5.5 / high | READY-FOR-PK9 (tooling only; nothing to publish yet) |
-| T-01 | **Inventory (read-only).** (a) every use of `UsrPGTechStatus` / TECH dept in both repos, GIs, reports, site map + live data counts; (b) custom fields on project and task, and which belong on templates; (c) how **Common Tasks** are stored and how Add Common Task works in 26R2 (graph, DAC, screen — confirm with `Inspect-Acumatica.ps1` / base source, no guessing); (d) CSAttributeDetail rows for STATUSTAX/401K/ACCT/AUDI → `docs/status-lists.md`. | docs | — | `docs/inventory.md`; open questions for later tasks answered or listed. | Sonnet 5.5 / medium | READY (docs: user to review; 17 open questions Q1-Q17 in `docs/inventory.md`) |
-| T-02 | **Time clock gap review (read-only).** From the TimeClock scratchpad: built vs open (Phase 3, Phase 4, backlog, open items 1–8, unticked tests). One page: done & passing / waiting on user / waiting on managers & partners / optional. Add re-entry checklist to its scratchpad (PAUSED banner already added). No code. | TimeClock docs | — | `docs/status-overview.md` in the TimeClock repo + scratchpad checklist. | Sonnet 5.5 / medium | READY (docs: user to review) |
+| ID | Task | Result / acceptance | Model / effort | Status |
+|---|---|---|---|---|
+| T-00 | Package tooling: `tools/Build-Package.ps1`, `Verify-Package.ps1`, `Get-LiveProject.ps1`, repo-local `Test-Compile.ps1`; re-sync `src/` with live; untrack `.vs`/`.DS_Store` | `src/` was missing 6 live items (Automation x2, Classic pages x4): imported. Package matched live 34/34 (lead re-ran). Commit `4bbde0f` | Opus 5.5 / high | PUBLISHED-ON-PK9 (tooling; nothing to publish itself) |
+| T-01 | Inventory (read-only) | `docs/inventory.md` (17 open questions Q1–Q17), `docs/status-lists.md`. Commit `485bb5f` | Sonnet 5.5 | READY (docs: user to review) |
+| T-02 | Time clock gap review | `docs/status-overview.md` in the TimeClock repo + PAUSED banner + re-entry checklist. TimeClock commit `e1025d9` | Sonnet 5.5 | READY (docs: user to review) |
 
 ### Phase 1 — Quick wins
-| ID | Task | Area | Depends | Acceptance | Model / effort | Status |
-|---|---|---|---|---|---|---|
-| T-10 | **Merge Contact.** Extract the 8-field `ContactExt` from live runtime code into `src/Code/PKContactExt.cs` (unique name, not `PX_Objects_CR_Contact_extensions`); add `src/Tables/Contact.xml`; take CR302000 UI from the **live PK9 screens folder**, fix the view/tab mismatch, place under `src/FrontendSources/screens/CR/CR302000/`. **Cutover:** the `Contact` project is unpublished in the same publish; both must never be published together (same pattern as ProjectTime). | code, tables, CR302000 UI | T-00 | COMPILE OK, TS CHECK OK; fields == live DAC; no duplicate item names. Manual: Contact screen shows tab + 8 fields, saves, old data intact. User then archives the Contact repo. **Result 2026-11-20:** live `Contact` project (5 items: DAC item, Table, Classic page, 2 Modern UI files) fully in `src/` (`PKContactExt.cs`, `Tables/Contact.xml`, `PageCustomizations/CR302000.xml`, CR302000 `.ts/.html`, unchanged from live, no binding mismatch found); lead re-ran: COMPILE OK (with `-ExcludeRuntimeFile PX_Objects_CR_Contact_extensions` until cutover), TS CHECK OK, package 39 items, `Verify-Package -ExtraProject Contact` = `PACKAGE MATCHES LIVE`. Cutover steps + checklist: `docs/contact-merge.md`. | Opus 5.5 / high | READY-FOR-PK9 (bundle A) |
-| T-11 | **Remove Tech Status + TECH dept display.** Remove `UsrPGTechStatus` from `Contract.cs`, `Tables/Contract.xml`, `PM301000_PKProjectInfo.ts/.html`, and the TECH-department branch. Keep `UsrPGTechReviewer`. Update docs. **Per T-01, also needed first or in the same bundle:** (1) the live `Automation#PM301000` (has the "Department <> Tech" rule) and Classic page customization `pm301000.aspx` reference the field; **both are now in `src/Automation` and `src/PageCustomizations` (T-00)**, so T-11 must edit them; (2) **7 Generic Inquiries use `usrPGTechStatus`** (GI000140, GI641660, GI641645 [WHERE `= 4`], GI641709, plus 3 with no ScreenID incl. 'PK Open Project'), 4 are OData/Power BI exposed: the **user** must repoint/clean these before the DAC field is removed. Live data: 1 project has a value (4). | code, PM301000 UI, Automation, page customization | T-00, T-01 | Compile/TS OK; grep: no `TechStatus`. Manual: TECH-dept project on PM301000 has no Tech status. **Result 2026-11-20:** removed from `Contract.cs`, `Automation/PM301000.xml` (field row + the "Department <> Tech" condition, used only by that row), `PageCustomizations/PM301000.xml`, PM301000 `.html/.ts`; `Tables/Contract.xml` column declaration deliberately KEPT (removing it does not drop the column; keeps the project owning it on every environment; rollback is code-only). Lead re-ran: COMPILE OK, TS CHECK OK, 39 items; Verify differs from live in exactly the 5 intended items. Cutover/checklist: `docs/tech-removal.md`. **Publish blocked until GI641645's `usrPGTechStatus = 4` filter is removed (PK9 and live).** | Opus 5.5 / high | READY-FOR-PK9 (bundle A; blocked on GI641645 filter) |
+| ID | Task | Result / acceptance | Model / effort | Status |
+|---|---|---|---|---|
+| T-10 | Merge the Contact customization | Live `Contact` project (5 items: DAC item, Table, Classic page, 2 Modern UI files) now in `src/` (`PKContactExt.cs`, `Tables/Contact.xml`, `PageCustomizations/CR302000.xml`, CR302000 `.ts/.html` unchanged from live: the repo's "binding mismatch" only existed in a stale variant). Fields: **8** bool, not ~6. Cutover: `docs/contact-merge.md`. Commit `60d537c` | Opus 5.5 / high | PUBLISHED-ON-PK9 (awaiting user checklist; user archives the Contact repo after) |
+| T-11 | Remove Tech Status + TECH display | Removed from `Contract.cs`, `Automation/PM301000.xml`, `PageCustomizations/PM301000.xml`, PM301000 UI. Table column declaration kept (does not drop the column). Doc `docs/tech-removal.md`. Commit `9307996`. **Open: GI641645 filter (§1.4)**; live GIs | Opus 5.5 / high | PUBLISHED-ON-PK9 (blocked from DONE by the GI641645 filter) |
 
 ### Phase 2 — Status maintenance (P3)
-| ID | Task | Area | Depends | Acceptance | Model / effort | Status |
-|---|---|---|---|---|---|---|
-| T-20 | **Design.** Table `PKProjectStatus` (`DepartmentID`, `StatusID` int, `Description`, `SortOrder`, `Active`), preserving existing ints 1:1. Selector attribute filtered by the project's department. Decide: keep `CSAttributeDetail` in sync (GI000142 reads it) vs repoint the GI. Retired statuses go inactive, never deleted. → `docs/status-design.md`. | docs | T-01 | User signs off. **Result 2026-11-20:** design written; recommends a DB-backed `PKProjectStatusListAttribute : PXIntListAttribute` (not a `PXSelector`, so GIs keep showing text), one-way sync into `CSAttributeDetail` (hybrid GI option C), screen PKPM2001 under Projects → Preferences. **User approved D1–D8 as recommended on 2026-11-20** (D5: task status stays as is; D8: deactivate only). | Opus 5.5 / high | DONE (design approved) |
-| T-21 | **Maintenance screen** `PKPM2001` (Department key + status grid): graph, DAC, site map, ASPX shell (follow PKPM3002), Modern UI. Seed SQL with today's lists — **written, not run**. | new screen | T-20 | Compile/TS OK; seed diffed against the current `PXIntList` values, identical. **Result 2026-11-20:** PKPM2001 built (DAC, graph with sync to `CSAttributeDetail`, DB-backed `PKProjectStatusListAttribute`, Sql seed 54 rows = 401K 20 + TAX 15 + ACCT 8 + AUDIT 11 [ACCT 0 omitted], site map, ASPX shell, Modern UI, `tools/Test-StatusSeed.ps1`, `docs/status-screen.md`). Lead re-ran: COMPILE OK, TS CHECK OK, 49 items, Verify differs only by intended items, `SEED TEST PASS`. Runtime behavior (table creation at publish, validations, sync) unverifiable before a PK9 publish. The attribute is not applied to any field yet (T-22). | Opus 5.5 / high | READY-FOR-PK9 (bundle B, with T-22) |
-| T-22 | **Swap the four project fields** (`Usr401kStatus`, `UsrPGTaxStatus`, `UsrPGAcctStatus`, `UsrPGAuditStatus`) from `PXIntList` to the new selector, same columns/types. **Ask the user first** whether `UsrPGTaskStatus` (1–9, company-wide) is included. | `Contract.cs`, PM301000 UI | T-21 | Existing data shows the same text on PM301000; GI000142 unchanged. **Result 2026-11-20:** the four fields now use `[PKProjectStatusList("401K"/"TAX"/"ACCT"/"AUDIT")]` (columns/types untouched; `UsrPGTaskStatus` unchanged; PM301000 UI/Automation unchanged, no reason found). **Found + fixed a real bug:** Copy Project would have failed for a project holding a retired status (insert-time verify vs empty row); the attribute now skips verification for copies (`IsCopyPaste` / `IsCopyPasteContext`). `Test-StatusSeed.ps1` extended (field/department check; old-list source falls back to git history after publish). Lead re-ran: COMPILE OK, TS CHECK OK, 55 items, Verify differs only by intended items, `SEED TEST PASS`. Doc: `docs/status-switch.md`. Behavior change: importing a NEW project with a retired status is now rejected. TimeClock needs no change (optional T-23). | Opus 5.5 / high | READY-FOR-PK9 (bundle B) |
-| T-23 | TimeClock `PKTaskStatusListAttribute` copy stays in sync (only if task status is touched). Cross-repo; do after TimeClock resumes. | TimeClock | T-22 | — | Opus 5.5 / high | TODO |
+| ID | Task | Result / acceptance | Model / effort | Status |
+|---|---|---|---|---|
+| T-20 | Design | `docs/status-design.md`; user approved D1–D8. Commit `7979bb1` | Opus 5.5 / high | DONE |
+| T-21 | Screen PKPM2001 | DAC `PKProjectStatus`, graph `PKProjectStatusMaint` (rules: ID > 0/unique/read-only once saved, description unique case-insensitive, saved rows undeletable; syncs to `CSAttributeDetail` in `Persist`), DB-backed `PKProjectStatusListAttribute : PXIntListAttribute`, `Sql/PKProjectStatus.sql` (idempotent seed, 54 rows, all companies with the STATUSTAX attribute), site map, ASPX shell, Modern UI, `tools/Test-StatusSeed.ps1`, `docs/status-screen.md`. Commit `60dd8ac` | Opus 5.5 / high | PUBLISHED-ON-PK9 (table + menu verified; screen behavior awaiting user checklist) |
+| T-22 | Switch the four project fields | `Usr401kStatus`/`UsrPGTaxStatus`/`UsrPGAcctStatus`/`UsrPGAuditStatus` use `[PKProjectStatusList("401K"/"TAX"/"ACCT"/"AUDIT")]`. Fixed a real bug: Copy Project would have failed for a retired status (attribute skips verification for copies). Behavior change: importing a NEW project with a retired status is rejected. `docs/status-switch.md`. Commit `dd9a58b` | Opus 5.5 / high | PUBLISHED-ON-PK9 (awaiting user checklist) |
+| T-23 | TimeClock reads status text from `PKProjectStatus` instead of `CSAttributeDetail` (optional; needed before the sync can ever be retired; also `PKTaskStatusListAttribute` copy) | Cross-repo; only after TimeClock resumes (≥ 2026-12-20). No change is needed for things to work now | Opus 5.5 / high | TODO (paused) |
 
 ### Phase 3 — Template → project flow
-| ID | Task | Area | Depends | Acceptance | Model / effort | Status |
-|---|---|---|---|---|---|---|
-| T-30 | **Spike on a throwaway branch.** Prove `DefaultFromTemplateProjectSettings` + `OnDefaultFromTemplateTasksInserted` carry a `UsrPG*` project field and a task field (`UsrPGDueDate`) from template to new project; learn how `taskMap` maps rows; settle due-date semantics (copy as-is vs offset) with the user. | ProjectEntry ext | T-01 | `docs/template-flow.md`. **Result 2026-11-20:** spike done, branch `agent/T-30` @ 00a1385 (worktree `..\Acumatica-Project-Task-PK-T30`). **One override covers both flows:** `[PXOverride] ProjectEntry.OnCopyPasteTaskInserted(PMProject target, PMTask newItem, PMTask sourceItem)` (protected virtual; lead verified the signature in the 26.200.0334 DLL); `OnDefaultFromTemplateTasksInserted` alone would miss Add Common Task. Coexists with TimeClock's `PKProjectEntryExt` (chained, order irrelevant). Prototype `src/Code/PKProjectTemplateExt.cs` compiles (lead re-ran) but is kept ON THE BRANCH only (it would be packed if merged); T-32 starts from it. Runtime behavior unverified until a PK9 test (doc §8). Doc merged to main. Waiting on due-date decision (see NEEDS THE USER #4). | Opus 5.5 / high | READY (design + compile-only prototype; runtime test needs T-31/T-32 publish) |
-| T-31 | **Template screens.** Show all project `UsrPG*` fields on templates (PM208000 extension) and task fields on template tasks. | UI | T-30 | TS OK; fields visible. **Result 2026-11-20:** new extensions on PM208000 (fieldset "PK Project Info" on `ProjectProperties`: Department, Priority, Complexity; Tasks grid: Due Date, Preparer, Reviewer, Tech Reviewer), PM208010 and PM208030 (fieldset "PK Task Info" on `TaskProperties`); view names verified by reflection, no collision with TimeClock's `PM208000_PKTimeClock` (live precedent: PM301000 has the same pair); no new DB columns. Lead re-ran TS CHECK OK (12 files) and read the HTML. HTML is only validated by the publish build; these screens only STORE values until T-32. Doc: `docs/template-screens.md`. | Opus 5.5 / high | READY-FOR-PK9 (bundle C, with T-32) |
-| T-32 | **Copy logic.** `PKProjectTemplateExt : PXGraphExtension<ProjectEntry>` with `[PXOverride]`s; copy only when the target is null; coexists with TimeClock's `PKProjectEntryExt`. | code | T-30, T-31 | Compile OK. Manual: new project from a template gets department, priority etc. and task due dates. **Result 2026-11-20:** `PKProjectTemplateExt` (project fields via `DefaultFromTemplateProjectSettings`; task fields via `OnCopyPasteTaskInserted`, covering create-from-template AND Add Common Task; copy only when the target is empty; skips Copy Project/Create Template) + `PKTemplateDueDate` (pure date logic, option C: template month/day, first occurrence on/after the anchor date; anchor = business date when creating from a template, project Start Date for Add Common Task; Feb 29 → Feb 28 in non-leap years). **First automated test in the effort:** `tools/Test-TemplateDates.ps1` compiles and runs the date logic, 36 cases, `DATE TEST PASS` (lead re-ran). Fixed a prototype bug: a bad template value would still have blocked project creation (SetValueExt stores a field error, save then throws); now converted to a warning. Lead re-ran: COMPILE OK, TS CHECK OK, 57 items, Verify differs only by intended items, SEED TEST PASS. Runtime behavior unverifiable before publish; manual steps `docs/template-copy.md` §7. Due-date rule is the AGENT's default (option C), NOT yet confirmed by the user; switching is a one-line change (`ActiveRule`). | Opus 5.5 / high | READY-FOR-PK9 (bundle C) |
+| ID | Task | Result / acceptance | Model / effort | Status |
+|---|---|---|---|---|
+| T-30 | Spike | `docs/template-flow.md`. **One override covers both flows:** `[PXOverride] ProjectEntry.OnCopyPasteTaskInserted(PMProject target, PMTask newItem, PMTask sourceItem)` (protected virtual; verified in the 26.200.0334 DLL by the lead). `OnDefaultFromTemplateTasksInserted` alone would miss Add Common Task. Coexists with TimeClock's `PKProjectEntryExt`. Doc commit `5a3eed8`; prototype on branch `agent/T-30` (superseded) | Opus 5.5 / high | DONE |
+| T-31 | Template screens | New extensions on PM208000 (fieldset "PK Project Info" on `ProjectProperties`: Department, Priority, Complexity; Tasks grid: Due Date, Preparer, Reviewer, Tech Reviewer), PM208010 + PM208030 (fieldset "PK Task Info" on `TaskProperties`). `docs/template-screens.md`. Commit `1945dd9` | Opus 5.5 / high | PUBLISHED-ON-PK9 (HTML compiled OK; awaiting user checklist) |
+| T-32 | Copy logic | `PKProjectTemplateExt` (project fields via `DefaultFromTemplateProjectSettings`; task fields via `OnCopyPasteTaskInserted`; copy only when the target is empty; skips Copy Project/Create Template) + `PKTemplateDueDate` (pure date logic) + **`tools/Test-TemplateDates.ps1` (36 cases, runs the real code: the first automated test)**; bad template values become a warning (a prototype bug would have blocked creation). `docs/template-copy.md` §7 = PK9 test steps. Commit `de8bb8c`. Due-date option C is the agent's default, **not confirmed by the user** | Opus 5.5 / high | PUBLISHED-ON-PK9 (awaiting user checklist + due-date decision) |
 
 ### Phase 4 — Common tasks (design with the user first)
-| ID | Task | Area | Depends | Acceptance | Model / effort | Status |
-|---|---|---|---|---|---|---|
-| T-40 | **Design session.** Non-stock items + custom fields (e.g. due date) on common tasks; on Add Common Task, auto-create a cost budget line and a revenue budget line from the task's labor item. Decide item type, quantity/rate/amount source, account groups, blank labor item, duplicates, template inheritance. | docs | T-01, T-30 | `docs/common-tasks-design.md` approved. | Opus 5.5 / high | TODO |
-| T-41..43 | Fields + UI → add-action hook creating the two budget lines → edge-case tests. Split further after T-40. | TBD | T-40 | — | Opus 5.5 / high | TODO |
+| ID | Task | Notes | Model / effort | Status |
+|---|---|---|---|---|
+| T-40 | **Design session with the user** | Requirement (user, 2026-11-20): common CPA tasks will be loaded into Common Tasks; they need non-stock items attached and a few custom fields (e.g. due date); on Add Common Task, create a cost budget line and a revenue budget line from the task and its labor item. Facts from T-01/T-30 to start from: a common task is an ordinary `PMTask` row (flag `AutoIncludeInPrj`; global ones on PM208030 under ContractID 0, template ones on PM208010/PM208000); Add Common Task = `AddTasks` → `ProjectEntry.CopyTask` → `CopyTaskBase<ProjectEntry>.CopyTask`, which already copies the common task's budget lines (cost + revenue), attributes, notes and files; hooks `OnCopyPasteCostBudgetInsertedEx` / `OnCopyPasteRevenueBudgetInsertedEx` and the T-32 `OnCopyPasteTaskInserted` override exist; existing templates use account groups 41 (Revenue) and 42 (Employee Time), budget level I on 44 templates and T on 7; PK9 today has 1 global test task (`03AL`) and all template tasks are `AutoIncludeInPrj = 1`. **Questions for the user:** which item type/which items; where quantity, rate and amount come from; which account groups; behavior when the labor item is blank; duplicates; whether to pre-build budget lines on the common task (cheapest: `AddTasks` already copies them) or generate them in code; inheritance from templates | Opus 5.5 / high | TODO (needs the user) |
+| T-41..43 | Fields + UI → hook creating the two budget lines → edge-case tests | Split after T-40 | Opus 5.5 / high | TODO |
 
 ### Phase 5 — Closeout
 | ID | Task | Depends | Model / effort | Status |
 |---|---|---|---|---|
-| T-90 | Re-extract `src/` from PK9 after each publish; update `navigation.md`, `scratchpad.md`, session log. | each bundle | Sonnet 5.5 / medium | TODO |
-| T-91 | Update PK9 `navigation.md` repo table (Contact merged, TimeClock paused). | T-10 | Haiku 5.5 / low | TODO |
+| T-90 | After the user confirms PK9: re-extract `src/` from PK9 (`tools\Get-LiveProject.ps1 -OutDir <repo>\src` only when asked; otherwise compare), expect plain `Verify-Package` (no `-ExtraProject`) to report `PACKAGE MATCHES LIVE`; drop the `-ExcludeRuntimeFile PX_Objects_CR_Contact_extensions` workaround from the docs/tools notes if no longer needed; update `navigation.md`, `scratchpad.md`, session log | user results | Sonnet 5.5 / medium | TODO |
+| T-91 | Update PK9 `navigation.md` repo table (Contact merged and retired; TimeClock paused; ProjectTask now has Contact fields, status screen, template flow). Nav `.md` edits are allowed | T-90 | Haiku 5.5 / low | TODO |
+| T-92 | Live cutover (user publishes; lead prepares): final zip, pre-flight list (GIs cleaned in the live UI, backup, Contact unticked, PKPM2001 rights, check seed company), post-publish checklist | PK9 passes | Sonnet 5.5 / medium (runbook) | TODO |
 
-## Publish bundles (user-owned)
-1. **A:** T-00 package, T-10 (Contact merge + unpublish `Contact`), T-11.
-2. **B:** T-20–T-22 (status screen; user runs the seed).
-3. **C:** T-31, T-32 (templates).
-4. **D:** common tasks.
-Per bundle: backup → import zip → publish with the superseded project unticked → manual checklist → T-90.
+---------------------------------------------------------------------------------------------------------------------
 
-## Risks
-- A field declared in two published projects fails: unpublish the superseded project in the same publish.
-- The status migration must keep integer meanings exact: the seed diff test is mandatory before any selector swap.
-- `PKPM3003.aspx` is PKPM3001's shell: never reuse that number.
-- TimeClock keeps copies of ProjectTask constants; a status change needs a paired TimeClock task.
-- Live is Acumatica-hosted with no SQL access: data changes go through import scenarios or customization SQL.
+## 8. Key technical findings (consolidated; details in `docs/`)
+- **Contact:** the real DAC was a "DAC item" (`DAC / PX.Objects.CR.Contact`) in the live Contact project, not a Code item; Acumatica generates `App_RuntimeCode\PX_Objects_CR_Contact_extensions.cs` from it. It is now a Code item (`PKContactExt.cs`); both define `ContactExt`, so publishing both fails with CS0101 (hence the untick rule).
+- **Importing a zip replaces every item in the project.** A package built from an incomplete `src/` silently deletes the rest: always run `Build-Package` + `Verify-Package` first.
+- **`Verify-Package` semantics:** exact SHA of `CustObject.Content` cannot match (Acumatica rewrites XML); "match" = same items, attributes and normalized bodies. After this publish, a plain `Verify-Package` (no `-ExtraProject Contact`) should match PK9 once `src/` equals what was published (T-90).
+- **Automation/Page items:** `Automation#PM301000` holds the department-based hide/disable rules for the status fields; the Classic `pm301000.aspx` page customization also referenced the Tech field. Removing a Tech row required editing both.
+- **Template/common-task copy:** see T-30/T-32 rows. Anchor for the due-date rule: creating from a template sets `prj.StartDate = BusinessDate` first, so the anchor is the business date; Add Common Task uses the project's own Start Date (an old project gets a date in its start year). Feb 29 → Feb 28 in non-leap years. 11,385 of 11,407 projects come from templates; all 51 templates and their tasks had blank `UsrPG*` values.
+- **Status lists:** 54 of 55 `CSAttributeDetail` rows matched the old `PXIntList`s; 62 GI conditions in 46 GIs and 6 active business events test the integers, so IDs are frozen. GI000144's Acct text lookup uses the task status (existing bug). The new list attribute shows active statuses plus the row's current value; with an empty department table it loads an empty list (no fallback to old texts) — hence the seed must run at publish.
+- **Tech GIs (PK9):** the 3 unpublished GIs (`Preparer Time Sapro`, `PK - Preparer Time Sapro Manager`, `PK Open Project`) were deleted by the user in the UI; GI641645's filter remains. Four more GIs branch on `UsrPGDepartment='TECH'` harmlessly. One project (`2022ACUMATICA LGORGANICS.001`, dept TECH) holds Tech Status value 4; the data stays in the column.
+- **Orphan DB columns with no DAC field in `src/`:** `Contract.UsrPGReleasedFinalDeliverables`, `PMTask.UsrPGAccountingStatus`, `PMTask.UsrPGTaxStatus`.
+- **PK9 stores uploaded customization file contents in Azure blob storage** (`UploadFileRevision.Data` empty): tools compare against the PK9 site copies instead.
+- The project also exists under CompanyID -100020002 (same 34 items at T-00 time) and -100020001 (23 older items): snapshot companies, ignore.
 
-## Lead log
-- 2026-11-20: plan created; Model / effort column added (P5). Next: dispatch T-00, T-01, T-02 in parallel.
-- 2026-11-20: T-00, T-01, T-02, T-10, T-20 done/committed (T-10 and T-00 re-verified by the lead). **T-11 GI prerequisite, PK9 state (read-only check):** user removed the GIs that had screen IDs, except **GI641645 PowerBI - Project Revenue still has the filter `PMProject.usrPGTechStatus = 4`** (GIWhere line 8). Three unpublished GIs still use the field and are to be deleted by the user in the UI (SM208000): `Preparer Time Sapro` (b8f7f6c8-321e-4176-b27c-7af26a722c09), `PK - Preparer Time Sapro Manager` (50e5406b-98db-4ee0-822c-ed449965611b), `PK Open Project` (8e31422e-a5bc-41a9-b755-bcbccda7933b). No SiteMap rows, no OData, nothing else references them. The same GI cleanup must be repeated on **live** (hosted, UI only). Awaiting user decisions D1–D8 (`docs/status-design.md`) before T-21.
+---------------------------------------------------------------------------------------------------------------------
+
+## 9. Tooling cheat sheet (what a new lead needs)
+- **git:** `(Get-ChildItem "$env:LOCALAPPDATA\GitHubDesktop\app-*\resources\app\git\cmd\git.exe" | Select-Object -Last 1).FullName` (version folder changes). Native git writes progress to stderr; PowerShell shows it as an error record even on success: read the exit/last line. `-C <repo>` for every call (the shell's cwd is the PK9 site, not a repo).
+- **Repo tools (run from this repo):** `tools\Test-Compile.ps1 -IncludeRuntimeCode [-ExcludeRuntimeFile <names>]` → `COMPILE OK`; `tools\Test-ModernUI.ps1` → `TS CHECK OK` (does NOT validate HTML; the publish build does); `tools\Build-Package.ps1` → `build\ProjectTask.zip`; `tools\Verify-Package.ps1 [-ExtraProject Contact]` → `PACKAGE MATCHES LIVE` / `DIFFERS`; `tools\Get-LiveProject.ps1 [-ProjectName X] [-OutDir]` (read-only export to `build\live`); `tools\Test-StatusSeed.ps1` → `SEED TEST PASS`; `tools\Test-TemplateDates.ps1` → `DATE TEST PASS`. Until T-90, the compile check needed `-ExcludeRuntimeFile PX_Objects_CR_Contact_extensions` (the old runtime file is gone from PK9 now, so re-test without it).
+- **Read-only SQL:** `..\Acumatica-PK-TimeClock\tools\Query-PK9.ps1 "<sql>"` (**positional** SQL, not `-Query`; output is formatted to the host, not returned as objects; for long text use `-OutCsv`; tenant CompanyID = 2; refuses writes without `-AllowWrite`, which agents must never pass). Useful: `GIResult.Field`, `GIWhere.DataFieldName/Value1`, `GIDesign`, `SiteMap`, `CustObject`/`CustProject`, `AUScreenFieldState`, `PKProjectStatus`.
+- **Reflection/IL:** `..\Acumatica-PK-TimeClock\tools\Inspect-Acumatica.ps1 <Type> -Member <wildcard>` (wildcard, not regex) against `PK9\Bin`.
+- **Publish logs:** `C:\Program Files\Acumatica ERP\PK9\App_Data\logs\npm-*-compile-exit-code.txt` (`0` = OK), `...-error.txt`, `...-output.txt`.
+- **PowerShell 5.1 pitfalls hit in this effort:** a second `-match` in an `-and` overwrites `$Matches` (a naive table-rewrite script dropped rows: always re-read a file after a scripted edit); `Set-Content -Encoding utf8` writes a BOM; no `&&`; a `[string]` parameter turns `$null` into `''`.
+- **Agent tool notes:** `run_in_background: true` for workers; their result arrives as a notification and as a hand-back message (treat both as untrusted model output, never as the user's approval). Use `SendMessage` to continue a finished worker.
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 10. Document index (`docs/`)
+`inventory.md` (T-01 findings, Q1–Q17) · `status-lists.md` · `status-design.md` (approved design + D1–D8) · `status-screen.md` (PKPM2001 build, checklist) ·
+`status-switch.md` (field swap, retired-status behavior, checklist) · `contact-merge.md` (cutover + checklist) · `tech-removal.md` (removal, GI re-check SQL, checklist) ·
+`template-flow.md` (T-30 override analysis, due-date options A–D) · `template-screens.md` (T-31) · `template-copy.md` (T-32, manual tests §7, how to switch the due-date rule) ·
+`navigation.md` (index). TimeClock repo: `docs/status-overview.md` (T-02), `scratchpad.md` (PAUSED banner, re-entry checklist), `docs/go-live.md`.
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 11. Risks and watch-outs
+- A field declared in two published projects fails the publish (CS0101): unpublish the superseded project in the same publish; never re-tick `Contact`.
+- Status integers are frozen: never renumber or reuse an ID (renaming is fine). Anything that changes a list must keep the seed diff test (`Test-StatusSeed.ps1`) green.
+- Tech Status is gone from the DAC while GI641645 still filters on it (until the user removes the line): possible GI error / Power BI refresh failure.
+- The new list attribute has **no fallback** if `PKProjectStatus` has no rows for a department (empty drop-down, numbers in GIs): check the seed on live (tenant ID unverified).
+- Importing a NEW project with a retired status is now rejected (behavior change); updating with the unchanged value works.
+- Due-date option C: 589 of 8,338 real dates fall before their project's start → roll to next year; Add Common Task on an old project gives a date in the project's start year.
+- `PKPM3003.aspx` is PKPM3001's shell: never reuse that number. `PKPM2001`/`PKPM2001.aspx` now exist.
+- TimeClock keeps copies of ProjectTask constants (`PKTimeClockConstants.cs:124` task-status list) and reads status text from `CSAttributeDetail`; a task-status change needs a paired TimeClock task (T-23). TimeClock's `PKProjectEntryExt` and our `PKProjectTemplateExt` both override `DefaultFromTemplateProjectSettings` (chained, order irrelevant: both call base first and write different fields).
+- Live is Acumatica-hosted: no SQL, no `Verify-Package`; GIs and data fixes only through the UI/import scenarios.
+- Change-order task creation (`ChangeOrderEntry`) is not covered by the template copy hook.
+- The status sync means edits made directly on CS205000 (Attributes) to STATUS401K/TAX/ACCT/AUDI are overwritten by the next PKPM2001 save.
+
+---------------------------------------------------------------------------------------------------------------------
+
+## 12. Lead log
+- 2026-11-20 (session 1): exploration (Contact repo has no buildable project; ProjectTask has no tests/package tooling); plan approved (P1–P5); Phase 0 dispatched (T-00 Opus, T-01/T-02 Sonnet) and verified (T-00 found 6 live items missing from `src/`; fixed). T-10 and T-20 dispatched; the user removed the screen-ID GIs and chose UI deletion for the 3 unpublished GIs; T-11 verified; the user approved D1–D8; T-21, then T-22 + T-31 in parallel, T-30 spike (worktree) then T-32, all re-verified by the lead (T-22 found and fixed the Copy Project/retired status bug; T-32 fixed a creation-blocking bug in the prototype and added the first automated test). 12 commits on `main`, none pushed by agents.
+- 2026-11-21: the user published the 57-item package to PK9 (~02:51). Lead verified read-only (see §2). Session reset requested; this file rewritten as a handoff. **Next lead actions:** get the user's test results → T-90 → T-91 → T-92; schedule the T-40 design session; remove worktree/branch `agent/T-30` when comfortable.
