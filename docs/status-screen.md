@@ -101,26 +101,26 @@ Importing the zip **replaces** the whole `ProjectTask` project with `src/`, whic
   Sort Order blank, Disabled cleared; delete value IDs added after go-live only if no project uses them.
 
 ## Manual test checklist (user, on PK9 after publish)
-- [ ] Menu: Projects workspace → Preferences → **Department Statuses** opens (Modern UI).
-- [ ] Department **401K**: 20 rows, IDs 1-20, text identical to the 401k Status drop-down on PM301000 (17 has the double space).
-- [ ] **TAX**: 15 rows. **ACCT**: 8 rows (1-8, no 0; "Initial Review (Acctg)" at 2). **AUDIT**: 11 rows ("Ready To Prep" at 1). Total 54.
-- [ ] All rows Active; Sort Order = ID.
-- [ ] Before any save: GI000142 still shows the old CSAttributeDetail text for ACCT 02 ("Initial Review"). Select ACCT, click Save:
+- [1] Menu: Projects workspace → Preferences → **Department Statuses** opens (Modern UI).
+- [1] Department **401K**: 20 rows, IDs 1-20, text identical to the 401k Status drop-down on PM301000 (17 has the double space).
+- [1] **TAX**: 15 rows. **ACCT**: 8 rows (1-8, no 0; "Initial Review (Acctg)" at 2). **AUDIT**: 11 rows ("Ready To Prep" at 1). Total 54.
+- [1] All rows Active; Sort Order = ID.
+- [1] Before any save: GI000142 still shows the old CSAttributeDetail text for ACCT 02 ("Initial Review"). Select ACCT, click Save:
       GI000142 now shows "Initial Review (Acctg)" for ACCT projects with status 2 (12 projects on 2026-11-20). Repeat Save for 401K, TAX, AUDIT.
       (GI000142 is a per-preparer dashboard; if it lists none of these projects for you, check the value on CS205000 instead.)
-- [ ] Rename a status (e.g. TAX 13 "Invoice" → "Invoice Sent"; 2 TAX projects had status 13 on 2026-11-20) and Save: GI000142
+- [1] Rename a status (e.g. TAX 13 "Invoice" → "Invoice Sent"; 2 TAX projects had status 13 on 2026-11-20) and Save: GI000142
       shows the new text for those projects (CS205000 STATUSTAX value 13 shows it too). Rename it back afterwards.
       (PM301000 shows the new text only after T-22.)
-- [ ] Add a status: click + on a department → Status ID defaults to max + 1 and Sort Order to the same; enter a description; Save.
+- [1] Add a status: click + on a department → Status ID defaults to max + 1 and Sort Order to the same; enter a description; Save.
       CS205000 shows the new value ID (2 digits) on the department's attribute.
-- [ ] Enter a description that already exists in the department (different case, e.g. "complete") → error; empty description → error on Save.
-- [ ] Enter an existing Status ID on a new row → error "Status ID n already exists…"; enter 0 → error.
-- [ ] Deactivate a status (clear Active), Save: CS205000 shows the value as Disabled. Re-activate it afterwards.
-- [ ] Try to delete a saved row → error "A saved status cannot be deleted… Clear the Active check box instead."; the row stays after refresh.
-- [ ] Status ID of a saved row cannot be edited (cell disabled).
-- [ ] Delete a new, unsaved row → it disappears (allowed).
-- [ ] A user without PKPM2001 rights cannot open the screen (after SM201020 is set).
-- [ ] ACCT 00 "Not Started" still exists on CS205000 (the sync never deletes).
+- [1] Enter a description that already exists in the department (different case, e.g. "complete") → error; empty description → error on Save.
+- [1] Enter an existing Status ID on a new row → error "Status ID n already exists…"; enter 0 → error.
+- [1] Deactivate a status (clear Active), Save: CS205000 shows the value as Disabled. Re-activate it afterwards.
+- [1] Try to delete a saved row → error "A saved status cannot be deleted… Clear the Active check box instead."; the row stays after refresh.
+- [1] Status ID of a saved row cannot be edited (cell disabled).
+- [1] Delete a new, unsaved row → it disappears (allowed).
+- [1] A user without PKPM2001 rights cannot open the screen (after SM201020 is set).
+- [1] ACCT 00 "Not Started" still exists on CS205000 (the sync never deletes).
 
 ## Not verifiable without a PK9 publish
 - That the `Sql` item actually runs during publish and creates/seeds the table (script syntax parsed with ScriptDom and the seed
