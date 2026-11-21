@@ -79,6 +79,9 @@ All of these must be ticked by the user (with the lead's confirmation). Do not g
         `ProjectTime` (its `PMTimeActivityExt` fields): **keep `ProjectTime` ticked on live** if it is ticked today.
       - Live build `product-version=26.200` (same major as PK9). Not checkable from exports: the Modern UI (HTML) build of live's older PKTimeClock next to
         the new screens — PK9's build of the same screens passed; watch the publish log for a failed npm step.
+        User (2026-11-21): live's current Modern UI works and was tested extensively, so live's existing set of projects builds and runs today; the only
+        remaining unknown is the combined build at publish time (old live PKTimeClock + new ProjectTask screens). Low risk: the new screens' extensions
+        target PM208000/PM208010/PM208030/PM301000/PM302000/CR302000/PKPM2001, and PK9 built them next to PKTimeClock without errors.
 
 ### 2.2 Remove Tech Status from live Generic Inquiries (blocking)
 A GI that still names the removed field (`PMProject.usrPGTechStatus`) will error or show a blank column after the publish, and Power BI refreshes fail.
@@ -131,6 +134,7 @@ The UI has no "search by field" for GIs, so use one of these ways:
 
 ### 4.2 Screens
 - [ ] **PM301000 Projects:** one project per department (401K, TAX, ACCT, AUDIT) shows the same status text as before; each drop-down has the full list (401K 20, TAX 15, ACCT 8, AUDIT 11) in order; change one value, save, change back. **No Tech Status field anywhere** (including a TECH-department project). Tasks tab still shows Preparer, Reviewer, Tech Reviewer, Due Date, Task Status.
+- [ ] **PK Status (T-25, if the zip contains it):** on a few projects (one each of TAX, ACCT, AUDIT, 401K and one ADMIN/TECH) the read-only *PK Status* in *PK Project Info* equals the department's status text (empty for ADMIN/TECH); change a status, save: PK Status follows. Details: `docs/pk-status.md`.
 - [ ] **CR302000 Contacts:** **PK Marketing** tab right after **General**, group *Marketing Attributes* with 8 check boxes; a known contact still has its boxes ticked; tick/untick one, save, reload (F5), restore. Compare with the baseline counts if you took them.
 - [ ] **Template screens:** PM208000 (fieldset *PK Project Info*: Department, Priority, Complexity; Tasks grid: Due Date, Preparer, Reviewer, Tech Reviewer), PM208010 and PM208030 (*PK Task Info*). TimeClock's *Default Labor Item* still shows on PM208000. Enter test values on a **test** template (copy one first) and save.
 - [ ] **Template copy (due dates as-is, D9):** on the test template put Due Date 04/15/2027 on a task and a Preparer; create a new project from it: Department/Priority/Complexity and task Preparer/Reviewer/Tech Reviewer copied, **Due Date = 04/15/2027 exactly** (not rolled). **Add Common Task** gives the template date unchanged as well. A blank template value leaves the field empty. Delete the test project and test template afterwards.

@@ -13,4 +13,6 @@
 	<Column TableName="Contract" ColumnName="UsrPGReleasedFinalDeliverables" ColumnType="bool" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
 	<Column TableName="Contract" ColumnName="UsrPGFinishDate" ColumnType="date" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
 	<Column TableName="Contract" ColumnName="UsrPGYearEnd" ColumnType="date" AllowNull="True" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contract" ColumnName="UsrPKStatusID" ColumnType="int" AllowNull="True" MaxLength="25" DecimalPrecision="2" IsNewColumn="True" IsUnicode="True" />
+	<Column TableName="Contract" ColumnName="UsrPKStatus" ColumnType="string" AllowNull="True" MaxLength="60" DecimalPrecision="2" DecimalLength="60" IsNewColumn="True" IsUnicode="True" />
 </Table>

@@ -189,6 +189,8 @@ namespace ProjectTask
             // The selected department is synced on every save, so a plain Save pushes it to CSAttributeDetail
             // (first sync after publish; also repairs edits made on CS205000, which the sync owns now).
             AddDepartment(departments, Filter.Current?.DepartmentID);
+            // T-25: statuses whose description changes in this save (read before base.Persist clears the originals).
+            List<PKProjectStatus> renamed = RenamedStatuses();
 
             using (var ts = new PXTransactionScope())
             {
@@ -198,10 +200,56 @@ namespace ProjectTask
                     Dictionary<string, List<PKProjectStatusInfo>> saved = PKProjectStatusListAttribute.ReadFromDatabase();
                     foreach (string dept in departments)
                         SyncAttributeDetails(dept, saved.TryGetValue(dept, out List<PKProjectStatusInfo> list) ? list : new List<PKProjectStatusInfo>());
+                    UpdateProjectStatusText(renamed, saved);   // T-25
                 }
                 ts.Complete();
             }
             PKProjectStatusListAttribute.ResetCache();
+        }
+
+        /// <summary>
+        /// T-25: updated rows whose Description differs from the value read from the database (case-sensitive, so a case-only
+        /// rename counts). A row without an original value counts as renamed (the update below is harmless then).
+        /// (De)activation and sort-order changes need nothing: the project text is the description, active or not.
+        /// </summary>
+        private List<PKProjectStatus> RenamedStatuses()
+        {
+            var result = new List<PKProjectStatus>();
+            foreach (PKProjectStatus row in Statuses.Cache.Updated)
+            {
+                if (row?.StatusID == null || string.IsNullOrWhiteSpace(row.DepartmentID)) continue;
+                string original = Statuses.Cache.GetValueOriginal(row, nameof(PKProjectStatus.Description)) as string;
+                if (original == null || !string.Equals(original, row.Description, StringComparison.Ordinal))
+                    result.Add(row);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// T-25: after a rename, refreshes the stored PK Status of the projects of that department that hold the status:
+        /// one set-based UPDATE per renamed status, inside the save transaction, current company only (PXDatabase adds the
+        /// company restriction):
+        ///   UPDATE Contract SET UsrPKStatusID = id, UsrPKStatus = 'new text' WHERE UsrPGDepartment = dept AND &lt;dept status column&gt; = id
+        /// Departments without a project status field (PKDepartmentStatus) are skipped. Plain saves, sort-order and Active
+        /// changes run no statement. Projects open in another session get the usual "another process has updated" message.
+        /// </summary>
+        protected virtual void UpdateProjectStatusText(IEnumerable<PKProjectStatus> renamed, Dictionary<string, List<PKProjectStatusInfo>> saved)
+        {
+            foreach (PKProjectStatus row in renamed)
+            {
+                string dept = PKDepartmentStatus.CanonicalDepartment(row.DepartmentID);
+                string statusField = PKDepartmentStatus.StatusFieldOf(dept);
+                if (statusField == null || row.StatusID == null) continue;
+                if (!saved.TryGetValue(dept, out List<PKProjectStatusInfo> list)) continue;
+                PKProjectStatusInfo status = list.Find(s => s.StatusID == row.StatusID.Value);
+                if (status == null) continue;
+
+                PXDatabase.Update<PX.Objects.CT.Contract>(
+                    new PXDataFieldAssign(nameof(PX.Objects.CT.ContractExt.UsrPKStatusID), PXDbType.Int, 4, status.StatusID),
+                    new PXDataFieldAssign(nameof(PX.Objects.CT.ContractExt.UsrPKStatus), PXDbType.NVarChar, 60, status.Description),
+                    new PXDataFieldRestrict(nameof(PX.Objects.CT.ContractExt.UsrPGDepartment), PXDbType.NVarChar, 10, dept),
+                    new PXDataFieldRestrict(statusField, PXDbType.Int, 4, status.StatusID));
+            }
         }
 
         /// <summary>

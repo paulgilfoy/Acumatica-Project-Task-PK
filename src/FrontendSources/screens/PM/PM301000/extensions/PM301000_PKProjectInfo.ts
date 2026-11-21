@@ -14,6 +14,9 @@ export class PM301000_ProjectProperties_PKProjectInfo {
 	@placeAfterProperty("TagTemplateID")
 	UsrPGDepartment: PXFieldState<PXFieldOptions.CommitChanges>;
 
+	// T-25: status of the project's own department, computed on save (read-only)
+	UsrPKStatus: PXFieldState<PXFieldOptions.Disabled>;
+
 	UsrPGPriority: PXFieldState;
 
 	UsrPGIsFinal: PXFieldState;

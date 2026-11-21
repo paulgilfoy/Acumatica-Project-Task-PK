@@ -118,5 +118,24 @@ namespace PX.Objects.CT
     public virtual DateTime? UsrPGYearEnd { get; set; }
     public abstract class usrPGYearEnd : PX.Data.BQL.BqlDateTime.Field<usrPGYearEnd> { }
     #endregion
+
+    // T-25 "PK Status": ONE stored status per project for GIs and reports = the status of the project's own department
+    // (UsrPGDepartment TAX/ACCT/AUDIT/401K -> that department's status field; other departments -> empty). Never typed in:
+    // PKDepartmentStatusAttribute recomputes both columns on every save in any graph (RowPersisting, no extra query),
+    // PKPM2001 updates the text after a rename, Sql/PKProjectStatusBackfill.sql recalculates all rows. docs/pk-status.md
+    #region UsrPKStatusID
+    [PXDBInt]
+    [PKDepartmentStatus(typeof(usrPGDepartment), typeof(usrPKStatus))]
+    [PXUIField(DisplayName = "PK Status ID", Enabled = false)]
+    public virtual int? UsrPKStatusID { get; set; }
+    public abstract class usrPKStatusID : PX.Data.BQL.BqlInt.Field<usrPKStatusID> { }
+    #endregion
+
+    #region UsrPKStatus
+    [PXDBString(60, IsUnicode = true)]   // = PKProjectStatus.Description (nvarchar(60))
+    [PXUIField(DisplayName = "PK Status", Enabled = false, Visibility = PXUIVisibility.SelectorVisible)]
+    public virtual string UsrPKStatus { get; set; }
+    public abstract class usrPKStatus : PX.Data.BQL.BqlString.Field<usrPKStatus> { }
+    #endregion
     }
 }
