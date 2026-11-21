@@ -21,6 +21,13 @@
   Exact SHA-256 of CustObject.Content cannot be predicted before import (Acumatica re-serializes the XML),
   so "matches" means: same item set, same significant attributes, same normalized bodies.
 
+  Page items (Classic page customizations): by default the root <Page pageSource="..."> attribute is left out of the
+  comparison on both sides. It is a deflate+base64 snapshot of the page Acumatica customized, and Acumatica re-generates
+  it on every import, so it never equals the source after a publish although the customization is the same. Everything
+  else in the Page item (path, ControlId, every child element and attribute, incl. OriginalIndex) is still compared
+  exactly. An item whose only difference was pageSource shows as OK with a note, and a summary line lists them.
+  -StrictPageSource compares pageSource too (the old behaviour).
+
   -ExtraProject (merges, e.g. T-10 "Contact"): the live side becomes the UNION of ProjectTask and the named projects,
   i.e. "importing this zip and unpublishing those projects loses nothing". An item present in two live projects is a
   problem (DUPLICATE LIVE). A live DAC item (Data Class editor, <DAC type="X"> with <Field> children) has no
@@ -34,13 +41,15 @@
   .\tools\Build-Package.ps1; .\tools\Verify-Package.ps1
   .\tools\Verify-Package.ps1 -Zip build\ProjectTask-live.zip
   .\tools\Verify-Package.ps1 -ExtraProject Contact     # T-10: zip == live ProjectTask + live Contact
+  .\tools\Verify-Package.ps1 -StrictPageSource        # also compare the re-generated Classic pageSource blobs
 #>
 param(
     [string]$Zip,
     [string]$ProjectName = 'ProjectTask',
     [string[]]$ExtraProject = @(),
     [int]$CompanyID = 2,
-    [string]$SitePath = 'C:\Program Files\Acumatica ERP\PK9'
+    [string]$SitePath = 'C:\Program Files\Acumatica ERP\PK9',
+    [switch]$StrictPageSource   # Page items: compare the pageSource attribute too (default: ignored, see .DESCRIPTION)
 )
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
@@ -53,8 +62,11 @@ function Norm([string]$t) {
     if ($null -eq $t) { return $null }
     ($t.TrimStart([char]0xFEFF) -replace "`r`n", "`n" -replace "`r", "`n").TrimEnd()
 }
-function CanonXml([string]$t) {
-    $d = New-Object Xml.XmlDocument; $d.PreserveWhitespace = $false; $d.LoadXml($t.TrimStart([char]0xFEFF)); $d.DocumentElement.OuterXml
+function CanonXml([string]$t, [switch]$NoPageSource) {
+    $d = New-Object Xml.XmlDocument; $d.PreserveWhitespace = $false; $d.LoadXml($t.TrimStart([char]0xFEFF))
+    # Only the root <Page> element's pageSource attribute; nothing else is dropped.
+    if ($NoPageSource -and $d.DocumentElement.LocalName -eq 'Page') { $d.DocumentElement.RemoveAttribute('pageSource') }
+    $d.DocumentElement.OuterXml
 }
 function Get-ZipText($entry) {
     $sr = New-Object IO.StreamReader($entry.Open(), [Text.Encoding]::UTF8)
@@ -147,6 +159,7 @@ foreach ($l in @($live.Values | Where-Object { $_.Type -eq 'DAC' -and -not $pkg.
 }
 
 # ---- Compare ----
+$pageSourceIgnored = @()
 foreach ($k in (@($pkg.Keys) + @($live.Keys) | Sort-Object -Unique)) {
     $p = $pkg[$k]; $l = $live[$k]; $status = 'OK'; $note = ''
     if ($dacResult.ContainsKey($k)) { $r = $dacResult[$k]; if ($r.Status -ne 'OK') { $fail++ }; $rows += $r; continue }
@@ -157,7 +170,16 @@ foreach ($k in (@($pkg.Keys) + @($live.Keys) | Sort-Object -Unique)) {
         $diffAttr = @($l.Attr.Keys | Where-Object { "$($l.Attr[$_])" -cne "$($p.Attr[$_])" } | ForEach-Object { "$_ live='$($l.Attr[$_])' zip='$($p.Attr[$_])'" })
         if ($diffAttr.Count) { $status = 'DIFF'; $note = $diffAttr -join '; ' }
         elseif ($null -ne $l.Xml -or $null -ne $p.Xml) {
-            if ((CanonXml $l.Xml) -cne (CanonXml $p.Xml)) { $status = 'DIFF'; $note = 'XML content differs' }
+            if ((CanonXml $l.Xml) -cne (CanonXml $p.Xml)) {
+                if ($p.Type -eq 'Page' -and $l.Type -eq 'Page' -and -not $StrictPageSource) {
+                    if ((CanonXml $l.Xml -NoPageSource) -cne (CanonXml $p.Xml -NoPageSource)) {
+                        $status = 'DIFF'; $note = 'XML content differs (also besides pageSource)'
+                    } else {
+                        $note = 'pageSource differs (re-generated on import; ignored, -StrictPageSource compares it)'
+                        $pageSourceIgnored += $k
+                    }
+                } else { $status = 'DIFF'; $note = 'XML content differs' }
+            }
         } else {
             if ($null -eq $p.Body) { $status = 'DIFF'; $note = 'zip entry missing' }
             elseif ($null -eq $l.Body) { $status = 'UNVERIFIED'; $note = "no live body ($($l.BodySource))" }
@@ -190,5 +212,9 @@ foreach ($p in $pkg.Values | Where-Object Type -eq 'Graph') {
 $rows | Sort-Object @{ e = { $_.Status -eq 'OK' } }, Item | Format-Table -AutoSize -Wrap | Out-String -Width 220 | Write-Host
 Write-Host ("Zip: {0} items; live {1}: {2} items (CompanyID {3}). Problems: {4}; runtime-copy warnings: {5}." -f `
     $pkg.Count, ($projects -join ' + '), $live.Count, $CompanyID, $fail, $warn)
+if ($pageSourceIgnored.Count) {
+    Write-Host ("Note: pageSource differed but was ignored on {0} Page item(s) (Acumatica re-generates it on import; -StrictPageSource to compare): {1}" -f `
+        $pageSourceIgnored.Count, (($pageSourceIgnored | ForEach-Object { $_ -replace '^Page\|', '' }) -join ', ')) -ForegroundColor Yellow
+}
 if ($fail -eq 0) { Write-Host 'PACKAGE MATCHES LIVE' -ForegroundColor Green; exit 0 }
 else { Write-Host 'PACKAGE DIFFERS FROM LIVE' -ForegroundColor Red; exit 1 }
