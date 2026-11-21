@@ -158,6 +158,13 @@ $byAttr = @{}; foreach ($a in $Attributes.Keys) { $byAttr[$Attributes[$a]] = $a 
 $live = @{}
 foreach ($r in $attrRows) { $live["$($byAttr[$r.AttributeID])|$([int]$r.ValueID)"] = [pscustomobject]@{ ValueID = $r.ValueID; Text = $r.Description } }
 Write-Host "Live CSAttributeDetail rows: $($attrRows.Count)"
+# Rows the user added or renamed on PKPM2001 are synced into CSAttributeDetail: accept them when the table holds the same text.
+$tblText = @{}
+if ([int](@(Invoke-ReadOnly "SELECT COUNT(*) AS N FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PKProjectStatus'")[0].N) -gt 0) {
+    foreach ($t in @(Invoke-ReadOnly "SELECT DepartmentID, StatusID, Description FROM PKProjectStatus WHERE CompanyID = $CompanyID")) {
+        $tblText["$("$($t.DepartmentID)".Trim())|$([int]$t.StatusID)"] = $t.Description
+    }
+}
 $same = 0; $devs = @()
 foreach ($k in $seed.Keys) {
     $l = $live[$k]
@@ -168,11 +175,13 @@ foreach ($k in $seed.Keys) {
         if ($D1.ContainsKey($k)) { Note "$k $($D1[$k]) already synced: CSAttributeDetail = seed $(Show $seed[$k])" }
     }
     elseif ($D1.ContainsKey($k)) { $devs += "$k $($D1[$k]): seed $(Show $seed[$k]) vs CSAttributeDetail $(Show $l.Text)" }
+    elseif ($tblText.ContainsKey($k) -and $tblText[$k] -ceq $l.Text) { Note "$k renamed on PKPM2001 and synced: seed $(Show $seed[$k]) vs table/CSAttributeDetail $(Show $l.Text)" }
     else { Fail "$k unexpected difference: seed $(Show $seed[$k]) vs CSAttributeDetail $(Show $l.Text)" }
 }
 foreach ($k in $live.Keys | Sort-Object) {
     if ($seed.Contains($k)) { continue }
     if ($D2.ContainsKey($k)) { $devs += "$k $($D2[$k]): CSAttributeDetail $(Show $live[$k].Text) stays, the sync never deletes it" }
+    elseif ($tblText.ContainsKey($k) -and $tblText[$k] -ceq $live[$k].Text) { Note "$k added on PKPM2001 and synced: $(Show $live[$k].Text)" }
     else { Fail "$k exists in CSAttributeDetail ($(Show $live[$k].Text)) but not in the seed" }
 }
 Ok "$same of $($seed.Count) seed rows equal CSAttributeDetail exactly"
