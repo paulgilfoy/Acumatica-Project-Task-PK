@@ -67,6 +67,18 @@ All of these must be ticked by the user (with the lead's confirmation). Do not g
 - 1 ] Export any other published project you are not sure about (at least `PKTimeClock`). Not needed for rollback of this change, but cheap.
 - [1] Keep all zips outside the Acumatica server (e.g. your own drive) and give the two `BEFORE` zips to the lead for a diff
       (live `ProjectTask` is expected to match PK9's pre-publish 34 items; **importing the new zip replaces every item of `ProjectTask`, so any extra item that exists only on live would be deleted**). Wait for the lead's "no surprises" before publishing.
+- [x] **Lead diff of the live exports (2026-11-21 ~22:40, `Downloads\Live-Site-Customizations`, exported 22:30): NO SURPRISES.**
+      - Live `ProjectTask` = **34 items, all present in the new zip** (nothing would be deleted); the new zip adds the 23 known items (57 total).
+      - 29 of the 34 are identical to the new zip. The 5 that differ (`Contract` code, `Automation PM301000`, Classic pages `pm301000`/`pm302000`,
+        and the PM301000 Modern UI `.html/.ts`) are **byte-for-byte (whitespace-insensitive) equal to our pre-change source** (git `4bbde0f`, synced from PK9 on
+        2026-11-20): the only differences are our intended changes (Tech removal, status list, Classic re-sync). **No live-only edits are lost.**
+        `PKPM3002.aspx`/`PKPM3003.aspx` differ only in whitespace/line endings.
+      - **Compile test of live's other projects with the new `ProjectTask`:** the code of live `PKTimeClock` (15 code items), `ProjectTime` (1 + its 2 DAC
+        items) and `Velixo2025R1OrOlder` (18) compiled together with the new zip's 14 code items against PK9 26.200 → **exit 0** (Contact left out, as in section 3).
+        None of them references Tech Status or the Contact fields. Note: live `PKTimeClock` (38 items) is OLDER than PK9's (46) and live `PKTimeClock` needs
+        `ProjectTime` (its `PMTimeActivityExt` fields): **keep `ProjectTime` ticked on live** if it is ticked today.
+      - Live build `product-version=26.200` (same major as PK9). Not checkable from exports: the Modern UI (HTML) build of live's older PKTimeClock next to
+        the new screens — PK9's build of the same screens passed; watch the publish log for a failed npm step.
 
 ### 2.2 Remove Tech Status from live Generic Inquiries (blocking)
 A GI that still names the removed field (`PMProject.usrPGTechStatus`) will error or show a blank column after the publish, and Power BI refreshes fail.
