@@ -1,13 +1,23 @@
-# Live cutover runbook (T-92, DRAFT)
+# Live cutover runbook (T-92) — release 1 (ProjectTask)
 
-Status: **ready for the user's review (updated 2026-11-21 ~21:00 with the lead's PK9 verification, section 0). Do NOT start the publish (section 3) until every item in section 1 is ticked;** the backup and exports (section 2.1) can be done any time. The user executes it; the lead
+Status (2026-11-22): **GATE PASSED — ready for the live publish tonight.** Every PK9 checklist passed (user), the backup and exports are done,
+the lead diffed the live exports (no surprises) and rebuilt the zip from exactly what PK9 runs (`PACKAGE MATCHES LIVE`). What is left: 2.2 (live
+GI cleanup), 2.3, then sections 3–6. The user executes it; the lead
 prepares the zip and answers questions. Live is hosted by Acumatica: **no SQL, no `Verify-Package`, UI only.**
+
+**Release plan (decided 2026-11-22):**
+| Release | Contents | Zip | State |
+|---|---|---|---|
+| **1 — tonight** | everything PK9 runs and the user tested (list below) | `build\ProjectTask-LIVE-15ee9d4.zip` | this runbook |
+| 2 — later | T-24 PKPM2001 arrows + T-25 read-only PK Status (+ backfill) | `build\ProjectTask-T25.zip` (60 items) | built, **not yet on PK9**; PK9 round first |
+| 3 — later | PKTimeClock: T-26 EP307000 lookup (Active + In Planning) + the 7 unreleased EP307000 items; **ProjectTime must be unpublished on live in the same publish** | TimeClock repo `build\PKTimeClock.zip` | built, not yet on PK9; TimeClock `docs/go-live.md` must be updated first |
 Rules: publishing restarts the site for everyone, so pick a quiet time (no one clocked in on the time clock). Allow about 2 hours
 with pre-flight; the publish itself is one operation. Tick the boxes as you go and keep notes for the "tell the lead" list (section 6).
 
-What goes live (one zip, `build\ProjectTask.zip`, 57 items): Contact fields merged into `ProjectTask`, Tech Status removed,
-Department Statuses screen PKPM2001 + the four project status drop-downs reading from it, new fields on template screens
-PM208000/PM208010/PM208030, and the template/common-task copy logic (due dates copied as-is, D9).
+What goes live tonight (one zip, **`build\ProjectTask-LIVE-15ee9d4.zip`**, 57 items, built from `main` @ `15ee9d4` = what PK9 runs since the
+2026-11-21 11:43 republish): Contact fields merged into `ProjectTask`, Tech Status removed, Department Statuses screen PKPM2001 (with the T-21b save
+fix and T-21c cache fix) + the four project status drop-downs reading from it, new fields on template screens PM208000/PM208010/PM208030, and the
+template/common-task copy logic (due dates copied as-is, D9). **Not included:** the PKPM2001 arrows (T-24), PK Status (T-25), the EP307000 lookup (T-26).
 
 ---------------------------------------------------------------------------------------------------------------------
 ## 0. PK9 status: what the lead verified (2026-11-21, ~21:00, after the 11:43 republish)
@@ -36,11 +46,11 @@ template screens. Note: PK9 now has **55** statuses (your ACCT 11 test row); **l
 ---------------------------------------------------------------------------------------------------------------------
 ## 1. Gate: PK9 must be fully done first
 All of these must be ticked by the user (with the lead's confirmation). Do not go live on a partial pass.
-- [ ] **NEW (2026-11-21 21:45): the zip now also contains T-24 (PKPM2001 Previous/Next Department arrows), which PK9 has NOT run yet.**
-      Republish **`build\ProjectTask-T24.zip`** on PK9 (SHA-256 `A9D3020D…C836`, 88,576 bytes; a saved copy, because `build\ProjectTask.zip` is being rebuilt for T-25), then run the T-24 list in
-      `docs/status-screen.md`. The lead then re-runs `Verify-Package` (must say `PACKAGE MATCHES LIVE`) and confirms the hash in section 3.
-      Live gets **only** a zip that PK9 has run and passed. (Previous verified zip, without T-24: `AF9171C9…06A1` @ `15ee9d4`; it was overwritten by the rebuild.)
-- [x] Before T-24: the zip from `main` @ `15ee9d4` matched PK9 (`PACKAGE MATCHES LIVE`, lead, 2026-11-21 ~21:00; republished 11:43).
+- [x] **Live zip = what PK9 runs and the user tested (lead, 2026-11-22):** PK9's last publish is 2026-11-21 11:43 (no later npm build; no T-24/T-25
+      runtime files, no `UsrPKStatus` columns on PK9). The lead rebuilt the zip from `main` @ `15ee9d4` in a separate worktree
+      (`..\Acumatica-Project-Task-PK-live`) → `build\ProjectTask-LIVE-15ee9d4.zip`, 57 items, 87,341 bytes, SHA-256
+      `CBDA18554866ABEBC2072170E999C51570FDB8C0135380E2FA129CE9F1F296E6`; `Verify-Package` vs PK9 → **PACKAGE MATCHES LIVE** (0 problems).
+      (Same content as the earlier `AF9171C9…` zip; zip bytes differ only by build timestamps.) The T-24 / T-25 zips are release 2.
 - [x] Lead confirmed read-only (21:41): the first sync ran for all four departments (`CSAttributeDetail` SortOrder filled for 401K, TAX, ACCT, AUDIT); test renames reverted.
       Your extra **ACCT 11 "Ready for Review"** exists only on PK9: if you want it on live, add it on live's PKPM2001 after the publish (live will start with the 54 seed rows).
 - [1] **YOU:** `docs/status-screen.md` "Retest on PK9": rename (e.g. TAX 13 "Invoice" → "Invoice Sent" → back), toggle Active, add with a
@@ -50,9 +60,9 @@ All of these must be ticked by the user (with the lead's confirmation). Do not g
 - [1 ] `docs/status-switch.md` checklist (PM301000 dropdowns, retired status, Copy Project with a retired status, GI000140 / GI641708 show text).
 - [1] `docs/contact-merge.md` checklist (PK Marketing tab on CR302000, 8 check boxes, old values intact).
 - [1] `docs/tech-removal.md` checklist (no Tech Status on PM301000, other departments fine, GI641645 / Power BI refresh works).
-- [ ] `docs/template-screens.md` section 5 checklist (PM208000 / PM208010 / PM208030 fields).
-- [ ] `docs/template-copy.md` section 7 manual test, using the as-is due-date rule (D9): a template date of 4/15/2027 gives 4/15/2027 on a new
-      project and on Add Common Task, whatever today's date is.
+- [1] `docs/template-screens.md` section 5 checklist (PM208000 / PM208010 / PM208030 fields). **User 2026-11-22: all pass.**
+- [1] `docs/template-copy.md` section 7 manual test, using the as-is due-date rule (D9): a template date of 4/15/2027 gives 4/15/2027 on a new
+      project and on Add Common Task, whatever today's date is. **User 2026-11-22: all pass** (common tasks included).
 - [1] No open bug reports on PK9 for any of the above.
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -113,9 +123,9 @@ The UI has no "search by field" for GIs, so use one of these ways:
 ## 3. Publish steps
 **Never publish `Contact` together with the new `ProjectTask`** (both define `ContactExt`: CS0101 compile error).
 - [ ] SM204505 Customization Projects: open **`ProjectTask`** > **Import** the zip built by the lead (the lead gives you the file and commit id; do not use an older zip). Choose replace.
-      The zip to use is `build\ProjectTask-T24.zip` (copy of the T-24 build), 88,576 bytes, written 2026-11-21 21:42:31, SHA-256
-      `A9D3020D28D1487D846C7655E9CFB8BACAA453BB676CF23F3FC3CD0FBA60C836` (PowerShell: `Get-FileHash <zip>`) — **only after PK9 ran it and the
-      lead confirmed `PACKAGE MATCHES LIVE` against PK9** (gate, section 1). If the lead rebuilds it later, use the new hash the lead gives you.
+      The zip to use tonight is **`build\ProjectTask-LIVE-15ee9d4.zip`**, 57 items, 87,341 bytes, SHA-256
+      `CBDA18554866ABEBC2072170E999C51570FDB8C0135380E2FA129CE9F1F296E6` (PowerShell: `Get-FileHash <zip>`; it matches PK9, gate section 1).
+      Do **not** use `build\ProjectTask.zip`, `ProjectTask-T24.zip` or `ProjectTask-T25.zip` (release 2, untested on PK9).
       Alternatively export `ProjectTask` from PK9 and import that: same content.
 - [ ] Back in the project list, **tick `ProjectTask`**, **UNTICK `Contact`**, and **keep every other project ticked** that you noted in 2.1 (including **`PKTimeClock`**, `ProjectTime`, Velixo/others). Do not tick anything that was not ticked before.
 - [ ] **Publish** the selected projects once (one operation). Wait for the site restart and the Modern UI build to finish. If it fails with a compile error mentioning `ContactExt` / CS0101, `Contact` is still ticked: untick it and publish again.
@@ -134,7 +144,7 @@ The UI has no "search by field" for GIs, so use one of these ways:
 
 ### 4.2 Screens
 - [ ] **PM301000 Projects:** one project per department (401K, TAX, ACCT, AUDIT) shows the same status text as before; each drop-down has the full list (401K 20, TAX 15, ACCT 8, AUDIT 11) in order; change one value, save, change back. **No Tech Status field anywhere** (including a TECH-department project). Tasks tab still shows Preparer, Reviewer, Tech Reviewer, Due Date, Task Status.
-- [ ] **PK Status (T-25, if the zip contains it):** on a few projects (one each of TAX, ACCT, AUDIT, 401K and one ADMIN/TECH) the read-only *PK Status* in *PK Project Info* equals the department's status text (empty for ADMIN/TECH); change a status, save: PK Status follows. Details: `docs/pk-status.md`.
+- [ ] *(Release 2 only — skip tonight: the live zip does not contain T-25.)* **PK Status (T-25):** on a few projects (one each of TAX, ACCT, AUDIT, 401K and one ADMIN/TECH) the read-only *PK Status* in *PK Project Info* equals the department's status text (empty for ADMIN/TECH); change a status, save: PK Status follows. Details: `docs/pk-status.md`.
 - [ ] **CR302000 Contacts:** **PK Marketing** tab right after **General**, group *Marketing Attributes* with 8 check boxes; a known contact still has its boxes ticked; tick/untick one, save, reload (F5), restore. Compare with the baseline counts if you took them.
 - [ ] **Template screens:** PM208000 (fieldset *PK Project Info*: Department, Priority, Complexity; Tasks grid: Due Date, Preparer, Reviewer, Tech Reviewer), PM208010 and PM208030 (*PK Task Info*). TimeClock's *Default Labor Item* still shows on PM208000. Enter test values on a **test** template (copy one first) and save.
 - [ ] **Template copy (due dates as-is, D9):** on the test template put Due Date 04/15/2027 on a task and a Preparer; create a new project from it: Department/Priority/Complexity and task Preparer/Reviewer/Tech Reviewer copied, **Due Date = 04/15/2027 exactly** (not rolled). **Add Common Task** gives the template date unchanged as well. A blank template value leaves the field empty. Delete the test project and test template afterwards.

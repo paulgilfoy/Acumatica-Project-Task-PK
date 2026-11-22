@@ -4,8 +4,10 @@
 > [Work claims](#work-claims), and update [Learnings](#learnings) / [Session log](#session-log) before you finish.
 > Master multi-agent rules: `..\Acumatica-PK-TimeClock\scratchpad.md` → Coordination rules.
 
-Last updated: 2026-11-21 (T-93 docs cleanup; consolidation package published on PK9 2026-11-21, see `PLAN.md` §1/§2).
-**State:** live is stable and untouched; PK9 carries the consolidation package (not yet on live). Change live only on user request; other projects depend on the `UsrPG*` fields.
+Last updated: 2026-11-22 (all PK9 checklists passed; live release 1 tonight — see `PLAN.md` §0–§2 and `docs/live-cutover.md`).
+**State:** PK9 runs `main` @ `15ee9d4` and every user checklist passed. **Release 1 (live, 2026-11-22 night): `build\ProjectTask-LIVE-15ee9d4.zip`.**
+Release 2 (T-24 arrows + T-25 PK Status: `build\ProjectTask-T25.zip`) and release 3 (PKTimeClock with T-26, ProjectTime unpublished) are built
+but not yet on PK9. Common tasks: finished as built; team alpha testers give feedback. Other projects depend on the `UsrPG*` fields.
 
 ## Read order for a new agent
 1. This file. 2. `navigation.md`, then the `navigation.md` of the folder you touch.

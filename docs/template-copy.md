@@ -1,7 +1,7 @@
 # T-32 — Copy template / common-task values into new projects and tasks
 
 Date 2026-11-20, updated 2026-11-21. Acumatica 26.200.0334 (PK9). **Status:** published on PK9 2026-11-21 in the merged package; the
-due-date rule was then switched to **as-is (D9, T-32b)**, which ships with the republish; the manual test (§7) is still unanswered. Live untouched. No DB writes by agents.
+due-date rule was then switched to **as-is (D9, T-32b)**, which ships with the republish; the manual test (§7) **passed (user, 2026-11-22)**. Live untouched. No DB writes by agents.
 Design and hook evidence: `docs/template-flow.md` (T-30). Screens that store the values: `docs/template-screens.md` (T-31).
 T-31 (entry screens) and T-32 (copy logic) belong together (without T-31 nobody can enter the values; without T-32 they are only stored).
 
@@ -164,6 +164,7 @@ BASE  Void OnCopyPasteTaskInserted(PX.Objects.PM.PMProject, PX.Objects.PM.PMTask
 ```
 
 ## 7. Manual test on PK9 (after the user republishes the T-32b build; adapted from `template-flow.md` §8). Expected due dates follow the AS-IS rule (D9)
+**Result (user, 2026-11-22): ALL PASS on PK9**, including Add Common Task (build `15ee9d4`). The user considers common tasks finished as built; team alpha testers give feedback next. Goes live in release 1.
 1. Backup; import `build\ProjectTask.zip`; publish with the usual projects (ProjectTask, PKTimeClock, …; `Contact` unticked).
 2. **PM208000**: copy a template to `T32TEST`. *PK Project Info*: Department = TAX, Priority = High, Complexity = Level 2; TimeClock's
    Default Labor Item set. Tasks grid: Task A (*Automatically Include in Project* = on): Preparer, Reviewer, Tech Reviewer,

@@ -92,6 +92,7 @@ exists on the server DAC (the server only resolves those at runtime).
 - Employee selectors on PM208030 (global tasks have no project; the selector is `PXEPEmployeeSelector`, not project-dependent, so expected fine).
 
 ## 5. Manual test checklist (after the user publishes; T-31 alone or with T-32)
+**Result (user, 2026-11-22): ALL PASS on PK9** (build `15ee9d4`). Goes live in release 1 (`docs/live-cutover.md`).
 1. PM208000 → open a template (copy one to a test template first, e.g. `T31TEST`). Summary tab, column A: fieldset
    **PK Project Info** with Department, Project Priority, Project Complexity. Set TAX / High / Level 2.
 2. Same screen, *Project Properties*: TimeClock's **Default Labor Item** (`UsrPKLaborItemID`) still shows after Project Group.
