@@ -14,3 +14,4 @@ retype them without checking its `scratchpad.md`.
    - Before finishing, update `scratchpad.md` (status, learnings, session log).
 4. Shell is Windows PowerShell 5.1. git is not on PATH — see `..\Acumatica-PK-TimeClock\scratchpad.md` → Learnings.
 5. Do not trust `exports/project.xml`: it is a 2024 Classic-era export and is stale (see `exports/navigation.md`). `src/` is current.
+6. Working conventions for multi-agent work (navigation system, scratchpad, claims, safety, verification): read `GUIDE.md`.
