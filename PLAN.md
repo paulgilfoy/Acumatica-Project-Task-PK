@@ -1,7 +1,7 @@
 # PK Consolidation & Expansion — Master Plan (lead agent + worker swarm)
 
-Created 2026-11-20. Rewritten as a session handoff 2026-11-21; **§0–§2 rewritten again 2026-11-22 before the live publish** (the user
-clears the lead session after this). **This file is the single source of truth for the effort.** The lead agent (PM/orchestrator) keeps it current.
+Created 2026-11-20. Rewritten as a session handoff 2026-11-21; §0–§2 rewritten 2026-11-22 before the live publish; **status text in §0–§6
+and §11 refreshed 2026-11-25 after releases 1–3 went live**. **This file is the single source of truth for the effort.** The lead agent (PM/orchestrator) keeps it current.
 Workers read this file, `CLAUDE.md`, `scratchpad.md` and `navigation.md` before starting.
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -9,15 +9,20 @@ Workers read this file, `CLAUDE.md`, `scratchpad.md` and `navigation.md` before 
 ## 0. READ THIS FIRST (new lead session)
 
 **Who you are:** the lead/PM agent. You dispatch worker subagents (Agent tool), re-verify their work yourself, commit,
-and keep this file current. **You never publish, never write to the PK9 database, never touch live.** The user publishes.
+and keep this file current. Agent rules (since 2026-11-25, canonical): `..\Acumatica-DevEnv\docs\agent-rules.md`. In short: PK9 is the
+dev/test sandbox; agents may publish on PK9 after the checks, under the lock `C:\Tools\locks\pk9-publish.lock` (full project set, verify,
+tell the user); test data only through the app (`ZZTEST` prefix); no direct SQL writes without the user's approval in the current conversation; **never change live**.
 
 **First 10 minutes:**
 1. Read this file, then `CLAUDE.md` and `scratchpad.md` in this repo, `docs/live-cutover.md`, and `C:\Program Files\Acumatica ERP\PK9\navigation.md`.
-2. `git log --oneline -15` and `git status --short` here and in `..\Acumatica-PK-TimeClock` (git path in §9). Expected: this repo `main` at or
-   after the 2026-11-22 handoff commit; TimeClock `main` at or after `ab86090` (T-26). Only `CLAUDE.md` (M) and `GUIDE.md` (??) uncommitted: the user's.
-3. Ask the user how the **live publish (release 1)** went and walk through `docs/live-cutover.md` §4–§6 with them.
+2. `git log --oneline -15`, `git status --short` and `git worktree list` here and in `..\Acumatica-PK-TimeClock` (git path in §9). Expected:
+   this repo `main` at or after `dfc2f3b` (2026-11-25). Worktrees: `-T30` and `-live` (to be removed, §1) and `-noaspx` (branch
+   `agent/remove-aspx`, DevEnv DE-08: removing the ASPX/Classic page items; **in progress**, not merged).
+3. Work from §1; ask the user for alpha-tester feedback.
 
-**Where things stand (2026-11-22):** **Release 1 is cleared for the live publish tonight.** On PK9 the user tested and passed every checklist:
+**Where things stand (2026-11-25):** releases 1, 2 and 3 are published on PK9 **and live** (§1); alpha testers are giving feedback.
+
+*History (2026-11-22, before release 1):* Release 1 was cleared for the live publish. On PK9 the user tested and passed every checklist:
 Contact merge, Tech removal, PKPM2001 Department Statuses (18 tests, incl. the T-21b save fix), status drop-downs (status switch), template screens,
 template copy incl. Add Common Task with as-is due dates. PK9 runs the 2026-11-21 11:43 publish = `main` @ `15ee9d4`; the lead rebuilt that
 exact state as **`build\ProjectTask-LIVE-15ee9d4.zip`** (SHA-256 `CBDA1855…96E6`, `Verify-Package` vs PK9 → PACKAGE MATCHES LIVE). The live
@@ -37,32 +42,37 @@ live `Contact` cleanup and ACCT 11 handled; TimeClock D19c + D22 published. Alph
 (T-40..43 common-task budget lines: removed from the plan by the user 2026-11-25.)
 
 ---------------------------------------------------------------------------------------------------------------------
-## 2. Current state (2026-11-22), verified by the lead read-only
+## 2. Current state
+**2026-11-25 (user; PK9 part re-checked read-only):** PK9 `CustProject` (CompanyID 2) = `ProjectTask` 60 items, `PKTimeClock` 55 items,
+`Velixo2025R1OrOlder`; no `Contact`, no `ProjectTime`. Releases 1–3 are on PK9 and live (§1). The table below is the 2026-11-22 snapshot (history).
+
 
 | Item | State |
 |---|---|
 | PK9 runs | `ProjectTask` 57 items = `main` @ `15ee9d4` (published 2026-11-21 11:43, npm exit 0); `PKTimeClock` 46 items (= TimeClock `src` before T-26); Velixo; `Contact` deleted; ProjectTime not on PK9 |
-| Release 1 zip (live tonight) | `build\ProjectTask-LIVE-15ee9d4.zip`, 57 items, 87,341 bytes, SHA-256 `CBDA18554866ABEBC2072170E999C51570FDB8C0135380E2FA129CE9F1F296E6`; `Verify-Package` vs PK9: **PACKAGE MATCHES LIVE**, 0 problems |
+| Release 1 zip (now live) | `build\ProjectTask-LIVE-15ee9d4.zip`, 57 items, 87,341 bytes, SHA-256 `CBDA18554866ABEBC2072170E999C51570FDB8C0135380E2FA129CE9F1F296E6`; `Verify-Package` vs PK9: **PACKAGE MATCHES LIVE**, 0 problems |
 | Release 2 zip | `build\ProjectTask-T25.zip`, 60 items (adds Code `PKDepartmentStatus`, `PKDepartmentStatusAttribute`, Sql `PKProjectStatusBackfill`; changes Contract, PKProjectStatus, PKProjectStatusMaint, Table Contract, PM301000 UI), SHA-256 `794EF8A9…6252`; COMPILE/TS/SEED/DATE/PK STATUS tests pass. `build\ProjectTask.zip` = same as T-25 (latest build of `main`) |
 | Release 3 zip | TimeClock repo `build\PKTimeClock.zip` (46 items, T-26 inside `PKEmployeeTimeActivitiesExt`), SHA-256 `30FF0D3C…E7E2`; COMPILE OK. Frozen first-release copy `build\cutover\PKTimeClock.zip` untouched |
 | PK9 user test results | ALL PASS: contact-merge, tech-removal, status-screen (18), status-switch, template-screens, template-copy (incl. Add Common Task, as-is dates) |
 | PKPM2001 data on PK9 | 55 statuses (seed 54 + user's ACCT 11); first sync ran for all four departments (CSAttributeDetail SortOrder filled); test renames reverted |
 | Contact data | 8 flag counts = 2026-11-20 baseline (271/254/298/175/10/437/225/92) |
-| Tech removal | 0 TechStatus refs in GIResult/GIWhere/GISort/AUScreenFieldState on PK9; **live GIs still to clean (runbook §2.2)** |
+| Tech removal | 0 TechStatus refs in GIResult/GIWhere/GISort/AUScreenFieldState on PK9; live GIs cleaned by the user before release 1 |
 | Live exports (2026-11-21 22:30) | `C:\Users\Administrator\Downloads\Live-Site-Customizations` (Contact, PKTimeClock 38, ProjectTask 34, ProjectTime 8, Velixo 135). Diff + compile: no surprises (runbook §2.1) |
-| Live | Not yet touched by this effort; backup taken by the user 2026-11-21 |
+| Live | Backup taken by the user 2026-11-21; releases 1–3 published there by the user (state 2026-11-25) |
 
 ---------------------------------------------------------------------------------------------------------------------
 
 ## 3. Repos and git state
 - `Acumatica-Project-Task-PK` (this repo, customization `ProjectTask`, branch `main`, remote `origin`; local commits are not pushed by agents):
   `4bbde0f` T-00 · `485bb5f` T-01 · `7979bb1` T-20 · `60d537c` T-10 · `9307996` T-11 · `5a3eed8` T-30 doc · `f035077`/`e448fd9` plan updates ·
-  `60dd8ac` T-21 · `1945dd9` T-31 · `dd9a58b` T-22 · `de8bb8c` T-32. Uncommitted: `CLAUDE.md` (M), `GUIDE.md` (??) — the user's.
+  `60dd8ac` T-21 · `1945dd9` T-31 · `dd9a58b` T-22 · `de8bb8c` T-32 · … · `b2244de` T-24 · `c42a0d0` T-25 · `dfc2f3b` (2026-11-25 plan).
+  `CLAUDE.md` and `GUIDE.md` are committed.
 - Branch `agent/T-30` + worktree `..\Acumatica-Project-Task-PK-T30` (@ `00a1385`): the spike prototype, **superseded by T-32 in
-  main**. Safe to remove (`git worktree remove`, `git branch -D agent/T-30`) once the user is comfortable; nothing else uses it.
-- `Acumatica-PK-TimeClock` (branch `main` @ `e1025d9`; **paused until at least 2026-12-20**): T-02 added `docs/status-overview.md`,
-  a PAUSED banner and a re-entry checklist to its `scratchpad.md`. Its commit subject has a stray invisible BOM (cosmetic).
-  `CLAUDE.md` (M) and `GUIDE.md` (??) uncommitted there too (the user's).
+  main**. To be removed (§1: `git worktree remove`, `git branch -D agent/T-30`); nothing else uses it.
+- Worktree `..\Acumatica-Project-Task-PK-live` (detached @ `15ee9d4`, built the release-1 zip): to be removed (§1).
+- Branch `agent/remove-aspx` + worktree `..\Acumatica-Project-Task-PK-noaspx` (DevEnv DE-08): removing the ASPX/Classic page items. **In progress**, not merged.
+- `Acumatica-PK-TimeClock` (branch `main`): T-02 added `docs/status-overview.md` (commit `e1025d9`; its subject has a stray invisible BOM,
+  cosmetic); T-26 = `ab86090`; D19c + D22 published on PK9 and live (2026-11-25). T-23 is paused until at least 2026-12-20. Current state: its `scratchpad.md`.
 - `PriceKubecka-Acumatica-Contact`: merged into this repo; to be archived by the user. Not modified by agents.
 - `Acumatica-Employee-Project-Time`: legacy; used read-only for base source in `reference\base-code\`.
 
@@ -71,18 +81,21 @@ live `Contact` cleanup and ACCT 11 handled; TimeClock D19c + D22 published. Alph
 ## 4. Locked decisions
 | # | Decision |
 |---|---|
-| P1 | **Done = "Checks + user gate".** A worker's task is `READY-FOR-PK9` when COMPILE OK, TS CHECK OK, package builds, read-only SQL checks pass. The lead sets `DONE` only after the user publishes AND ticks the manual checklist. |
+| P1 | **Done = "Checks + user gate".** A worker's task is `READY-FOR-PK9` when COMPILE OK, TS CHECK OK, package builds, read-only SQL checks pass. The lead sets `DONE` only after it is published on PK9 (by the user, or since 2026-11-25 by an agent under `agent-rules.md`) AND the user ticks the manual checklist. |
 | P2 | **Tech cleanup = status + department display only.** `UsrPGTechStatus` removed; **`UsrPGTechReviewer` stays** (time clock uses it); DB columns are never dropped (the `Tables/Contract.xml` declaration for the Tech Status column is deliberately kept). |
 | P3 | **Status maintenance = one generic screen** (PKPM2001, Department key + status grid) replacing the inline `PXIntList`s. |
 | P4 | Plan lives here as `PLAN.md`. |
 | P5 | Model/effort per task: coding/design on **Opus 5.5 at high effort**; read-only investigation/doc work on Sonnet; trivial doc edits on Haiku. Pass as `model` / `effort` on the Agent call (effort only because the user asked for it). |
 | D1–D8 (user approved 2026-11-20, all recommendations) | D1 text for ACCT 2 / AUDIT 1 / 401K 5 = the in-code (`PXIntList`) text. D2 ACCT 0 "Not Started" not seeded. D3 keep the 401K 17 double space. D4 GIs: keep `CSAttributeDetail` in sync one-way on every PKPM2001 save (hybrid), repoint GIs at the user's pace; also fix the GI000144 join (it looks up Acct text using the *task* status). D5 task status (`UsrPGTaskStatus`) stays as is. D6 menu = Projects → Preferences → "Department Statuses". D7 access rights set by the user on SM201020. D8 saved statuses are never deleted, only deactivated; IDs read-only after save. Plain meaning: a project stores the status **number**; GIs and business events test the number; to change what "01" means, rename it. A "delete only if unused" variant was offered and not chosen |
 | D9 (user, 2026-11-21) | **Template/common-task due dates are copied AS-IS (option A).** Due dates are usually static dates the user can modify; projects are created in bulk and the user bulk-updates dates (e.g. all "2026" tax projects to 4/15/2027, "shortly"). No roll-forward rule is wanted: a tax project created after 4/15 is back-dated to 4/15/2027 and then the "Extended" checkbox is checked for the IRS extension filing. (If a rule were ever wanted: the next calendar occurrence of the month/day.) Implemented by switching `PKTemplateDueDate.ActiveRule` to AsIs (T-32b) |
-| Hard rules | Never publish. Never edit PK9 site files (except nav `.md`). Never write to the PK9 DB without explicit user approval in the *current* conversation (the user chose UI deletion for GIs). Edit source only under `src/` in the GitHub repos. One owner per area; claims in `scratchpad.md`. Modern UI only. Never run `-AllowWrite`/`-Execute` on `Query-PK9.ps1`. |
+| Hard rules | Canonical since 2026-11-25: `..\Acumatica-DevEnv\docs\agent-rules.md` (PK9 publish allowed after the checks, under the lock; never change live). Never edit PK9 site files (except nav `.md`). Never write to the PK9 DB with SQL without explicit user approval in the *current* conversation (the user chose UI deletion for GIs). Edit source only under `src/` in the GitHub repos. One owner per area; claims in `scratchpad.md`. Modern UI only. Never run `-AllowWrite`/`-Execute` on `Query-PK9.ps1`. |
 
 ---------------------------------------------------------------------------------------------------------------------
 
-## 5. Publish procedure (user-owned) and bundle history
+## 5. Publish procedure and bundle history
+**Since 2026-11-25** agents may publish on PK9 (checks, lock `C:\Tools\locks\pk9-publish.lock`, full project set, verify, tell the user):
+`..\Acumatica-DevEnv\docs\agent-rules.md` → Publishing. Live stays user-only. The text below is the user-run procedure used for releases 1–3.
+
 **PK9 (done 2026-11-21 02:51):** one zip carried everything verified at that time (former bundles A+B+C merged, because an import
 replaces all items of the project, so partial bundles would require rebuilding from older commits): T-00 tooling, T-10 Contact
 merge, T-11 Tech removal, T-21 status screen, T-22 field switch, T-31 template screens, T-32 copy logic.
@@ -92,7 +105,7 @@ merge, T-11 Tech removal, T-21 status screen, T-22 field switch, T-31 template s
 for new screens on SM201020 → run the checklists → tell the lead. If the HTML build fails, read the newest
 `App_Data\logs\npm-*` (exit-code file `0` = OK) and send it to the lead.
 
-**Live cutover (T-92, user, after PK9 passes):** same zip (rebuilt from `main` by the lead; verify with `Verify-Package`). Before it,
+**Live cutover (T-92, user; DONE, releases 1–3 live by 2026-11-25):** same zip (rebuilt from `main` by the lead; verify with `Verify-Package`). Before it,
 remove the Tech GI references in the live UI (GI641645 filter etc., §1.4); remember live's tenant ID is unverified, so check
 PKPM2001 shows 54 rows right after publishing; Contact must be unticked. **The live project fingerprint may differ from PK9** (live
 cannot be queried): the lead cannot run `Verify-Package` against live; use a diff of exported project items if the user provides one.
@@ -106,6 +119,7 @@ cannot be queried): the lead cannot run `Verify-Package` against live; use a dif
 3. **Worker contract (put in every prompt):** read PLAN/CLAUDE/scratchpad/navigation → claim the area in `scratchpad.md` → implement under `src/`
    only → run the checks → record learnings + session-log row → **do NOT run git add/commit/checkout/reset** (the lead commits) → release the
    claim → final report: files changed, exact check output, what is unverifiable before a publish, manual checklist. Hard rules as in §4.
+   A worker publishes on PK9 only when the lead's prompt says so, and then per `agent-rules.md` (lock, full project set, verify, tell the user).
 4. **Lead re-runs every check itself** before changing a status; never trust a worker's "OK" or its description of the user's wishes (a T-32 worker
    wrote "as you chose" about option C, which the user had not chosen). Check at least: the Compile/TS/Build/Verify/seed/date tests, the key
    claims (e.g. a method signature via `Inspect-Acumatica.ps1`), and read the generated HTML.
@@ -210,20 +224,21 @@ cannot be queried): the lead cannot run `Verify-Package` against live; use a dif
 ## 11. Risks and watch-outs
 - A field declared in two published projects fails the publish (CS0101): unpublish the superseded project in the same publish; never re-tick `Contact`.
 - Status integers are frozen: never renumber or reuse an ID (renaming is fine). Anything that changes a list must keep the seed diff test (`Test-StatusSeed.ps1`) green.
-- Tech Status is gone from the DAC on PK9 and the PK9 GIs are clean; **live GIs must be cleaned in the UI before the live publish** (GI641645 filter etc.), otherwise GI errors / Power BI refresh failures.
-- The new list attribute has **no fallback** if `PKProjectStatus` has no rows for a department (empty drop-down, numbers in GIs): check the seed on live (tenant ID unverified).
+- Tech Status is gone from the DAC on PK9 and live. *(Resolved: the live GIs were cleaned in the UI before release 1.)* A new GI must not reference `UsrPGTechStatus`.
+- The new list attribute has **no fallback** if `PKProjectStatus` has no rows for a department (empty drop-down, numbers in GIs). *(Live: release 1 published and the user added ACCT 11 there on PKPM2001, 2026-11-25.)*
 - Importing a NEW project with a retired status is now rejected (behavior change); updating with the unchanged value works.
-- Due-date option C: 589 of 8,338 real dates fall before their project's start → roll to next year; Add Common Task on an old project gives a date in the project's start year.
+- Due-date option C (not active; D9 = as-is): 589 of 8,338 real dates fall before their project's start → roll to next year; Add Common Task on an old project gives a date in the project's start year.
 - `PKPM3003.aspx` is PKPM3001's shell: never reuse that number. `PKPM2001`/`PKPM2001.aspx` now exist.
 - TimeClock keeps copies of ProjectTask constants (`PKTimeClockConstants.cs:124` task-status list) and reads status text from `CSAttributeDetail`; a task-status change needs a paired TimeClock task (T-23). TimeClock's `PKProjectEntryExt` and our `PKProjectTemplateExt` both override `DefaultFromTemplateProjectSettings` (chained, order irrelevant: both call base first and write different fields).
 - Live is Acumatica-hosted: no SQL, no `Verify-Package`; GIs and data fixes only through the UI/import scenarios.
 - Change-order task creation (`ChangeOrderEntry`) is not covered by the template copy hook.
-- **PKPM2001 on PK9 still has the save bug until the T-21b fix is republished.** Until then: do not ask users to add or rename statuses and do not expect the `CSAttributeDetail` sync; republish T-21b + T-32b together so the user publishes once.
+- *(Resolved: the T-21b PKPM2001 save fix was republished on PK9 2026-11-21 (all 18 tests passed) and is live with release 1.)*
 - The status sync means edits made directly on CS205000 (Attributes) to STATUS401K/TAX/ACCT/AUDI are overwritten by the next PKPM2001 save.
 
 ---------------------------------------------------------------------------------------------------------------------
 
 ## 12. Lead log
+- 2026-11-25 (docs worker): refreshed stale status text (PLAN §0, §2–§6, §11; scratchpad; GUIDE; README; nav files; `docs/live-cutover.md` header): releases 1–3 live; agent rules now in `agent-rules.md` (DevEnv DE-04); `agent/remove-aspx` (DE-08) noted as in progress. Docs only.
 - 2026-11-25: user: releases 1–3 (incl. T-24/T-25/T-26, TimeClock D19c + D22) published on PK9 and live; live Contact cleanup + ACCT 11 done; alpha feedback under way. T-24/25/26, T-90, T-92 set DONE; T-40 and T-41..43 deleted at the user's request (brief `docs/common-tasks-brief.md` kept). Left: worktree cleanup, T-01/T-02 doc review, T-23 (paused). §1 rewritten.
 - 2026-11-22 (session 3, end): the user tested template screens + template copy (incl. Add Common Task): ALL PASS, so every PK9 checklist has passed. The user considers common tasks finished as built and will gather feedback from team alpha testers (T-40..43 parked). PK9 still runs the 2026-11-21 11:43 publish (`15ee9d4`; T-24/T-25/T-26 never republished there), so the lead rebuilt that exact commit in a detached worktree `..\Acumatica-Project-Task-PK-live` -> `build\ProjectTask-LIVE-15ee9d4.zip` (CBDA1855...96E6), Verify-Package vs PK9 PACKAGE MATCHES LIVE. Releases defined: 1 = tonight (that zip), 2 = T-24 + T-25 (`ProjectTask-T25.zip`, PK9 round first), 3 = PKTimeClock with T-26 (needs ProjectTime unpublished on live; TimeClock go-live.md stale). Updated PLAN §0-§2 and §7 statuses, `docs/live-cutover.md` (release plan, gate passed, zip/hash), template docs, scratchpad, PK9 `navigation.md` + `CLAUDE.md` (T-91), memory. The user clears the session next and asks for one last check before the live push.
 - 2026-11-22 (session 3): T-26 (EP307000 project lookup: Active + In Planning) built by a worker in the **TimeClock repo** at the user's request (commit `ab86090` there); lead verified the diff, COMPILE OK, `ProjectStatus.planned`. T-25 (PK Status) built, verified, committed `c42a0d0`; T-24 arrows `b2244de`.

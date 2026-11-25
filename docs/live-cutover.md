@@ -1,20 +1,22 @@
 # Live cutover runbook (T-92) — release 1 (ProjectTask)
 
-Status (2026-11-22): **GATE PASSED — ready for the live publish tonight.** Every PK9 checklist passed (user), the backup and exports are done,
-the lead diffed the live exports (no surprises) and rebuilt the zip from exactly what PK9 runs (`PACKAGE MATCHES LIVE`). What is left: 2.2 (live
-GI cleanup), 2.3, then sections 3–6. The user executes it; the lead
-prepares the zip and answers questions. Live is hosted by Acumatica: **no SQL, no `Verify-Package`, UI only.**
+Status (2026-11-25): **DONE. Releases 1, 2 and 3 are published on PK9 and live** (user); live `Contact` cleanup and ACCT 11 done; TimeClock
+D19c + D22 also live. The rest of this file is the record as written for release 1 (2026-11-22) and the template for later live releases.
+
+*Status as of 2026-11-22 (history):* GATE PASSED — ready for the live publish. Every PK9 checklist passed (user), the backup and exports were done,
+the lead diffed the live exports (no surprises) and rebuilt the zip from exactly what PK9 ran (`PACKAGE MATCHES LIVE`). The user executes the
+runbook; the lead prepares the zip and answers questions. Live is hosted by Acumatica: **no SQL, no `Verify-Package`, UI only; agents never change live.**
 
 **Release plan (decided 2026-11-22):**
 | Release | Contents | Zip | State |
 |---|---|---|---|
-| **1 — tonight** | everything PK9 runs and the user tested (list below) | `build\ProjectTask-LIVE-15ee9d4.zip` | this runbook |
-| 2 — later | T-24 PKPM2001 arrows + T-25 read-only PK Status (+ backfill) | `build\ProjectTask-T25.zip` (60 items) | built, **not yet on PK9**; PK9 round first |
-| 3 — later | PKTimeClock: T-26 EP307000 lookup (Active + In Planning) + the 7 unreleased EP307000 items; **ProjectTime must be unpublished on live in the same publish** | TimeClock repo `build\PKTimeClock.zip` | built, not yet on PK9; TimeClock `docs/go-live.md` must be updated first |
+| **1** | everything PK9 runs and the user tested (list below) | `build\ProjectTask-LIVE-15ee9d4.zip` | **DONE** (PK9 + live; this runbook) |
+| 2 | T-24 PKPM2001 arrows + T-25 read-only PK Status (+ backfill) | `build\ProjectTask-T25.zip` (60 items) | **DONE** (PK9 + live, 2026-11-25) |
+| 3 | PKTimeClock: T-26 EP307000 lookup (Active + In Planning) + the 7 unreleased EP307000 items; **ProjectTime must be unpublished on live in the same publish** | TimeClock repo `build\PKTimeClock.zip` | **DONE** (PK9 + live, ProjectTime unpublished, 2026-11-25) |
 Rules: publishing restarts the site for everyone, so pick a quiet time (no one clocked in on the time clock). Allow about 2 hours
 with pre-flight; the publish itself is one operation. Tick the boxes as you go and keep notes for the "tell the lead" list (section 6).
 
-What goes live tonight (one zip, **`build\ProjectTask-LIVE-15ee9d4.zip`**, 57 items, built from `main` @ `15ee9d4` = what PK9 runs since the
+What went live in release 1 (one zip, **`build\ProjectTask-LIVE-15ee9d4.zip`**, 57 items, built from `main` @ `15ee9d4` = what PK9 runs since the
 2026-11-21 11:43 republish): Contact fields merged into `ProjectTask`, Tech Status removed, Department Statuses screen PKPM2001 (with the T-21b save
 fix and T-21c cache fix) + the four project status drop-downs reading from it, new fields on template screens PM208000/PM208010/PM208030, and the
 template/common-task copy logic (due dates copied as-is, D9). **Not included:** the PKPM2001 arrows (T-24), PK Status (T-25), the EP307000 lookup (T-26).

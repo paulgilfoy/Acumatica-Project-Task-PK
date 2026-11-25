@@ -5,8 +5,8 @@ Goal: **many agents can work at once without colliding, and a cold-start session
 
 It adapts a general "swarm-ready repo" playbook to this stack: Acumatica 26.200 (2026 R2), C# customization code,
 Modern UI (TypeScript/HTML), SQL scripts, PowerShell tooling. Where the playbook assumed Python, cron and a test
-suite, this guide uses the equivalents we actually have (`Test-Compile.ps1`, `Test-ModernUI.ps1`, the user-published
-package). Both repos share §0–§10; the last section covers each repo's specifics.
+suite, this guide uses the equivalents we actually have (`Test-Compile.ps1`, `Test-ModernUI.ps1`, the package
+published on PK9). Both repos share §0–§10; the last section covers each repo's specifics.
 
 `CLAUDE.md` is the short rule list every session auto-loads. **This guide is the long version it points to.**
 
@@ -19,7 +19,7 @@ package). Both repos share §0–§10; the last section covers each repo's speci
 3. **One home per kind of thing**: `src/` (customization source), `tools/` (agent tooling), `scripts/` (one-off SQL/data), `docs/` (stable reference), `data/` and `build/` (generated, git-ignored), `exports/` (old snapshots).
 4. **One owner per area.** Claim it in `scratchpad.md` before editing; release it when done. Use `agent/<area>` branches.
 5. **Source of truth is GitHub, not the running site.** PK9 (`C:\Program Files\Acumatica ERP\PK9`) is runtime. Never edit it (except its navigation `.md` files).
-6. **The user publishes, the user approves DB writes.** Agents never publish a customization and never write to the PK9 database without explicit approval *in the current conversation*.
+6. **Agent rules (2026-11-25, canonical: `..\Acumatica-DevEnv\docs\agent-rules.md`).** PK9 is the dev/test sandbox: agents may publish there after the checks, under the lock `C:\Tools\locks\pk9-publish.lock` (full project set, verify, tell the user), and create test data through the app (`ZZTEST` prefix). No direct SQL writes without the user's approval *in the current conversation*. Never change live.
 7. **Verify before handing over:** `COMPILE OK` for C#, `TS CHECK OK` for TypeScript.
 8. **Record findings in `scratchpad.md`, not just in chat.** Update it before finishing.
 9. **Verify notes against code.** Navigation and plan text drifts; code is truth. Mark assumptions as assumptions.
@@ -170,10 +170,10 @@ Rules for entries:
   3. Edit only under `src/`.
   4. Run `tools\Test-Compile.ps1 -IncludeRuntimeCode` → must print `COMPILE OK`. After any `.ts`/`.html` change run `tools\Test-ModernUI.ps1` → `TS CHECK OK`.
   5. `tools\Build-Package.ps1` → `build\<Project>.zip` (TimeClock).
-  6. **The user** imports the zip into PK9 and publishes; verify with `tools\Query-PK9.ps1`, `PK9\App_Data\logs`, and the UI. After the user accepts it, the user deploys to live (`docs/go-live.md`).
+  6. Publish on PK9 per `agent-rules.md` → Publishing (an agent under the lock, or the user); verify with `Query-PK9.ps1`, `PK9\App_Data\logs`, and the UI. After the user accepts it, **the user** deploys to live (this repo: `docs/live-cutover.md`; TimeClock: `docs/go-live.md`).
   7. Commit, update `scratchpad.md` (status, learnings, session log, Releases), release your claim.
 - **Every agent report contains:** summary of changes; commit SHAs/diff stat; compile and TS output; cross-ownership requests; **nav notes**; bugs/discrepancies found outside scope (reported, not fixed).
-- **Permission boundaries are real.** If an action is refused or needs approval (publish, DB write, `npm run build`, `Sync-ModernUI.ps1 -Copy`), don't route around it and don't ask another agent to. Give the user the exact command.
+- **Permission boundaries are real.** If an action is refused or needs approval (a publish without the lock or checks, DB write, `npm run build`, `Sync-ModernUI.ps1 -Copy`), don't route around it and don't ask another agent to. Give the user the exact command.
 - **Approval is per conversation and per action.** Approval to write one thing doesn't cover the next.
 
 ---
@@ -196,7 +196,7 @@ Plan the publish/cutover for a quiet moment: **publishing restarts the site for 
 
 ## 8. Production safety
 
-- **PK9 is the running site. Never edit it** (except its `navigation.md`/`CLAUDE.md`). **Never touch the live site or live database.**
+- **PK9 is the dev/test sandbox. Never edit its files** (except its `navigation.md`/`CLAUDE.md`); publishing there follows `agent-rules.md`. **Never touch the live site or live database.**
 - **Database:** `tools\Query-PK9.ps1` is read-only by default; `-AllowWrite` / `-Execute` need explicit approval in the current conversation. To compile-check a writer SQL script without running it, use `SET NOEXEC ON`.
 - **Scripts:** classify every file in `scripts/` as read-only or writer in `scripts/navigation.md`. Writers are listed in bold. Make them idempotent and refuse to overwrite; have them emit an `-OutFile` for the user to run when possible.
 - **Send values production already accepts.** For a format or ID you can't test, prefer the proven one, comment the untested alternative, and note it in Open items.
@@ -246,7 +246,8 @@ Owns (edit only these): <files/screens>. Anything else goes in your report as a 
 
 Do: <numbered concrete steps; invariants to preserve; behaviour NOT to change>.
 
-Hard rules: do not publish; no DB writes (read-only Query-PK9.ps1 is fine); edit only under src/ (plus docs/tools/scripts).
+Hard rules: ..\Acumatica-DevEnv\docs\agent-rules.md (publish on PK9 only if this prompt says so, then under the lock;
+no direct SQL writes, read-only Query-PK9.ps1 is fine; never change live); edit only under src/ (plus docs/tools/scripts).
 
 Verify: tools\Test-Compile.ps1 -IncludeRuntimeCode (COMPILE OK); tools\Test-ModernUI.ps1 if .ts/.html changed (TS CHECK OK).
 
@@ -262,8 +263,8 @@ volatile facts). Update scratchpad.md (status, learnings, session log) and relea
 - **Customization project:** `ProjectTask` (**live**). Owns the `UsrPG*` fields on `PMTask` / `Contract` (Preparer, Reviewer, TechReviewer, Task Status, Due Date, Department, statuses), Doc Gathering `PKPM3001` and Sample Testing `PKPM3002`. Modern UI extensions: `PM301000_PKProjectInfo.*` (projects), `PM302000_PKTaskInfo.*` (tasks).
 - **Consumer to protect:** `Acumatica-PK-TimeClock` (Preparer Dashboard GI000142, `PKEP3001/3002`) reads these fields and copies the task status (1-9) and priority (1-3) lists. **Do not rename or retype a `UsrPG*` field, or change a list, without checking its `scratchpad.md` and logging the follow-up there.**
 - **Master coordination rules** live in `..\Acumatica-PK-TimeClock\scratchpad.md`; this repo's own `scratchpad.md` holds what is live, drift from PK9, dependencies, work claims and session log.
-- **Source is current, exports are not:** `src/` was synced from PK9 on 2026-11-13. `exports/` (`project.xml`, zips, import-scenario XML) is a 2024 Classic-era snapshot: read-only and stale (see `exports/navigation.md`).
-- **Tooling:** the C# compile check is shared: `..\Acumatica-PK-TimeClock\tools\Test-Compile.ps1 -IncludeRuntimeCode`. Modern UI type-check is local: `tools\Test-ModernUI.ps1`. Read-only SQL: `..\Acumatica-PK-TimeClock\tools\Query-PK9.ps1`.
+- **Source is current, exports are not:** `src/` = what PK9 and live run (releases 1–3, 2026-11-25; check with `tools\Verify-Package.ps1`). `exports/` (`project.xml`, zips, import-scenario XML) is a 2024 Classic-era snapshot: read-only and stale (see `exports/navigation.md`).
+- **Tooling:** the C# compile check is repo-local: `tools\Test-Compile.ps1 -IncludeRuntimeCode` (the TimeClock copy compiles the TimeClock repo, not this one). Modern UI type-check is local: `tools\Test-ModernUI.ps1`. Package: `tools\Build-Package.ps1` + `tools\Verify-Package.ps1`. Read-only SQL: `..\Acumatica-PK-TimeClock\tools\Query-PK9.ps1`.
 - **Adding a dropdown value** (record keeper, payroll provider, status) means `src/Code/ProjectTask_Constants.cs` **and** `ProjectTask_Messages.cs` **and** the DAC list attribute.
 - **`scripts/`** holds historical one-off DB scripts (2022-2026, table creation/changes). Treat them as writers needing user approval; the CREATE scripts for current tables are in `src/Sql/`.
 - **Screen ID gotcha:** `Pages/PK/PKPM3003.aspx` exists (it is PKPM3001's URL); don't reuse `PKPM3003` as a new screen ID.

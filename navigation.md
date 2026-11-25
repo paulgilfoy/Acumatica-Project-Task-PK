@@ -1,14 +1,16 @@
 # Repo navigation — Acumatica-Project-Task-PK
 
 Customization project **`ProjectTask`** (live): PMTask / Contract `UsrPG*` fields, Doc Gathering (`PKPM3001`), Sample Testing (`PKPM3002`),
-and (merged from project `Contact`, T-10, cutover pending) the PK Marketing fields on Contacts (CR302000).
+and (merged from project `Contact`, T-10) the PK Marketing fields on Contacts (CR302000). Plan/status: `PLAN.md`.
+Agent rules (publishing on PK9, test data, DB writes, live): `..\Acumatica-DevEnv\docs\agent-rules.md`.
 Start with **`scratchpad.md`** (what is live, drift, rules, work claims); this file is just the map.
 
 | Path | What's there | Agent actions |
 |---|---|---|
 | `scratchpad.md` | Living status, what is live on PK9, dependencies, coordination rules, **work claims**, learnings, session log | Read first. Claim work. Update before finishing. |
 | `README.md` | Human overview | Keep in sync with `src/` |
-| `src/` | **All customization source** of the `ProjectTask` project (synced from PK9 on 2026-11-13) | Edit here only. → `src/navigation.md` |
+| `PLAN.md` | Master plan of the PK consolidation effort (lead + workers): work left (§1), tasks, decisions, lead log | Read §0 first |
+| `src/` | **All customization source** of the `ProjectTask` project | Edit here only. → `src/navigation.md` |
 | `scripts/` | Historical one-off DB scripts (table creation/changes, 2022–2026) | Read. Writers need user approval. → `scripts/navigation.md` |
 | `exports/` | Old exported packages / project.xml / import-scenario export | Read-only snapshots, **stale**. → `exports/navigation.md` |
 | `docs/` | Stable reference | → `docs/navigation.md` |
@@ -20,7 +22,7 @@ Start with **`scratchpad.md`** (what is live, drift, rules, work claims); this f
 |---|---|
 | `C:\Program Files\Acumatica ERP\PK9\navigation.md` | Map of the running Acumatica site |
 | `..\Acumatica-PK-TimeClock\` | **Consumer** of `PMTaskExt.UsrPGPreparer/Reviewer/TechReviewer/TaskStatus/DueDate/Department` and `ContractExt.UsrPGDepartment` etc. (Preparer Dashboard = GI000142, PKEP3001/3002). Master multi-agent plan lives in its `scratchpad.md`. |
-| `..\Acumatica-Employee-Project-Time\` | Legacy EP307000 stopwatch (`ProjectTime`) |
+| `..\Acumatica-Employee-Project-Time\` | Legacy EP307000 stopwatch (`ProjectTime`; unpublished on PK9 and live with release 3, 2026-11-25) |
 | `http://localhost/PK9/` | The running site. Doc Gathering = `?ScreenId=PKPM3001`, Sample Testing = `PKPM3002`, Projects = `PM301000`, Project Tasks = `PM302000` |
 
 ## Common tasks → where
@@ -38,5 +40,5 @@ Start with **`scratchpad.md`** (what is live, drift, rules, work claims); this f
 | Type-check Modern UI TypeScript | `tools/Test-ModernUI.ps1`; syntax in `..\Acumatica-PK-TimeClock\docs\T290.md` |
 | Compile-check C# | `tools/Test-Compile.ps1 -IncludeRuntimeCode` (the TimeClock copy compiles the TimeClock repo, not this one) |
 | Build / verify the package | `tools/Build-Package.ps1` → `build/ProjectTask.zip`; `tools/Verify-Package.ps1` (zip vs live `ProjectTask`) |
-| Check `src/` against live PK9 | `tools/Verify-Package.ps1` (`-ExtraProject Contact` until the T-10 cutover is published), or `tools/Get-LiveProject.ps1` → `build/live/src` to diff |
+| Check `src/` against live PK9 | `tools/Verify-Package.ps1`, or `tools/Get-LiveProject.ps1` → `build/live/src` to diff |
 | Query data (read-only) | `..\Acumatica-PK-TimeClock\tools\Query-PK9.ps1` |
